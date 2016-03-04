@@ -4,7 +4,7 @@
 The **INV4D-312** is a transport spaceship that was just intercepted by an alien race classified as the **Zenytp-3D3**. Take control of **Phack Man** in his mission to clear all the floors of the cargo bay from these little bastards.
 
 ## Gameplay
-Phack Man's gameplay resembles the good ol’ Pacman mechanics. The map is a generated maze and entities can move freely through it. Phack Map can shoot with Lock & Stock, his favorite twin miniguns.
+Phack Man's gameplay resembles the good ol’ Pacman mechanics. The map is a generated maze and entities can move freely through it. Phack Man can shoot with Lock & Stock, his loyal twin miniguns.
 
 ## Map
 The map is a generated maze with progressive size depending on the floor. The algorithm used is undefined by now, but some ideas arise:
