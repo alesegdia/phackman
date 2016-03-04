@@ -15,7 +15,7 @@ protected:
 
 	enum Keys
 	{
-		KEY_UP,
+		KEY_UP = 0,
 		KEY_DOWN,
 		KEY_LEFT,
 		KEY_RIGHT,
@@ -24,21 +24,22 @@ protected:
 		KEY_SRIGHT
 	};
 
-	void HandleEvent(ALLEGRO_EVENT& ev);
-	virtual void Draw();
-	virtual void Ready();
-	virtual void HandleKeyInput();
+	void handleEvent(ALLEGRO_EVENT& ev);
+	virtual void draw();
+	virtual void update(float delta);
+	virtual void ready();
+	virtual void handleKeyInput();
 
-	int screenWidth, screenHeight;
+	int m_screenWidth, m_screenHeight;
 
 	const int FPS = 60;
 
-	ALLEGRO_DISPLAY* display = NULL;
-	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
-	ALLEGRO_TIMER* timer = NULL;
+	ALLEGRO_DISPLAY* m_display = NULL;
+	ALLEGRO_EVENT_QUEUE* m_eventQueue = NULL;
+	ALLEGRO_TIMER* m_timer = NULL;
 
-	bool redraw = true;
-	bool doexit = false;
+	bool m_redraw = true;
+	bool m_doexit = false;
 
 	bool key[6] = { false, false, false, false, false, false };
 

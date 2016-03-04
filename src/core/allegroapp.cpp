@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 AllegroApp::AllegroApp( int screen_width, int screen_height )
-	: screenWidth(screen_width), screenHeight(screen_height)
+	: m_screenWidth(screen_width), m_screenHeight(screen_height)
 {
 
 }
@@ -22,50 +22,50 @@ int AllegroApp::Init() {
 		return -1;
 	}
 
-	timer = al_create_timer(1.0 / FPS);
-	if(!timer) {
+	m_timer = al_create_timer(1.0 / FPS);
+	if(!m_timer) {
 		fprintf(stderr, "failed to create timer!\n");
 		return -1;
 	}
 
-	display = al_create_display(screenWidth, screenHeight);
-	if(!display) {
+	m_display = al_create_display(m_screenWidth, m_screenHeight);
+	if(!m_display) {
 		fprintf(stderr, "failed to create display!\n");
-		al_destroy_timer(timer);
+		al_destroy_timer(m_timer);
 		return -1;
 	}
 
 	al_clear_to_color(al_map_rgb(255, 0, 255));
-	al_set_target_bitmap(al_get_backbuffer(display));
+	al_set_target_bitmap(al_get_backbuffer(m_display));
 
-	event_queue = al_create_event_queue();
-	if(!event_queue) {
+	m_eventQueue = al_create_event_queue();
+	if(!m_eventQueue) {
 		fprintf(stderr, "failed to create event_queue!\n");
-		al_destroy_display(display);
-		al_destroy_timer(timer);
+		al_destroy_display(m_display);
+		al_destroy_timer(m_timer);
 		return -1;
 	}
 
-	al_register_event_source(event_queue, al_get_display_event_source(display));
-	al_register_event_source(event_queue, al_get_timer_event_source(timer));
-	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	al_register_event_source(m_eventQueue, al_get_display_event_source(m_display));
+	al_register_event_source(m_eventQueue, al_get_timer_event_source(m_timer));
+	al_register_event_source(m_eventQueue, al_get_keyboard_event_source());
 
 	al_clear_to_color(al_map_rgb(0,0,0));
-	al_start_timer(timer);
+	al_start_timer(m_timer);
 
-	al_set_target_bitmap(al_get_backbuffer(display));
-	Ready();
+	al_set_target_bitmap(al_get_backbuffer(m_display));
+	ready();
 
 	return 0;
 }
 
-void AllegroApp::HandleEvent(ALLEGRO_EVENT& ev) {
+void AllegroApp::handleEvent(ALLEGRO_EVENT& ev) {
 	if(ev.type == ALLEGRO_EVENT_TIMER) {
-		HandleKeyInput();
-		redraw = true;
+		handleKeyInput();
+		m_redraw = true;
 	}
 	else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-		doexit = true;
+		m_doexit = true;
 	}
 	else if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch(ev.keyboard.keycode) {
@@ -113,7 +113,7 @@ void AllegroApp::HandleEvent(ALLEGRO_EVENT& ev) {
 				break;
 
 			case ALLEGRO_KEY_ESCAPE:
-				doexit = true;
+				m_doexit = true;
 				break;
 
 			case ALLEGRO_KEY_Q:
@@ -127,15 +127,20 @@ void AllegroApp::HandleEvent(ALLEGRO_EVENT& ev) {
 	}
 }
 
-void AllegroApp::Draw() {
+void AllegroApp::draw() {
 
 }
 
-void AllegroApp::Ready() {
+void AllegroApp::update(float delta)
+{
 
 }
 
-void AllegroApp::HandleKeyInput() {
+void AllegroApp::ready() {
+
+}
+
+void AllegroApp::handleKeyInput() {
 
 }
 
@@ -143,15 +148,23 @@ int AllegroApp::Exec() {
 	int retcode = Init();
 	if( retcode != 0 ) return retcode;
 
-	while(!doexit) {
-		ALLEGRO_EVENT ev;
-		al_wait_for_event(event_queue, &ev);
-		HandleEvent(ev);
+	double now, then;
+	now = then = al_get_time();
 
-		if( redraw && al_is_event_queue_empty(event_queue) ) {
-			al_set_target_bitmap(al_get_backbuffer(display));
-			redraw = false;
-			Draw();
+	while(!m_doexit) {
+		ALLEGRO_EVENT ev;
+		al_wait_for_event(m_eventQueue, &ev);
+		handleEvent(ev);
+
+		now = al_get_time();
+		double delta = now - then;
+
+		update(delta);
+
+		if( m_redraw && al_is_event_queue_empty(m_eventQueue) ) {
+			al_set_target_bitmap(al_get_backbuffer(m_display));
+			m_redraw = false;
+			draw();
 			al_flip_display();
 		}
 	}
