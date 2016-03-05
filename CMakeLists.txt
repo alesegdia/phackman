@@ -16,5 +16,6 @@ elseif(UNIX)
 	set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/linux)
 	add_executable(phakman ${CPPs} ${HPPs} src/main.cpp)
 	target_link_libraries(phakman allegro)
+	target_link_libraries(phakman allegro_image)
 endif()
 
