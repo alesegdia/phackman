@@ -1,4 +1,5 @@
 #include "game.h"
+#include "assets.h"
 
 Game::Game(int sw, int sh)
 	: AllegroApp( sw, sh )
@@ -13,6 +14,8 @@ Game::~Game()
 
 void Game::ready()
 {
+	Assets::Initialize();
+
 	m_gameplayScreen.reset(new GameplayScreen(this));
 	m_currentScreen = m_gameplayScreen;
 	m_currentScreen->wake();
