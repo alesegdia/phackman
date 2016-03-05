@@ -1,5 +1,6 @@
 #include "allegroapp.h"
 #include <stdio.h>
+#include <allegro5/allegro_image.h>
 
 AllegroApp::AllegroApp( int screen_width, int screen_height )
 	: m_screenWidth(screen_width), m_screenHeight(screen_height)
@@ -14,6 +15,11 @@ AllegroApp::~AllegroApp() {
 int AllegroApp::Init() {
 	if(!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
+		return -1;
+	}
+
+	if(!al_init_image_addon()) {
+		fprintf(stderr, "failed to initialize image addon!\n");
 		return -1;
 	}
 
