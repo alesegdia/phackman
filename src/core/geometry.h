@@ -7,3 +7,6 @@ struct vec2 {
 	vec2(float _x, float _y) : x(_x), y(_y) {}
 };
 
+struct rect {
+	vec2 min, max;
+};
