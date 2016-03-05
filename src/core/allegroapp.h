@@ -6,6 +6,7 @@ public:
 	virtual ~AllegroApp ();
 
 	int Exec();
+	ALLEGRO_DISPLAY* display();
 
 private:
 

@@ -144,6 +144,11 @@ void AllegroApp::handleKeyInput() {
 
 }
 
+ALLEGRO_DISPLAY *AllegroApp::display()
+{
+	return m_display;
+}
+
 int AllegroApp::Exec() {
 	int retcode = Init();
 	if( retcode != 0 ) return retcode;
