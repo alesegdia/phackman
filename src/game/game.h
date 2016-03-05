@@ -7,6 +7,8 @@
 #include "../core/allegroapp.h"
 #include "../core/iscreen.h"
 
+#include "gameplayscreen.h"
+
 class Game : public AllegroApp {
 
 public:
@@ -17,7 +19,12 @@ public:
 	void ready();
 	void handleKeyInput();
 	void draw();
+	void update(double delta);
 
+	// all screens
+	std::shared_ptr<GameplayScreen> m_gameplayScreen;
+
+	// current screen
 	std::shared_ptr<IScreen> m_currentScreen;
 
 };

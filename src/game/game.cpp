@@ -11,14 +11,15 @@ Game::~Game()
 
 }
 
-void Game::ready() {
-	al_clear_to_color(al_map_rgb(255, 0, 255));
-	al_set_target_bitmap(al_get_backbuffer(m_display));
-
-	// init first screen
+void Game::ready()
+{
+	m_gameplayScreen.reset(new GameplayScreen(this));
+	m_currentScreen = m_gameplayScreen;
+	m_currentScreen->wake();
 }
 
-void Game::handleKeyInput() {
+void Game::handleKeyInput()
+{
 	if(key[KEY_UP]) {
 	}
 
@@ -38,7 +39,12 @@ void Game::handleKeyInput() {
 	}
 }
 
-void Game::draw() {
-	al_clear_to_color(al_map_rgb(255,0,255));
-	al_set_target_bitmap(al_get_backbuffer(m_display));
+void Game::draw()
+{
+	m_currentScreen->render();
+}
+
+void Game::update(double delta)
+{
+	m_currentScreen->update(delta);
 }
