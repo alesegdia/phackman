@@ -152,6 +152,7 @@ int AllegroApp::Exec() {
 
 		now = al_get_time();
 		double delta = now - then;
+		then = now;
 
 		update(delta);
 
