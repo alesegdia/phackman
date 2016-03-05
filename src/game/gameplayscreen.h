@@ -1,0 +1,5 @@
+#ifndef GAMEPLAYSCREEN_H
+#define GAMEPLAYSCREEN_H
+
+#endif // GAMEPLAYSCREEN_H
+
