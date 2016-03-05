@@ -133,23 +133,6 @@ void AllegroApp::handleEvent(ALLEGRO_EVENT& ev) {
 	}
 }
 
-void AllegroApp::draw() {
-
-}
-
-void AllegroApp::update(float delta)
-{
-
-}
-
-void AllegroApp::ready() {
-
-}
-
-void AllegroApp::handleKeyInput() {
-
-}
-
 ALLEGRO_DISPLAY *AllegroApp::display()
 {
 	return m_display;

@@ -26,10 +26,10 @@ protected:
 	};
 
 	void handleEvent(ALLEGRO_EVENT& ev);
-	virtual void draw();
-	virtual void update(float delta);
-	virtual void ready();
-	virtual void handleKeyInput();
+	virtual void draw() = 0 ;
+	virtual void update(double delta) = 0 ;
+	virtual void ready() = 0 ;
+	virtual void handleKeyInput() = 0 ;
 
 	int m_screenWidth, m_screenHeight;
 
