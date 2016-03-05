@@ -24,6 +24,6 @@ void GameplayScreen::update(double delta)
 
 void GameplayScreen::render()
 {
-	al_clear_to_color(al_map_rgb(0,255,255));
+	al_clear_to_color(al_map_rgb(20,20,20));
 	al_set_target_bitmap(al_get_backbuffer(m_game->display()));
 }
