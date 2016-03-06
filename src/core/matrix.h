@@ -8,6 +8,8 @@ class Matrix2D
 {
 public:
 
+	typedef std::shared_ptr<Matrix2D<T>> SharedPtr;
+
 	Matrix2D( int cols, int rows ) {
 		resize(cols, rows);
 	}
@@ -73,6 +75,8 @@ private:
 	int m_cols, m_rows;
 
 };
+
+typedef Matrix2D<int> Matrix2Di;
 
 template <typename T>
 class Matrix2DDebug
