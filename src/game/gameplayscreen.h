@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../core/iscreen.h"
+#include "../core/animation.h"
 
 class Game;
 
@@ -16,5 +17,6 @@ public:
 
 private:
 	Game* m_game;
+	AnimationData ad;
 
 };
