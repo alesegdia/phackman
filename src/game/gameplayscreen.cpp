@@ -1,9 +1,11 @@
+#include <allegro5/allegro.h>
+#include <iostream>
+
 #include "gameplayscreen.h"
 #include "game.h"
 #include "assets.h"
-
-#include <allegro5/allegro.h>
-#include <iostream>
+#include "../core/matrix.h"
+#include "../mapgen/mapgen.h"
 
 GameplayScreen::GameplayScreen( Game* g )
 {
@@ -17,6 +19,10 @@ GameplayScreen::~GameplayScreen()
 
 void GameplayScreen::wake()
 {
+	LayoutBuilder layoutBuilder;
+	Matrix2D<int> map = layoutBuilder.generate(5);
+
+	Matrix2DDebug<int>() << map;
 }
 
 void GameplayScreen::update(double delta)
