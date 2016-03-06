@@ -57,16 +57,18 @@ These upgrades won't probably be implemented, but they will be kept here for the
 After doing a little of research, I found a really interesting [pacman-like maze generator idea](http://pacman.shaunew.com/play/mapgen/) by Shaun Williams, part of his [Pac-Man tribute project](http://pacman.shaunew.com/). As the author says, the doc is incomplete in details, but the base is **use tetromino pieces to aid on map generation**. The map will be generated following this very principle.
 
 #### Method overview
-Tetromino pieces will be used to build a layout so that we can use the connected edges of those pieces to build the path. Later, this will be rendered into a tile map for its direct use in the game.
+Rectangle-made pieces will be used to build a layout so that we can use the connected edges of those pieces to build the path. Later, this will be rendered into a tile map for its direct use in the game.
 
 To sum up, these steps come into my mind (prone to changes):
 
-* **Connect** a number of tetromino pieces
+* **Generate** a number of *connected* pieces
 * **Trace** the path given the resulting layout. This step could be split later for simplicity.
 * **Mirror** the path horizontally.
 * **Render** the path to a tile map and use in the game!
 
-### 2.1. Connect pieces
+### 2.1. Generate connected pieces
+
+The output can be a matrix of integers, with a unique integer identifier for each piece.
 
 ### 2.2. Extract path
 
