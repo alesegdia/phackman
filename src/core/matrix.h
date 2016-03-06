@@ -28,14 +28,14 @@ public:
 
 	}
 
-	void set( int x, int y, T value )
+	void set( int col, int row, T value )
 	{
-		m_data[coordToIndex(x, y)] = value;
+		m_data[coordToIndex(col, row)] = value;
 	}
 
-	T get( int x, int y ) const
+	T get( int col, int row ) const
 	{
-		return m_data[coordToIndex(x, y)];
+		return m_data[coordToIndex(col, row)];
 	}
 
 	int cols() const
