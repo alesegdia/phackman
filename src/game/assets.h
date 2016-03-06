@@ -1,6 +1,9 @@
 #pragma once
 
+#include <memory>
 #include <allegro5/allegro.h>
+#include "../core/spritesheet.h"
+#include "../core/animation.h"
 
 class Assets
 {
@@ -14,6 +17,8 @@ public:
 	Assets();
 	~Assets();
 
-	ALLEGRO_BITMAP* characterSheet;
+	ALLEGRO_BITMAP* characterBitmap;
+	std::shared_ptr<Spritesheet> characterSheet;
+	std::shared_ptr<Animation> characterAnim;
 
 };

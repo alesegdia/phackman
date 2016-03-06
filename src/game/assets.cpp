@@ -5,18 +5,21 @@ Assets* Assets::instance = nullptr;
 
 Assets::Assets()
 {
-	characterSheet = al_load_bitmap("assets/phakman-sheet.png");
-	std::cout << characterSheet;
+	characterBitmap = al_load_bitmap("assets/phakman-sheet.png");
+	characterSheet.reset(new Spritesheet(3, 4, characterBitmap));
+	characterAnim.reset(new Animation(0.1f, 3));
+	characterAnim->addFrame(characterSheet->getFrame(0));
+	characterAnim->addFrame(characterSheet->getFrame(1));
+	characterAnim->addFrame(characterSheet->getFrame(2));
 }
 
 Assets::~Assets()
 {
-	al_destroy_bitmap(characterSheet);
+	al_destroy_bitmap(characterBitmap);
 }
 
 void Assets::Initialize()
 {
-	std::cout << "initing";
 	Assets::instance = new Assets();
 }
 
