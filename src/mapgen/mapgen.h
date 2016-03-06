@@ -1,5 +1,8 @@
 #pragma once
 
+#include <random>
+#include <memory>
+
 #include "../core/matrix.h"
 
 /**
@@ -10,17 +13,23 @@ class LayoutBuilder
 {
 public:
 
-	Matrix2D<int> generate( int num_pieces );
+	LayoutBuilder();
+
+	Matrix2Di::SharedPtr generate( int num_pieces );
 
 private:
 
 	/**
 	 * @brief carves a single piece using a default method.
-	 * Modularity via new PieceCarver class could be added herein order to achieve finer results.
+	 * Modularity via new PieceCarver class could be added in order to achieve finer results.
 	 * @param output matrix where to carve the piece
 	 * @param piece_id number to use to identify the piece
 	 */
-	void carvePiece( Matrix2D<int>& output, int piece_id );
+	void carvePiece(int piece_id );
+
+	std::mt19937 rng;
+
+	Matrix2Di::SharedPtr m_layoutMatrix;
 
 };
 
@@ -35,7 +44,7 @@ public:
 	/**
 	 * @param res_scale resolution of the scale applied (1 is no scale)
 	 */
-	Matrix2D<int> generate( int res_scale )
+	Matrix2Di generate( int res_scale )
 	{
 
 	}
