@@ -167,10 +167,6 @@ ShapeStorage::ShapeStorage()
 	{ 0, 1, 0,
 	  1, 1, 1,
 	  0, 1, 0 }));
-
-	Matrix2Di::SharedPtr m = rotate(*m_L1, 3);
-
-	Matrix2DDebug<int>() << *m;
 }
 
 std::vector<std::shared_ptr<Matrix2Di> > ShapeStorage::makeSample()
