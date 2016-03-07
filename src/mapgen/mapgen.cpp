@@ -94,8 +94,7 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
 	return matrix_out;
 }
 
-
-ShapeStorage::Pieces()
+ShapeStorage::ShapeStorage()
 {
 	m_L1.reset(new Matrix2Di(2, 3,
 	{ 1, 0,
@@ -106,9 +105,27 @@ ShapeStorage::Pieces()
 	{ 1, 0,
 	  1, 1 }));
 
+	m_I1.reset(new Matrix2Di(1, 3,
+	{ 1,
+	  1,
+	  1 }));
+
+	m_I2.reset(new Matrix2Di(1, 2,
+	{ 1,
+	  1, }));
+
 	m_T.reset(new Matrix2Di(3, 2,
 	{ 1, 1, 1,
 	  0, 1, 0 }));
+
+	m_Plus.reset(new Matrix2Di(3, 3,
+	{ 0, 1, 0,
+	  1, 1, 1,
+	  0, 1, 0 }));
+
+	Matrix2Di::SharedPtr m = rotate(*m_L1, 3);
+
+	Matrix2DDebug<int>() << *m;
 }
 
 std::vector<std::shared_ptr<Matrix2Di> > ShapeStorage::makeSample()

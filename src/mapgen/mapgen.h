@@ -69,7 +69,12 @@ public:
 private:
 	std::shared_ptr<Matrix2Di> m_L1;
 	std::shared_ptr<Matrix2Di> m_L2;
+	std::shared_ptr<Matrix2Di> m_I1;
+	std::shared_ptr<Matrix2Di> m_I2;
+	std::shared_ptr<Matrix2Di> m_I3;
+	std::shared_ptr<Matrix2Di> m_I4;
 	std::shared_ptr<Matrix2Di> m_T;
+	std::shared_ptr<Matrix2Di> m_Plus;
 
 };
 

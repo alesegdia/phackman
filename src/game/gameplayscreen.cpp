@@ -23,6 +23,8 @@ void GameplayScreen::wake()
 	std::shared_ptr<Matrix2Di> map = layoutBuilder.generate(9);
 
 	Matrix2DDebug<int>() << *map;
+
+	ShapeStorage ss;
 }
 
 void GameplayScreen::update(double delta)
