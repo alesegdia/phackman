@@ -41,6 +41,44 @@ private:
 
 };
 
+class ShapeStorage
+{
+public:
+	Pieces()
+	{
+		m_L1.reset(new Matrix2Di(2, 3,
+		{ 1, 0,
+		  1, 0,
+		  1, 1 }));
+
+		m_L2.reset(new Matrix2Di(2, 2,
+		{ 1, 0,
+		  1, 1 }));
+
+		m_T.reset(new Matrix2Di(3, 2,
+		{ 1, 1, 1,
+		  0, 1, 0 }));
+	}
+
+	std::vector<std::shared_ptr<Matrix2Di>> makeSample()
+	{
+		std::vector<Matrix2Di::SharedPtr> shapes;
+		shapes.push_back(m_L1);
+		shapes.push_back(m_L1);
+		shapes.push_back(m_L2);
+		shapes.push_back(m_L2);
+		shapes.push_back(m_L2);
+		shapes.push_back(m_T);
+		shapes.push_back(m_T);
+		return shapes;
+	}
+
+private:
+	std::shared_ptr<Matrix2Di> m_L1;
+	std::shared_ptr<Matrix2Di> m_L2;
+	std::shared_ptr<Matrix2Di> m_T;
+};
+
 /**
  * @brief Traces a path using sides of previously generated connected polygonal pieces.
  * The output matrix can be scaled for simplicity at incoming needs.
