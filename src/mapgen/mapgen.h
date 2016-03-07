@@ -75,7 +75,7 @@ public:
 	/**
 	 * @param res_scale resolution of the scale applied (1 is no scale)
 	 */
-	Matrix2Di generate( int res_scale )
+	Matrix2Di generate( const Matrix2Di& input_matrix )
 	{
 
 	}
