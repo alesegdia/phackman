@@ -1,5 +1,6 @@
 #pragma once
 
+#include <initializer_list>
 #include <vector>
 #include <iostream>
 
@@ -24,6 +25,14 @@ public:
 		: m_cols(other.cols()),
 		  m_rows(other.rows()),
 		  m_data(other.m_data)
+	{
+
+	}
+
+	Matrix2D( int cols, int rows, std::initializer_list<T> il )
+		: m_cols(cols),
+		  m_rows(rows),
+		  m_data(il)
 	{
 
 	}
