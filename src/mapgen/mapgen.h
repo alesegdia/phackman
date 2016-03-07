@@ -44,39 +44,14 @@ private:
 class ShapeStorage
 {
 public:
-	Pieces()
-	{
-		m_L1.reset(new Matrix2Di(2, 3,
-		{ 1, 0,
-		  1, 0,
-		  1, 1 }));
-
-		m_L2.reset(new Matrix2Di(2, 2,
-		{ 1, 0,
-		  1, 1 }));
-
-		m_T.reset(new Matrix2Di(3, 2,
-		{ 1, 1, 1,
-		  0, 1, 0 }));
-	}
-
-	std::vector<std::shared_ptr<Matrix2Di>> makeSample()
-	{
-		std::vector<Matrix2Di::SharedPtr> shapes;
-		shapes.push_back(m_L1);
-		shapes.push_back(m_L1);
-		shapes.push_back(m_L2);
-		shapes.push_back(m_L2);
-		shapes.push_back(m_L2);
-		shapes.push_back(m_T);
-		shapes.push_back(m_T);
-		return shapes;
-	}
+	ShapeStorage();
+	std::vector<std::shared_ptr<Matrix2Di>> makeSample();
 
 private:
 	std::shared_ptr<Matrix2Di> m_L1;
 	std::shared_ptr<Matrix2Di> m_L2;
 	std::shared_ptr<Matrix2Di> m_T;
+
 };
 
 /**
