@@ -13,7 +13,15 @@ class LayoutBuilder
 {
 public:
 
-	LayoutBuilder();
+	struct Config
+	{
+		// probability to carve each shape
+		std::vector<Matrix2Di::SharedPtr> shapes;
+		int canvasWidth = 0 ;
+		int canvasHeight = 0 ;
+	};
+
+	LayoutBuilder( Config cfg = {} );
 
 	Matrix2Di::SharedPtr generate( int num_pieces );
 
@@ -25,10 +33,10 @@ private:
 	 * @param output matrix where to carve the piece
 	 * @param piece_id number to use to identify the piece
 	 */
-	void carvePiece(int piece_id );
+	void step(int piece_id );
 
 	std::mt19937 rng;
-
+	Config m_config;
 	Matrix2Di::SharedPtr m_layoutMatrix;
 
 };
