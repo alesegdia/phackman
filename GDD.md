@@ -57,18 +57,20 @@ These upgrades won't probably be implemented, but they will be kept here for the
 After doing a little of research, I found a really interesting [pacman-like maze generator idea](http://pacman.shaunew.com/play/mapgen/) by Shaun Williams, part of his [Pac-Man tribute project](http://pacman.shaunew.com/). As the author says, the doc is incomplete in details, but the base is **use tetromino pieces to aid on map generation**. The map will be generated following this very principle.
 
 #### Method overview
-Rectangle-made pieces will be used to build a layout so that we can use the connected edges of those pieces to build the path. Later, this will be rendered into a tile map for its direct use in the game.
+Rectangle-made **figures** will be used to build a layout so that we can use the connected edges of those pieces to build the path. Later, this will be rendered into a tile map for its direct use in the game.
 
-To sum up, these steps come into my mind (prone to changes):
+A **figure** model will be represented as a 2D matrix of integers. The generation will be supplied with a list of models in order to place them randomly in a blank layout. This way, we are shaping different distributions of the same pieces. Relating this to game progress, a different set of figures can be used in each floor of the spaceship.
 
-* **Generate** a number of *connected* pieces
-* **Trace** the path given the resulting layout. This step could be split later for simplicity.
+A resume of the needed steps (prone to changes):
+
+* **Generate** a number of *connected figures*.
+* **Trace** the path given the resulting layout using figure edges. This step could be split later for simplicity.
 * **Mirror** the path horizontally.
 * **Render** the path to a tile map and use in the game!
 
-### 2.1. Generate connected pieces
+### 2.1. Generate layout
 
-The output can be a matrix of integers, with a unique integer identifier for each piece.
+Having a list with the figures we want, we can place them using different strategies. The one I will come up with by now is fairly simple: pick a random piece and place it to the left, as in tetris but pieces going left instead of down.
 
 ### 2.2. Extract path
 
