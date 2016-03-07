@@ -52,6 +52,14 @@ private:
 
 };
 
+/**
+ * @brief rotates a matrix by an angle multiple of 90
+ * @param matrix to rotate
+ * @param angle index representing the angle (1: 90º, 2: 180º, 3: 270º)
+ * @return a rotated matrix
+ */
+Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle );
+
 class ShapeStorage
 {
 public:

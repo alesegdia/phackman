@@ -41,76 +41,57 @@ void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, int brush )
 	}
 }
 
-/**
- * @brief searches the first column with a zero number in a fixed row
- * @param mat the matrix
- * @param row the fixed row number
- * @return the column number, -1 if it's
- */
-int first_zero_column(const Matrix2Di& mat, int row)
+Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
 {
-	int col = -1;
-	for( int i = 0; i < mat.cols(); i++ )
+	Matrix2Di::SharedPtr matrix_out;
+	if( angle == 0 )
 	{
-		if( mat.get(i, row) == 0 )
+		matrix_out.reset(new Matrix2Di(matrix_in));
+	}
+	else if( angle >= 1 && angle <= 3 )
+	{
+		int cols, rows;
+		if( angle == 1 || angle == 3 )
 		{
-			col = i;
-			break;
+			cols = matrix_in.rows();
+			rows = matrix_in.cols();
+		}
+		else
+		{
+			cols = matrix_in.cols();
+			rows = matrix_in.rows();
+		}
+		matrix_out.reset(new Matrix2Di(cols, rows, 0));
+
+		for( int row_in = 0; row_in < matrix_in.rows(); row_in++ )
+		{
+			for( int col_in = 0; col_in < matrix_in.cols(); col_in++ )
+			{
+				int row_out, col_out;
+				if( angle == 1 )
+				{
+					row_out = col_in;
+					col_out = row_in;
+				}
+				else if( angle == 2 )
+				{
+					row_out = matrix_in.rows() - row_in - 1;
+					col_out = matrix_in.cols() - col_in - 1;
+				}
+				else if( angle == 3 )
+				{
+					row_out = matrix_in.cols() - col_in - 1;
+					col_out = row_in;
+				}
+				matrix_out->set(col_out, row_out, matrix_in.get(col_in, row_in));
+			}
 		}
 	}
-	return col;
-}
-
-/**
- * @brief finds a random non-zero row with a fixed column
- * @param mat the matrix to process
- * @param rng an std::mt19937 random number generator
- * @param x fixed column
- * @return
- */
-int random_nonzero_row(const Matrix2Di& mat, std::mt19937& rng, int x)
-{
-	int y = -1;
-
-	// random non-zero height
-	while( y == -1 )
+	else
 	{
-		y = rng() % mat.rows();
-		if( mat.get(x, y) != 0 )
-		{
-			y = -1;
-		}
+		matrix_out = nullptr;
 	}
-}
-
-/**
- * Pieces will tend to stick to the left. This will come in handy for the mirroring.
- */
-void LayoutBuilder::step(int piece_id)
-{
-	// to help on setting a pixel to the piece id
-	auto put = [this, piece_id](int x, int y)->void { this->m_layoutMatrix->set(x, y, piece_id); };
-
-
-	int iter = 12;
-	while( iter-- > 0 )
-	{
-		//int x = first_with_zero_column(*m_layoutMatrix);
-		//int y = random_nonzero_row(*m_layoutMatrix, rng, x);
-
-		int y = rng() % m_layoutMatrix->rows();
-		int x = first_zero_column(*m_layoutMatrix, y);
-
-		std::cout << x << ", " << y << std::endl;
-
-		put(x, y);
-	}
-
-	//int y = rng() % m_layoutMatrix->rows();
-	//int x = first_zero_column(*m_layoutMatrix, y);
-
-	//put(x, y);
-
+	return matrix_out;
 }
 
 
