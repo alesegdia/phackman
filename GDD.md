@@ -22,9 +22,9 @@ We can think of the map like a node graph where nodes are placed at maze positio
 ```
 # # # # # # # #
 # o         o #     # - solid block
-# # # # # #   #     o - map node
+#   # # # #   #     o - map node
 # o     o #   #
-# # # #   #   #
+#   # #   #   #
 # o     o   o #
 # # # # # # # #
 ```
