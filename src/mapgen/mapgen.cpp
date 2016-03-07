@@ -42,6 +42,33 @@ void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, int brush )
 	}
 }
 
+bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy )
+{
+	if( fixed.cols() < moved.cols() + offx )
+	{
+		return true;
+	}
+	else if( fixed.rows() < moved.rows() + offy )
+	{
+		return true;
+	}
+	for( int col_m = 0; col_m < moved.cols(); col_m++ )
+	{
+		int col_f = col_m + offx;
+		for( int row_m = 0; row_m < moved.rows(); row_m++ )
+		{
+			int row_f = row_m + offy;
+			int moved_cell = moved.get(col_m, row_m);
+			int fixed_cell = fixed.get(col_f, row_f);
+			if( moved_cell != 0 && fixed_cell != 0 )
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
 {
 	Matrix2Di::SharedPtr matrix_out;

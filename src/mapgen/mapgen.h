@@ -64,6 +64,16 @@ private:
  */
 Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle );
 
+/**
+ * @brief checks if a shape collides with another shape given an offset
+ * @param fixed the immovable matrix
+ * @param moved the matrix with the offset applied
+ * @param offx offset x coordinate
+ * @param offy offset y coordinate
+ * @return
+ */
+bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy );
+
 class ShapeStorage
 {
 public:
