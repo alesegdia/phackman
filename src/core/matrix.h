@@ -3,6 +3,7 @@
 #include <initializer_list>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 template <typename T>
 class Matrix2D
