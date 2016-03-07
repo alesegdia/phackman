@@ -2,6 +2,7 @@
 
 #include <random>
 #include <memory>
+#include <vector>
 
 #include "../core/matrix.h"
 
@@ -34,7 +35,7 @@ public:
 
 	LayoutBuilder( Config cfg = {} );
 
-	Matrix2Di::SharedPtr generate(std::vector<Matrix2D::SharedPtr> shapes );
+	Matrix2Di::SharedPtr generate( const std::vector<Matrix2Di::SharedPtr>& shapes );
 
 private:
 

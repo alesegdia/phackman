@@ -20,11 +20,11 @@ GameplayScreen::~GameplayScreen()
 void GameplayScreen::wake()
 {
 	LayoutBuilder layoutBuilder;
-	std::shared_ptr<Matrix2Di> map = layoutBuilder.generate(9);
-
-	Matrix2DDebug<int>() << *map;
 
 	ShapeStorage ss;
+	std::shared_ptr<Matrix2Di> map = layoutBuilder.generate(ss.makeSample());
+
+	Matrix2DDebug<int>() << *map;
 }
 
 void GameplayScreen::update(double delta)
