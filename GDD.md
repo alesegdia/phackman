@@ -15,7 +15,7 @@ Phack Man's gameplay resembles the good ol’ Pacman mechanics. The map is a gen
 The map is a generated maze with progressive size depending on the floor. The algorithm used is undefined by now, but some ideas arise:
 
 * Use a classic algorithm to create a maze, or even a lib that does this for us.
-* Generate small pieces and mirror them horizontally and/or vertically.
+* Generate small shapes and mirror them horizontally and/or vertically.
 
 We can think of the map like a node graph where nodes are placed at maze positions where the player can turn 90 degrees.
 
@@ -54,12 +54,12 @@ These upgrades won't probably be implemented, but they will be kept here for the
 
 ## 2. Map generation
 
-After doing a little of research, I found a really interesting [pacman-like maze generator idea](http://pacman.shaunew.com/play/mapgen/) by Shaun Williams, part of his [Pac-Man tribute project](http://pacman.shaunew.com/). As the author says, the doc is incomplete in details, but the base is **use tetromino pieces to aid on map generation**. The map will be generated following this very principle.
+After doing a little of research, I found a really interesting [pacman-like maze generator idea](http://pacman.shaunew.com/play/mapgen/) by Shaun Williams, part of his [Pac-Man tribute project](http://pacman.shaunew.com/). As the author says, the doc is incomplete in details, but the base is **use tetromino shapes to aid on map generation**. The map will be generated following this very principle.
 
 #### Method overview
-Rectangle-made **figures** will be used to build a layout so that we can use the connected edges of those pieces to build the path. Later, this will be rendered into a tile map for its direct use in the game.
+**Rectangle-made shapes** will be used to build a layout so that we can use the connected edges of those shapes to build the path. Later, this will be rendered into a tile map for its direct use in the game.
 
-A **figure** model will be represented as a 2D matrix of integers. The generation will be supplied with a list of models in order to place them randomly in a blank layout. This way, we are shaping different distributions of the same pieces. Relating this to game progress, a different set of figures can be used in each floor of the spaceship.
+A **figure** model will be represented as a 2D matrix of integers. The generation will be supplied with a list of models in order to place them randomly in a blank layout. This way, we are shaping different distributions of the same shapes. Relating this to game progress, a different set of figures can be used in each floor of the spaceship.
 
 A resume of the needed steps (prone to changes):
 
@@ -70,7 +70,7 @@ A resume of the needed steps (prone to changes):
 
 ### 2.1. Generate layout
 
-Having a list with the figures we want, we can place them using different strategies. The one I will come up with by now is fairly simple: pick a random piece and place it to the left, as in tetris but pieces going left instead of down.
+Having a list with the figures we want, we can place them using different strategies. The one I will come up with by now is fairly simple: pick a random shape and place it to the left, as in tetris but shapes going left instead of down.
 
 ### 2.2. Extract path
 
