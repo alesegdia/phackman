@@ -20,6 +20,9 @@ void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, int brush );
 /**
  * @brief Generates a matrix representing a set of connected polygons made of 1x1 rectangles.
  * The returned matrix has a unique identifier for each polygonal piece.
+ *
+ * Connectivity is not guaranteed, so it is needed to adapt the number of shapes
+ * to the layout size.
  */
 class LayoutBuilder
 {
