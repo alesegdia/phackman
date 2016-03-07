@@ -11,13 +11,13 @@ LayoutBuilder::LayoutBuilder(Config cfg)
 
 }
 
-Matrix2Di::SharedPtr LayoutBuilder::generate(int num_pieces)
+Matrix2Di::SharedPtr LayoutBuilder::generate(std::vector<Matrix2Di::SharedPtr> shapes)
 {
 	m_layoutMatrix.reset(new Matrix2Di( 10, 18, 0 ));
 
 	for( int i = 1; i <= num_pieces; i++ )
 	{
-		step( i );
+		int col = rng() % m_layoutMatrix->rows();
 	}
 
 	return m_layoutMatrix;

@@ -34,7 +34,7 @@ public:
 
 	LayoutBuilder( Config cfg = {} );
 
-	Matrix2Di::SharedPtr generate( int num_pieces );
+	Matrix2Di::SharedPtr generate(std::vector<Matrix2D::SharedPtr> shapes );
 
 private:
 
