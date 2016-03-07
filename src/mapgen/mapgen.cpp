@@ -1,6 +1,7 @@
 
 #include <ctime>
 #include <vector>
+#include <cassert>
 #include "mapgen.h"
 
 #include "../core/geometry.h"
@@ -13,12 +14,28 @@ LayoutBuilder::LayoutBuilder(Config cfg)
 
 Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::SharedPtr> &shapes)
 {
-	m_layoutMatrix.reset(new Matrix2Di( 5, 9, 0 ));
+	m_layoutMatrix.reset(new Matrix2Di( 9, 9, 0 ));
 
-	for( auto shape : shapes )
+	int shape_index = 1;
+	for( Matrix2Di::SharedPtr shape : shapes )
 	{
-		int col = rng() % m_layoutMatrix->rows();
+		int row = rng() % (m_layoutMatrix->rows() - shape->rows());
+		int final_col = m_layoutMatrix->cols() - shape->cols();
+		int selected_col = -1;
 
+		for( int col = 0; col < final_col; col++ )
+		{
+
+			if( !collide(*m_layoutMatrix, *shape, col, row) )
+			{
+				selected_col = col;
+				break;
+			}
+		}
+
+		assert(selected_col != -1);
+		plot(*shape, *m_layoutMatrix, selected_col, row, shape_index);
+		shape_index++;
 	}
 
 	return m_layoutMatrix;
