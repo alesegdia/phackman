@@ -63,17 +63,15 @@ A **figure** model will be represented as a 2D matrix of integers. The generatio
 
 A resume of the needed steps (prone to changes):
 
-* **Generate** a number of *connected figures*.
-* **Trace** the path given the resulting layout using figure edges. This step could be split later for simplicity.
-* **Mirror** the path horizontally.
+* **Generate** a layout from a list of *connected shapes*.
+* **Mirror** the resulting layout horizontally.
+* **Trace** the path given the layout using shape edges. This step could be split later for simplicity.
 * **Render** the path to a tile map and use in the game!
 
-### 2.1. Generate layout
+#### Generate layout
 
 Having a list with the figures we want, we can place them using different strategies. The one I will come up with by now is fairly simple: pick a random shape and place it to the left, as in tetris but shapes going left instead of down.
 
-### 2.2. Extract path
+#### Extract path
 
-### 2.3. Mirror path
-
-### 2.4. Render path to tile map
+To extract the path, I will first scale the previously generated map by 3. Then, I will shrink all the pieces by exactly one tile, so that a path of 2x2 blocks is extracted.
