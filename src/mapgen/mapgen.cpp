@@ -23,32 +23,22 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(int num_pieces)
 	return m_layoutMatrix;
 }
 
-/**
- * @brief searches the first column with a zero number
- * @param mat the matrix
- * @return the column number, -1 if there is no zero in the whole matrix
- */
-int first_with_zero_column(const Matrix2Di& mat)
+void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, int brush )
 {
-	int col = -1;
-	for( int i = 0; i < mat.cols(); i++ )
+	for( int y = 0; y < src.rows(); y++ )
 	{
-		bool zero_present = false;
-		for( int j = 0; j < mat.rows(); j++ )
+		int ry = oy + y;
+		for( int x = 0; x < src.cols(); x++ )
 		{
-			if( mat.get(i, j) == 0 )
+			int rx = ox + x;
+			if( src.get(x, y) != 0		&&
+				rx < target.cols() &&
+				ry < target.rows() )
 			{
-				zero_present = true;
-				break;
+				target.set(rx, ry, brush);
 			}
 		}
-		if( zero_present )
-		{
-			col = i;
-			break;
-		}
 	}
-	return col;
 }
 
 /**

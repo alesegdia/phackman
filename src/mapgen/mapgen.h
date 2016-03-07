@@ -6,6 +6,17 @@
 #include "../core/matrix.h"
 
 /**
+ * @brief copies one matrix into another matrix using an offset for the destination
+ * and replacing old non-zero values with another passed as parameter.
+ * @param src source matrix
+ * @param target destination matrix
+ * @param ox offset x coordinate
+ * @param oy offset y coordinate
+ * @param brush identifier to fill non-zero cells
+ */
+void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, int brush );
+
+/**
  * @brief Generates a matrix representing a set of connected polygons made of 1x1 rectangles.
  * The returned matrix has a unique identifier for each polygonal piece.
  */
