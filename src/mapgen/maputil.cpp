@@ -266,6 +266,25 @@ int shrink_pieces_convolutor(int d00, int d10, int d20, int d01, int d11, int d2
 
 	return ret;
 }
+
+
+Matrix2Di::SharedPtr tint(const Matrix2Di &matrix, int brush)
+{
+	Matrix2Di::SharedPtr output(new Matrix2Di(matrix));
+	for( int r = 0; r < matrix.rows(); r++ )
+	{
+		for( int c = 0; c < matrix.cols(); c++ )
+		{
+			if( matrix.get(c, r) != 0 )
+			{
+				output->set(c, r, brush);
+			}
+		}
+	}
+	return output;
+}
+
+
 Convolutor4x4::~Convolutor4x4()
 {
 
