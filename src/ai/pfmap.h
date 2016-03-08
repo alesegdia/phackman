@@ -26,18 +26,24 @@ private:
 	int m_x, m_y;
 };
 
-/**
- * @brief Encapsulates the functionality needed to collect all present path
- * nodes from a generated map with 0 as air tiles and 1 as wall tiles.
- */
-class PathNodeCollector
+class NavigationMap
 {
+public:
+	NavigationMap( Matrix2Di::SharedPtr input );
+
 private:
+	/**
+	 * @brief Encapsulates the functionality needed to collect all present path
+	 * nodes from a generated map with 0 as air tiles and 1 as wall tiles.
+	 */
 	class ConvolutorCollector : public Convolutor4x4
 	{
 	public:
 
 		std::vector<PathNode::SharedPtr> nodes;
+		Matrix2D<PathNode::SharedPtr>::SharedPtr navigationMap;
+
+		ConvolutorCollector( int w, int h );
 
 		int operator ()(
 				int d00, int d10, int d20, int d30,
@@ -46,6 +52,6 @@ private:
 				int d03, int d13, int d23, int d33, int x, int y);
 	};
 
-public:
-	std::vector<PathNode::SharedPtr> collect( Matrix2Di::SharedPtr input );
+	ConvolutorCollector m_collector;
+
 };

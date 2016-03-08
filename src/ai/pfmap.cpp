@@ -16,8 +16,19 @@ float PathNode::y()
 	return m_y;
 }
 
+NavigationMap::NavigationMap(Matrix2Di::SharedPtr input)
+	: m_collector(input->cols(), input->rows())
+{
+	// extract navigation data
+	convolute4x4(*input, &m_collector);
+}
 
-int PathNodeCollector::ConvolutorCollector::operator ()(int d00, int d10, int d20, int d30, int d01, int d11, int d21, int d31, int d02, int d12, int d22, int d32, int d03, int d13, int d23, int d33, int x, int y)
+NavigationMap::ConvolutorCollector::ConvolutorCollector(int w, int h)
+{
+	navigationMap.reset(new Matrix2D<PathNode::SharedPtr>(w, h, nullptr));
+}
+
+int NavigationMap::ConvolutorCollector::operator ()(int d00, int d10, int d20, int d30, int d01, int d11, int d21, int d31, int d02, int d12, int d22, int d32, int d03, int d13, int d23, int d33, int x, int y)
 {
 	int ret = 0;
 	if( d11 == 0 && d12 == 0 && d21 == 0 && d22 == 0 )
@@ -34,18 +45,11 @@ int PathNodeCollector::ConvolutorCollector::operator ()(int d00, int d10, int d2
 		{
 			PathNode::SharedPtr node(new PathNode(x, y, upfree, downfree, leftfree, rightfree));
 			nodes.push_back(node);
+			navigationMap->set(x, y, node);
 			ret = 1;
 		}
 	}
 	return ret;
-}
-
-
-std::vector<PathNode::SharedPtr> PathNodeCollector::collect(Matrix2Di::SharedPtr input)
-{
-	ConvolutorCollector cc;
-	convolute4x4(*input, &cc);
-	return cc.nodes;
 }
 
 
