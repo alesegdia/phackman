@@ -1,6 +1,7 @@
 #pragma once
 
 #include <limits>
+#include <functional>
 
 #include "../core/matrix.h"
 
@@ -81,3 +82,29 @@ Matrix2Di::SharedPtr flip( const Matrix2Di& input, bool horizontal = true );
  * @return the concatenated matrix
  */
 Matrix2Di::SharedPtr concat_horizontal( const Matrix2Di& A, const Matrix2Di& B );
+
+
+/**
+ * @brief represents a function of convolution with a 3x3 window
+ */
+typedef std::function<int (int, int, int, int, int, int, int, int, int)> convolutor;
+
+/**
+ * @brief convolutes a matrix with a 3x3 window
+ * @param matrix the matrix to convolute
+ * @param c the convolutor to use
+ * @return
+ */
+Matrix2Di::SharedPtr convolute3x3( const Matrix2Di& matrix, convolutor conv );
+
+/**
+ * @brief fills all the zeros with 1 leaving a border of 1 between the one-filled area
+ * and the already placed non-zero cells
+ */
+int fill_zero_border_convolutor	( int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22 );
+
+/**
+ * @brief shrinks all the non-one pieces by 1 tile
+ */
+int shrink_pieces_convolutor	( int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22 );
+

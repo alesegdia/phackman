@@ -194,3 +194,54 @@ Matrix2Di::SharedPtr concat_horizontal(const Matrix2Di &A, const Matrix2Di &B)
 	plot(B, *output, A.cols(), 0, false);
 	return output;
 }
+
+
+Matrix2Di::SharedPtr convolute3x3(const Matrix2Di &matrix, convolutor conv)
+{
+	Matrix2Di::SharedPtr output(new Matrix2Di(matrix));
+
+	for( int r = 0; r < matrix.rows() - 2; r++ )
+	{
+		for( int c = 0; c < matrix.cols() - 2; c++ )
+		{
+			output->set(c+1, r+1, conv(
+						   matrix.get(c, r),   matrix.get(c+1, r),   matrix.get(c+2, r),
+						   matrix.get(c, r+1), matrix.get(c+1, r+1), matrix.get(c+2, r+1),
+						   matrix.get(c, r+2), matrix.get(c+1, r+2), matrix.get(c+2, r+2)));
+		}
+	}
+
+	return output;
+}
+
+
+int fill_zero_border_convolutor(int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22)
+{
+	int ret = d11;
+	if( 0 == d00 && 0 == d10 && 0 == d20 &&
+		0 == d01 && 0 == d11 && 0 == d21 &&
+		0 == d02 && 0 == d12 && 0 == d22)
+	{
+		ret = 1;
+	}
+	return ret;
+}
+
+int shrink_pieces_convolutor(int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22)
+{
+	int ret = d11;
+
+	bool all_non_one = (d00 != 1 && d01 != 1 && d02 != 1 &&
+						d10 != 1 && d11 != 1 && d12 != 1 &&
+						d20 != 1 && d21 != 1 && d22 != 1 );
+	bool all_non_d11 = (d00 != d11 || d01 != d11 || d02 != d11 ||
+						d10 != d11 ||				d12 != d11 ||
+						d20 != d11 || d21 != d11 || d22 != d11 );
+
+	if( all_non_one && all_non_d11 )
+	{
+		ret = 0;
+	}
+
+	return ret;
+}
