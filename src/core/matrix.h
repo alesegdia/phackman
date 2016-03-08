@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <iomanip>
 
 template <typename T>
 class Matrix2D
@@ -98,6 +99,7 @@ public:
 		{
 			for( int x = 0; x < matrix.cols(); x++ )
 			{
+				std::cout << std::setw(3);
 				std::cout << matrix.get(x, y) << " ";
 			}
 			std::cout << std::endl;
