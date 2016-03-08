@@ -58,6 +58,8 @@ private:
 public:
 	NavigationMap( Matrix2Di::SharedPtr input );
 
+	const std::vector<PathNode::SharedPtr>& nodes();
+
 private:
 	ConvolutorCollector m_collector;
 	Matrix2Di::SharedPtr m_map;
