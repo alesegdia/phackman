@@ -44,8 +44,7 @@ int PathNodeCollector::ConvolutorCollector::operator ()(int d00, int d10, int d2
 std::vector<PathNode::SharedPtr> PathNodeCollector::collect(Matrix2Di::SharedPtr input)
 {
 	ConvolutorCollector cc;
-	Matrix2Di::SharedPtr ptr = convolute4x4(*input, &cc);
-	Matrix2DDebug<int>() << *ptr;
+	convolute4x4(*input, &cc);
 	return cc.nodes;
 }
 
