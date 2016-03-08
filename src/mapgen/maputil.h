@@ -9,9 +9,8 @@
  * @param target destination matrix
  * @param ox offset x coordinate
  * @param oy offset y coordinate
- * @param brush identifier to fill non-zero cells
  */
-void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, int brush );
+void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy );
 
 
 /**
