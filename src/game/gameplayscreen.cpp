@@ -23,8 +23,7 @@ void GameplayScreen::wake()
 	std::shared_ptr<Matrix2Di> map = LayoutBuilder().generate(ShapeStorage().makeSample());
 	Matrix2DDebug<int>() << *map;
 
-	std::vector<PathNode::SharedPtr> nodes = PathNodeCollector().collect(map);
-	printf("\n%d\n", nodes.size());
+	NavigationMap navmap(map);
 }
 
 void GameplayScreen::update(double delta)
