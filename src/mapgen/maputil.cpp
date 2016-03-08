@@ -180,3 +180,13 @@ Matrix2Di::SharedPtr flip(const Matrix2Di &input, bool horizontal)
 
 	return output;
 }
+
+
+Matrix2Di::SharedPtr concat_horizontal(const Matrix2Di &A, const Matrix2Di &B)
+{
+	assert( A.rows() == B.rows() );
+	Matrix2Di::SharedPtr output( new Matrix2Di(A.cols() + B.cols(), A.rows() ));
+	plot(A, *output, 0, 0, false);
+	plot(B, *output, A.cols(), 0, false);
+	return output;
+}

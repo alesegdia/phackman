@@ -72,3 +72,12 @@ Matrix2Di::SharedPtr add_integer( const Matrix2Di& input, int n, bool nonzero = 
  * @return the input matrix flipped
  */
 Matrix2Di::SharedPtr flip( const Matrix2Di& input, bool horizontal = true );
+
+
+/**
+ * @brief concatenates two matrices horizontally; both matrices must have the same number of rows
+ * @param A a matrix
+ * @param B a matrix
+ * @return the concatenated matrix
+ */
+Matrix2Di::SharedPtr concat_horizontal( const Matrix2Di& A, const Matrix2Di& B );
