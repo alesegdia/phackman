@@ -17,7 +17,7 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 {
 	m_layoutMatrix.reset(new Matrix2Di( 7, 9, 0 ));
 
-	int shape_index = 1;
+	int shape_index = 2;
 	for( Matrix2Di::SharedPtr shape : shapes )
 	{
 		int selected_col = -1;
