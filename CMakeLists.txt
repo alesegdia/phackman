@@ -17,5 +17,6 @@ elseif(UNIX)
 	add_executable(phakman ${CPPs} ${HPPs} src/main.cpp)
 	target_link_libraries(phakman allegro)
 	target_link_libraries(phakman allegro_image)
+	target_link_libraries(phakman allegro_primitives)
 endif()
 
