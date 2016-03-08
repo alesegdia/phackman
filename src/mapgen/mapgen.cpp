@@ -20,16 +20,21 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 	int shape_index = 1;
 	for( Matrix2Di::SharedPtr shape : shapes )
 	{
-		int row = rng() % (m_layoutMatrix->rows() - shape->rows());
-		int final_col = m_layoutMatrix->cols() - shape->cols();
 		int selected_col = -1;
+		int row;
 
-		for( int col = 0; col < final_col; col++ )
+		while( selected_col == -1 )
 		{
-			if( !collide(*m_layoutMatrix, *shape, col, row) )
+			row = rng() % (m_layoutMatrix->rows() - shape->rows());
+			int final_col = m_layoutMatrix->cols() - shape->cols();
+
+			for( int col = 0; col < final_col; col++ )
 			{
-				selected_col = col;
-				break;
+				if( !collide(*m_layoutMatrix, *shape, col, row) )
+				{
+					selected_col = col;
+					break;
+				}
 			}
 		}
 
