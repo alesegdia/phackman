@@ -86,7 +86,7 @@ std::vector<std::shared_ptr<Matrix2Di> > ShapeStorage::makeSample()
 }
 
 
-Matrix2D::SharedPtr PathTracer::generate(const Matrix2Di &input_matrix)
+Matrix2Di::SharedPtr PathTracer::generate(const Matrix2Di &input_matrix)
 {
 	Matrix2Di::SharedPtr scaled = scale(input_matrix, 3);
 
