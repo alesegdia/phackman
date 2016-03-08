@@ -29,6 +29,8 @@ We can think of the map like a node graph where nodes are placed at maze positio
 # # # # # # # #
 ```
 
+The walkable path will be 2 tiles width, instead of 1 like in Pac-Man. The walls of the map can have a minimum of 1 tile width.
+
 ### 1.4. Input
 Straight and simple: **arrows** for **movement** and **space** to **shoot** with Lock&Stock. The player always advance if its facing allows it. This is, the player cannot be stopped in the middle of a path. The player can always turn 180 degrees and interrupt the movement from one node to other.
 
