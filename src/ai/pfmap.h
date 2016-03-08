@@ -14,23 +14,26 @@ class PathNode
 {
 public:
 
+	friend class NavigationMap;
+
 	typedef std::shared_ptr<PathNode> SharedPtr;
 
-	PathNode( int x, int y, bool up, bool down, bool left, bool right );
-	float x();
-	float y();
+	PathNode( int x, int y );
+	int x();
+	int y();
+	const std::vector<PathNode::SharedPtr>& neighboors();
 
 private:
 
-	bool m_up, m_down, m_left, m_right;
+	void addNieghboor( PathNode::SharedPtr n );
+
 	int m_x, m_y;
+	std::vector<PathNode::SharedPtr> m_neighboors;
+
 };
 
 class NavigationMap
 {
-public:
-	NavigationMap( Matrix2Di::SharedPtr input );
-
 private:
 	/**
 	 * @brief Encapsulates the functionality needed to collect all present path
@@ -52,6 +55,14 @@ private:
 				int d03, int d13, int d23, int d33, int x, int y);
 	};
 
+public:
+	NavigationMap( Matrix2Di::SharedPtr input );
+
+private:
 	ConvolutorCollector m_collector;
+	Matrix2Di::SharedPtr m_map;
+
+	void connectNodes();
+	void searchNeighboor( PathNode::SharedPtr node, int direction );
 
 };
