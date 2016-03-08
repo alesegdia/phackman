@@ -46,6 +46,10 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 	Matrix2Di::SharedPtr output = flip(*m_layoutMatrix);
 	output = add_integer(*output, shape_index-1);
 	output = concat_horizontal(*output, *m_layoutMatrix);
+	output = scale(*output, 3);
+	output = add_border(*output, 4);
+	output = convolute3x3(*output, fill_zero_border_convolutor);
+	output = convolute3x3(*output, shrink_pieces_convolutor);
 
 	return output;
 }
