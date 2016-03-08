@@ -40,3 +40,11 @@ bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy
  * @return the scaled matrix
  */
 Matrix2Di::SharedPtr scale( const Matrix2Di& input, int factor );
+
+/**
+ * @brief adds a border of 0 to a matrix
+ * @param input the matrix to add the border to
+ * @param border_size the size of the border
+ * @return the matrix with the border added
+ */
+Matrix2Di::SharedPtr add_border( const Matrix2Di& input, int border_size );
