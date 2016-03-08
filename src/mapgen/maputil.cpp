@@ -97,3 +97,28 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
 	}
 	return matrix_out;
 }
+
+
+Matrix2Di::SharedPtr scale(const Matrix2Di &input, int factor)
+{
+	Matrix2Di::SharedPtr output;
+	output.reset(new Matrix2Di(input.cols() * factor, input.rows() * factor));
+
+	for( int row_in = 0; row_in < input.rows(); row_in++ )
+	{
+		for( int col_in = 0; col_in < input.cols(); col_in++ )
+		{
+			int value = input.get(col_in, row_in);
+			for( int row_out = row_in * factor; row_out < (row_in + 1) * factor; row_out++ )
+			{
+				for( int col_out = col_in * factor; col_out < (col_in + 1) * factor; col_out++ )
+				{
+					printf("%d, %d, (%d) | ", row_in, col_in, value);
+					output->set(col_out, row_out, value);
+				}
+			}
+		}
+	}
+
+	return output;
+}

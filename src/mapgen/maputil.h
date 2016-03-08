@@ -33,3 +33,10 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle );
  */
 bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy );
 
+/**
+ * @brief scales a matrix
+ * @param input the matrix to scale
+ * @param factor the factor to use on matrix scaling
+ * @return the scaled matrix
+ */
+Matrix2Di::SharedPtr scale( const Matrix2Di& input, int factor );
