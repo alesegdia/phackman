@@ -59,7 +59,7 @@ After doing a little of research, I found a really interesting [pacman-like maze
 #### Method overview
 **Rectangle-made shapes** will be used to build a layout so that we can use the connected edges of those shapes to build the path. Later, this will be rendered into a tile map for its direct use in the game.
 
-A **figure** model will be represented as a 2D matrix of integers. The generation will be supplied with a list of models in order to place them randomly in a blank layout. This way, we are shaping different distributions of the same shapes. Relating this to game progress, a different set of figures can be used in each floor of the spaceship.
+A **shape** model will be represented as a 2D matrix of integers. The generation will be supplied with a list of models in order to place them randomly in a blank layout. This way, we are shaping different distributions of the same shapes. Relating this to game progress, a different set of shapes can be used in each floor of the spaceship.
 
 A resume of the needed steps (prone to changes):
 
