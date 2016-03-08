@@ -6,6 +6,7 @@
 #include "assets.h"
 #include "../core/matrix.h"
 #include "../mapgen/mapgen.h"
+#include "../ai/pfmap.h"
 
 GameplayScreen::GameplayScreen( Game* g )
 {
@@ -21,6 +22,9 @@ void GameplayScreen::wake()
 {
 	std::shared_ptr<Matrix2Di> map = LayoutBuilder().generate(ShapeStorage().makeSample());
 	Matrix2DDebug<int>() << *map;
+
+	std::vector<PathNode::SharedPtr> nodes = PathNodeCollector().collect(map);
+	printf("\n%d\n", nodes.size());
 }
 
 void GameplayScreen::update(double delta)
