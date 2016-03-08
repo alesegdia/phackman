@@ -15,7 +15,7 @@ LayoutBuilder::LayoutBuilder(Config cfg)
 
 Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::SharedPtr> &shapes)
 {
-	m_layoutMatrix.reset(new Matrix2Di( 9, 9, 0 ));
+	m_layoutMatrix.reset(new Matrix2Di( 7, 9, 0 ));
 
 	int shape_index = 1;
 	for( Matrix2Di::SharedPtr shape : shapes )
