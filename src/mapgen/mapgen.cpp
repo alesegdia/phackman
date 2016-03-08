@@ -34,7 +34,7 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 		}
 
 		assert(selected_col != -1);
-		plot(*shape, *m_layoutMatrix, selected_col, row);
+		plot(*shape, *m_layoutMatrix, selected_col, row, true, shape_index);
 		shape_index++;
 	}
 

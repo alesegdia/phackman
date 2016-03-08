@@ -1,5 +1,7 @@
 #pragma once
 
+#include <limits>
+
 #include "../core/matrix.h"
 
 /**
@@ -9,8 +11,10 @@
  * @param target destination matrix
  * @param ox offset x coordinate
  * @param oy offset y coordinate
+ * @param nonzero set to true if only want to plot nonzero cells
+ * @param brush the number to replace, std::numeric_limits<int>::min() for exact copy
  */
-void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy );
+void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, bool nonzero = true, int brush = std::numeric_limits<int>::min() );
 
 
 /**

@@ -1,6 +1,6 @@
 #include "maputil.h"
 
-void plot(const Matrix2Di& src, Matrix2Di& target, int ox, int oy)
+void plot(const Matrix2Di& src, Matrix2Di& target, int ox, int oy, bool nonzero, int brush)
 {
 	for( int y = 0; y < src.rows(); y++ )
 	{
@@ -8,11 +8,18 @@ void plot(const Matrix2Di& src, Matrix2Di& target, int ox, int oy)
 		for( int x = 0; x < src.cols(); x++ )
 		{
 			int rx = ox + x;
-			if( src.get(x, y) != 0		&&
+			if( ((nonzero && src.get(x, y) != 0) || !nonzero) &&
 				rx < target.cols() &&
 				ry < target.rows() )
 			{
-				target.set(rx, ry, src.get(x, y));
+				if( brush == std::numeric_limits<int>::min() )
+				{
+					target.set(rx, ry, src.get(x, y));
+				}
+				else
+				{
+					target.set(rx, ry, brush);
+				}
 			}
 		}
 	}
