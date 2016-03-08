@@ -26,7 +26,6 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 
 		for( int col = 0; col < final_col; col++ )
 		{
-
 			if( !collide(*m_layoutMatrix, *shape, col, row) )
 			{
 				selected_col = col;
@@ -84,4 +83,10 @@ std::vector<std::shared_ptr<Matrix2Di> > ShapeStorage::makeSample()
 	shapes.push_back(m_T);
 	shapes.push_back(m_T);
 	return shapes;
+}
+
+
+Matrix2Di PathTracer::generate(const Matrix2Di &input_matrix)
+{
+	Matrix2Di::SharedPtr scaled = scale(*m_layoutMatrix, 3);
 }

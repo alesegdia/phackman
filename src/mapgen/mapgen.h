@@ -77,6 +77,6 @@ public:
 	 */
 	Matrix2Di generate( const Matrix2Di& input_matrix )
 	{
-
+		Matrix2Di::SharedPtr scaled = scale(*m_layoutMatrix, 3);
 	}
 };
