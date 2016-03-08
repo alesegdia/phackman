@@ -36,6 +36,7 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle );
  */
 bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy );
 
+
 /**
  * @brief scales a matrix
  * @param input the matrix to scale
@@ -44,6 +45,7 @@ bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy
  */
 Matrix2Di::SharedPtr scale( const Matrix2Di& input, int factor );
 
+
 /**
  * @brief adds a border of 0 to a matrix
  * @param input the matrix to add the border to
@@ -51,3 +53,13 @@ Matrix2Di::SharedPtr scale( const Matrix2Di& input, int factor );
  * @return the matrix with the border added
  */
 Matrix2Di::SharedPtr add_border( const Matrix2Di& input, int border_size );
+
+
+/**
+ * @brief adds an integer to every nonzero cell
+ * @param input matrix
+ * @param n integer to add
+ * @param nonzero true if only act on nonzero cells
+ * @return the processed matrix
+ */
+Matrix2Di::SharedPtr add_integer( const Matrix2Di& input, int n, bool nonzero = true );

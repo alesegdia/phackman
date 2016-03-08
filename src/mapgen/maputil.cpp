@@ -136,3 +136,22 @@ Matrix2Di::SharedPtr add_border( const Matrix2Di& input, int border_size )
 	plot(input, *output, border_size, border_size);
 	return output;
 }
+
+
+Matrix2Di::SharedPtr add_integer(const Matrix2Di &input, int n, bool nonzero)
+{
+	Matrix2Di::SharedPtr output(new Matrix2Di(input));
+
+	for( int i = 0; i < input.cols(); i++ )
+	{
+		for( int j = 0; j < input.rows(); j++ )
+		{
+			if( input.get(i, j) != 0 || !nonzero )
+			{
+				output->set(i, j, input.get(i, j) + n);
+			}
+		}
+	}
+}
+
+
