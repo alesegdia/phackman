@@ -1,6 +1,6 @@
 #include "maputil.h"
 
-void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, int brush )
+void plot(const Matrix2Di& src, Matrix2Di& target, int ox, int oy)
 {
 	for( int y = 0; y < src.rows(); y++ )
 	{
@@ -12,7 +12,7 @@ void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, int brush )
 				rx < target.cols() &&
 				ry < target.rows() )
 			{
-				target.set(rx, ry, brush);
+				target.set(rx, ry, src.get(x, y));
 			}
 		}
 	}
