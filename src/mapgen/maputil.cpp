@@ -121,3 +121,11 @@ Matrix2Di::SharedPtr scale(const Matrix2Di &input, int factor)
 
 	return output;
 }
+
+Matrix2Di::SharedPtr add_border( const Matrix2Di& input, int border_size )
+{
+	Matrix2Di::SharedPtr output;
+	output.reset(new Matrix2Di(input.cols() + border_size * 2, input.rows() + border_size * 2, 0));
+	plot(input, *output, border_size, border_size);
+	return output;
+}
