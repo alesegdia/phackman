@@ -21,7 +21,6 @@ void GameplayScreen::wake()
 {
 	std::shared_ptr<Matrix2Di> map = LayoutBuilder().generate(ShapeStorage().makeSample());
 	Matrix2DDebug<int>() << *map;
-	PathTracer().generate(*map);
 }
 
 void GameplayScreen::update(double delta)

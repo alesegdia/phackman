@@ -64,16 +64,3 @@ private:
 
 };
 
-/**
- * @brief Traces a path using sides of previously generated connected polygonal pieces.
- * The output matrix can be scaled for simplicity at incoming needs.
- */
-class PathTracer
-{
-public:
-
-	/**
-	 * @param res_scale resolution of the scale applied (1 is no scale)
-	 */
-	Matrix2Di::SharedPtr generate( const Matrix2Di& input_matrix );
-};
