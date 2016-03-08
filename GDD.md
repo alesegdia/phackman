@@ -70,7 +70,7 @@ A resume of the needed steps (prone to changes):
 
 #### Generate layout
 
-Having a list with the figures we want, we can place them using different strategies. The one I will come up with by now is fairly simple: pick a random shape and place it to the left, as in tetris but shapes going left instead of down. The row will be selected randomly.
+Having a list with the wanted shapes, those can be placed in a blank canvas using different strategies. The one I will use is fairly simple: pick a random shape and place it to the left, as in tetris but shapes going left instead of down. The row will be selected randomly.
 
 Currently, if no more pieces fit the blank canvas, an error is thrown and the app is stopped, but we could resolve this by making the map wider and/or trying to use other random row.
 
