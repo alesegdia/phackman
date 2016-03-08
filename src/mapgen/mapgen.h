@@ -13,6 +13,8 @@
  *
  * Connectivity is not guaranteed, so it is needed to adapt the number of shapes
  * to the layout size.
+ *
+ * Then, traces a path using sides of previously generated connected polygonal pieces.
  */
 class LayoutBuilder
 {
