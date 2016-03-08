@@ -50,6 +50,7 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 	output = add_border(*output, 4);
 	output = convolute3x3(*output, fill_zero_border_convolutor);
 	output = convolute3x3(*output, shrink_pieces_convolutor);
+	output = tint(*output, 1);
 
 	return output;
 }
