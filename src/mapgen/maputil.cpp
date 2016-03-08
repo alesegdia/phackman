@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "maputil.h"
 
 void plot(const Matrix2Di& src, Matrix2Di& target, int ox, int oy, bool nonzero, int brush)
@@ -152,6 +154,8 @@ Matrix2Di::SharedPtr add_integer(const Matrix2Di &input, int n, bool nonzero)
 			}
 		}
 	}
+
+	return output;
 }
 
 
