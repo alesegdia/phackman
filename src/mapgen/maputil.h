@@ -87,7 +87,21 @@ Matrix2Di::SharedPtr concat_horizontal( const Matrix2Di& A, const Matrix2Di& B )
 /**
  * @brief represents a function of convolution with a 3x3 window
  */
-typedef std::function<int (int, int, int, int, int, int, int, int, int)> convolutor;
+typedef std::function<int (int, int, int, int, int, int, int, int, int)> convolutor3x3;
+
+/**
+ * @brief represents a function of convolution with a 4x4 window
+ */
+class Convolutor4x4
+{
+public:
+	virtual ~Convolutor4x4() = 0 ;
+
+	virtual int operator()(int d00, int d10, int d20, int d30,
+					int d01, int d11, int d21, int d31,
+					int d02, int d12, int d22, int d32,
+					int d03, int d13, int d23, int d33, int x, int y) = 0 ;
+};
 
 /**
  * @brief convolutes a matrix with a 3x3 window
@@ -95,7 +109,9 @@ typedef std::function<int (int, int, int, int, int, int, int, int, int)> convolu
  * @param c the convolutor to use
  * @return
  */
-Matrix2Di::SharedPtr convolute3x3( const Matrix2Di& matrix, convolutor conv );
+Matrix2Di::SharedPtr convolute3x3( const Matrix2Di& matrix, convolutor3x3 conv );
+
+Matrix2Di::SharedPtr convolute4x4(const Matrix2Di& matrix, Convolutor4x4 *conv );
 
 /**
  * @brief fills all the zeros with 1 leaving a border of 1 between the one-filled area

@@ -196,7 +196,7 @@ Matrix2Di::SharedPtr concat_horizontal(const Matrix2Di &A, const Matrix2Di &B)
 }
 
 
-Matrix2Di::SharedPtr convolute3x3(const Matrix2Di &matrix, convolutor conv)
+Matrix2Di::SharedPtr convolute3x3(const Matrix2Di &matrix, convolutor3x3 conv)
 {
 	Matrix2Di::SharedPtr output(new Matrix2Di(matrix));
 
@@ -208,6 +208,27 @@ Matrix2Di::SharedPtr convolute3x3(const Matrix2Di &matrix, convolutor conv)
 						   matrix.get(c, r),   matrix.get(c+1, r),   matrix.get(c+2, r),
 						   matrix.get(c, r+1), matrix.get(c+1, r+1), matrix.get(c+2, r+1),
 						   matrix.get(c, r+2), matrix.get(c+1, r+2), matrix.get(c+2, r+2)));
+		}
+	}
+
+	return output;
+}
+
+
+Matrix2Di::SharedPtr convolute4x4(const Matrix2Di &matrix, Convolutor4x4* conv)
+{
+	Matrix2Di::SharedPtr output(new Matrix2Di(matrix));
+
+	for( int r = 0; r < matrix.rows() - 3; r++ )
+	{
+		for( int c = 0; c < matrix.cols() - 3; c++ )
+		{
+			output->set(c+1, r+1, (*conv)(
+							matrix.get(c, r),   matrix.get(c+1, r),   matrix.get(c+2, r),	matrix.get(c+3, r),
+							matrix.get(c, r+1), matrix.get(c+1, r+1), matrix.get(c+2, r+1),	matrix.get(c+3, r+1),
+							matrix.get(c, r+2), matrix.get(c+1, r+2), matrix.get(c+2, r+2),	matrix.get(c+3, r+2),
+							matrix.get(c, r+3), matrix.get(c+1, r+3), matrix.get(c+2, r+3),	matrix.get(c+3, r+3),
+							c+1, r+1));
 		}
 	}
 
@@ -244,4 +265,8 @@ int shrink_pieces_convolutor(int d00, int d10, int d20, int d01, int d11, int d2
 	}
 
 	return ret;
+}
+Convolutor4x4::~Convolutor4x4()
+{
+
 }
