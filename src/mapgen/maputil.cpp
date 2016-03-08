@@ -113,7 +113,6 @@ Matrix2Di::SharedPtr scale(const Matrix2Di &input, int factor)
 			{
 				for( int col_out = col_in * factor; col_out < (col_in + 1) * factor; col_out++ )
 				{
-					printf("%d, %d, (%d) | ", row_in, col_in, value);
 					output->set(col_out, row_out, value);
 				}
 			}
