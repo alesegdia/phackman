@@ -155,3 +155,28 @@ Matrix2Di::SharedPtr add_integer(const Matrix2Di &input, int n, bool nonzero)
 }
 
 
+Matrix2Di::SharedPtr flip(const Matrix2Di &input, bool horizontal)
+{
+	Matrix2Di::SharedPtr output(new Matrix2Di(input.cols(), input.rows(), 0));
+
+	for( int i = 0; i < input.cols(); i++ )
+	{
+		for( int j = 0; j < input.rows(); j++ )
+		{
+			int out_col, out_row;
+			if( horizontal )
+			{
+				out_col = input.cols() - i - 1;
+				out_row = j;
+			}
+			else
+			{
+				out_col = i;
+				out_row = input.rows() - j - 1;
+			}
+			output->set(out_col, out_row, input.get(i, j));
+		}
+	}
+
+	return output;
+}

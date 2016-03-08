@@ -63,3 +63,12 @@ Matrix2Di::SharedPtr add_border( const Matrix2Di& input, int border_size );
  * @return the processed matrix
  */
 Matrix2Di::SharedPtr add_integer( const Matrix2Di& input, int n, bool nonzero = true );
+
+
+/**
+ * @brief flips a matrix, vertical or horizontally
+ * @param input the matrix to flip
+ * @param horizontal set to true if want a horizontal flip, false if want a vertical flip
+ * @return the input matrix flipped
+ */
+Matrix2Di::SharedPtr flip( const Matrix2Di& input, bool horizontal = true );
