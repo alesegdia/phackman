@@ -65,7 +65,7 @@ A resume of the needed steps (prone to changes):
 
 * **Generate** a layout from a list of *connected shapes*.
 * **Mirror** the resulting layout horizontally.
-* **Trace** the path given the layout using shape edges. This step could be split later for simplicity.
+* **Trace** the path given the layout using shape edges.
 * **Render** the path to a tile map and use in the game!
 
 #### Generate layout
