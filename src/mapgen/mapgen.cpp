@@ -38,7 +38,11 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 		shape_index++;
 	}
 
-	return m_layoutMatrix;
+	Matrix2Di::SharedPtr output = flip(*m_layoutMatrix);
+	output = add_integer(*output, shape_index-1);
+	output = concat_horizontal(*output, *m_layoutMatrix);
+
+	return output;
 }
 
 
