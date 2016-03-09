@@ -60,76 +60,27 @@ int AllegroApp::Init() {
 	al_start_timer(m_timer);
 
 	al_set_target_bitmap(al_get_backbuffer(m_display));
+
+	Input::instance->Initialize();
+
 	ready();
 
 	return 0;
 }
 
-void AllegroApp::handleEvent(ALLEGRO_EVENT& ev) {
+void AllegroApp::handleEvent(ALLEGRO_EVENT& ev)
+{
 	if(ev.type == ALLEGRO_EVENT_TIMER) {
-		handleKeyInput();
 		m_redraw = true;
 	}
 	else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 		m_doexit = true;
 	}
 	else if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-		switch(ev.keyboard.keycode) {
-			case ALLEGRO_KEY_UP:
-				key[KEY_UP] = true;
-				break;
-
-			case ALLEGRO_KEY_DOWN:
-				key[KEY_DOWN] = true;
-				break;
-
-			case ALLEGRO_KEY_LEFT: 
-				key[KEY_LEFT] = true;
-				break;
-
-			case ALLEGRO_KEY_RIGHT:
-				key[KEY_RIGHT] = true;
-				break;
-
-			case ALLEGRO_KEY_Q: 
-				key[KEY_SLEFT] = true;
-				break;
-
-			case ALLEGRO_KEY_E:
-				key[KEY_SRIGHT] = true;
-				break;
-		}
+		Input::instance->notifyKeyDown(ev.keyboard.keycode);
 	}
 	else if(ev.type == ALLEGRO_EVENT_KEY_UP) {
-		switch(ev.keyboard.keycode) {
-			case ALLEGRO_KEY_UP:
-				key[KEY_UP] = false;
-				break;
-
-			case ALLEGRO_KEY_DOWN:
-				key[KEY_DOWN] = false;
-				break;
-
-			case ALLEGRO_KEY_LEFT: 
-				key[KEY_LEFT] = false;
-				break;
-
-			case ALLEGRO_KEY_RIGHT:
-				key[KEY_RIGHT] = false;
-				break;
-
-			case ALLEGRO_KEY_ESCAPE:
-				m_doexit = true;
-				break;
-
-			case ALLEGRO_KEY_Q:
-				key[KEY_SLEFT] = false;
-				break;
-
-			case ALLEGRO_KEY_E:
-				key[KEY_SRIGHT] = false;
-				break;
-		}
+		Input::instance->notifyKeyUp(ev.keyboard.keycode);
 	}
 }
 

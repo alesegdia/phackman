@@ -1,5 +1,7 @@
 #include <allegro5/allegro.h>
 
+#include "input.h"
+
 class AllegroApp {
 public:
 	AllegroApp ( int screen_width, int screen_height );
@@ -14,22 +16,10 @@ private:
 
 protected:
 
-	enum Keys
-	{
-		KEY_UP = 0,
-		KEY_DOWN,
-		KEY_LEFT,
-		KEY_RIGHT,
-
-		KEY_SLEFT,
-		KEY_SRIGHT
-	};
-
 	void handleEvent(ALLEGRO_EVENT& ev);
 	virtual void draw() = 0 ;
 	virtual void update(double delta) = 0 ;
 	virtual void ready() = 0 ;
-	virtual void handleKeyInput() = 0 ;
 
 	int m_screenWidth, m_screenHeight;
 
@@ -42,7 +32,6 @@ protected:
 	bool m_redraw = true;
 	bool m_doexit = false;
 
-	bool key[6] = { false, false, false, false, false, false };
 
 };
 

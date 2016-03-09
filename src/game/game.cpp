@@ -21,27 +21,6 @@ void Game::ready()
 	m_currentScreen->wake();
 }
 
-void Game::handleKeyInput()
-{
-	if(key[KEY_UP]) {
-	}
-
-	if(key[KEY_DOWN] ) {
-	}
-
-	if(key[KEY_LEFT]) {
-	}
-
-	if(key[KEY_RIGHT] ) {
-	}
-
-	if(key[KEY_SLEFT]) {
-	}
-
-	if( key[KEY_SRIGHT] ) {
-	}
-}
-
 void Game::draw()
 {
 	m_currentScreen->render();

@@ -17,7 +17,6 @@ public:
 	virtual ~Game();
 
 	void ready();
-	void handleKeyInput();
 	void draw();
 	void update(double delta);
 
