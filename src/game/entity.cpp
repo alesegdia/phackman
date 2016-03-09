@@ -70,6 +70,8 @@ void Player::update(double delta)
 {
 	Entity::update(delta);
 
+	float speed = 60;
+
 	if( Input::IsKeyDown(ALLEGRO_KEY_LEFT) )
 	{
 		setFacing(Direction::LEFT);
@@ -85,5 +87,21 @@ void Player::update(double delta)
 	else if( Input::IsKeyDown(ALLEGRO_KEY_UP) )
 	{
 		setFacing(Direction::UP);
+	}
+
+	switch(m_facing)
+	{
+	case Direction::UP:
+		m_y -= delta * speed;
+		break;
+	case Direction::RIGHT:
+		m_x += delta * speed;
+		break;
+	case Direction::DOWN:
+		m_y += delta * speed;
+		break;
+	case Direction::LEFT:
+		m_x -= delta * speed;
+		break;
 	}
 }
