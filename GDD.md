@@ -78,4 +78,4 @@ Currently, if no more pieces fit the blank canvas, an error is thrown and the ap
 
 #### Extract path
 
-To extract the path, the matrix needs to be scaled x3. Then, scale the previously generated map by 3, so that we can thick the shapes by one tile and get our needed walkable path of 2 tiles wide. Finally, a border will be added and filled with walls, so that we can use the more external paths that are only 1 tile wide.
+To extract the path, the matrix needs to be scaled x3, so that we can thick the shapes by one tile and get our needed walkable path of 2 tiles wide. Finally, a border will be added and filled with walls, so that we can use the more external paths that are only 1 tile wide.
