@@ -3,6 +3,7 @@
 #include "../core/iscreen.h"
 #include "../core/animation.h"
 #include "../ai/pfmap.h"
+#include "entity.h"
 
 class Game;
 
@@ -18,7 +19,7 @@ public:
 
 private:
 	Game* m_game;
-	AnimationData ad;
+	Entity::SharedPtr m_player;
 	Matrix2Di::SharedPtr m_map;
 	std::shared_ptr<NavigationMap> m_navmap;
 

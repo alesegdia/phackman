@@ -23,19 +23,18 @@ void GameplayScreen::wake()
 {
 	m_map = LayoutBuilder().generate(ShapeStorage().makeSample());
 	m_navmap.reset(new NavigationMap(m_map));
+	m_player.reset(new Entity(20, 20, Assets::instance->characterAnim));
 }
 
 void GameplayScreen::update(double delta)
 {
-	ad.timer += ((float)delta);
+	m_player->update(delta);
 }
 
 void GameplayScreen::render()
 {
 	al_clear_to_color(al_map_rgb(20,20,20));
 	al_set_target_bitmap(al_get_backbuffer(m_game->display()));
-
-	Assets::instance->characterAnim->updateData(ad);
 
 	for( int r = 0; r < m_map->rows(); r++ )
 	{
@@ -66,6 +65,5 @@ void GameplayScreen::render()
 			al_draw_line(cx, cy, ncx, ncy, al_map_rgba(0, 255, 255, 2), 1);
 		}
 	}
-
-	al_draw_bitmap(ad.currentFrame, 0, 0, 0);
+	m_player->render();
 }
