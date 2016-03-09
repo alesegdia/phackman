@@ -4,15 +4,8 @@
 #include <memory>
 
 #include "../core/matrix.h"
+#include "../core/direction.h"
 #include "../map/maputil.h"
-
-enum Direction : int
-{
-	UP = 0,
-	RIGHT = 1,
-	DOWN = 2,
-	LEFT = 3
-};
 
 /**
  * @brief A node representing a possible change of direction in the path.
