@@ -14,6 +14,9 @@ struct AnimationData
 class Animation
 {
 public:
+
+	typedef std::shared_ptr<Animation> SharedPtr;
+
 	Animation(float frame_duration, int num_frames);
 
 	/**
