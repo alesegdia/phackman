@@ -19,6 +19,9 @@ public:
 	void ready();
 	void draw();
 	void update(double delta);
+	void dispose();
+
+	void close();
 
 	// all screens
 	std::shared_ptr<GameplayScreen> m_gameplayScreen;

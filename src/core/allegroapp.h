@@ -20,6 +20,7 @@ protected:
 	virtual void draw() = 0 ;
 	virtual void update(double delta) = 0 ;
 	virtual void ready() = 0 ;
+	virtual void dispose() = 0 ;
 
 	int m_screenWidth, m_screenHeight;
 

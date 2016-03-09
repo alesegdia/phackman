@@ -124,6 +124,9 @@ int AllegroApp::Exec() {
 		}
 	}
 
+	dispose();
+	Input::Dispose();
+
 }
 
 

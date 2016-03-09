@@ -30,3 +30,13 @@ void Game::update(double delta)
 {
 	m_currentScreen->update(delta);
 }
+
+void Game::dispose()
+{
+	Assets::Dispose();
+}
+
+void Game::close()
+{
+	m_doexit = true;
+}
