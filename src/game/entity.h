@@ -19,10 +19,9 @@ public:
 protected:
 	void setAnim( Animation::SharedPtr anim );
 	void setFacing( Direction dir );
-
-private:
 	float m_x = 0;
 	float m_y = 0;
+
 	std::shared_ptr<Animation> m_anim = nullptr;
 	AnimationData m_animData;
 	Direction m_facing = Direction::RIGHT;
