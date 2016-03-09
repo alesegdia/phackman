@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "../core/matrix.h"
-#include "../mapgen/maputil.h"
+#include "../map/maputil.h"
 
 /**
  * @brief A node representing a possible change of direction in the path.

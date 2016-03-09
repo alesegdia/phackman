@@ -6,7 +6,7 @@
 #include "game.h"
 #include "assets.h"
 #include "../core/matrix.h"
-#include "../mapgen/mapgen.h"
+#include "../map/mapgen.h"
 #include "../ai/pfmap.h"
 
 GameplayScreen::GameplayScreen( Game* g )
