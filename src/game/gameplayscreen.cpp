@@ -23,7 +23,9 @@ void GameplayScreen::wake()
 {
 	m_map = LayoutBuilder().generate(ShapeStorage().makeSample());
 	m_navmap.reset(new NavigationMap(m_map));
-	m_player.reset(new Entity(20, 20, Assets::instance->characterAnim));
+
+	auto start_node = m_navmap->nodes()[0];
+	m_player.reset(new Entity((start_node->x()) * 16, (start_node->y()) * 16, Assets::instance->characterAnim));
 }
 
 void GameplayScreen::update(double delta)
@@ -37,6 +39,7 @@ void GameplayScreen::render()
 	al_set_target_bitmap(al_get_backbuffer(m_game->display()));
 
 	debugRender();
+	m_player->render();
 }
 
 void GameplayScreen::debugRender()
