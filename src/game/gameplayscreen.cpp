@@ -31,6 +31,10 @@ void GameplayScreen::wake()
 void GameplayScreen::update(double delta)
 {
 	m_player->update(delta);
+	if( Input::IsKeyDown(ALLEGRO_KEY_ESCAPE) )
+	{
+		m_game->close();
+	}
 }
 
 void GameplayScreen::render()
