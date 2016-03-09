@@ -21,7 +21,7 @@ public:
 
 private:
 	Game* m_game;
-	Entity::SharedPtr m_player;
+	Player::SharedPtr m_player;
 	Matrix2Di::SharedPtr m_map;
 	std::shared_ptr<NavigationMap> m_navmap;
 
