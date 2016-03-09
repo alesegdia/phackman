@@ -26,6 +26,16 @@ void PathNode::addNieghboor(PathNode::SharedPtr n)
 	m_neighboors.push_back(n);
 }
 
+void PathNode::setNeighboor(Direction direction, PathNode::SharedPtr node)
+{
+	m_dirNeighboors[direction] = node;
+}
+
+PathNode::SharedPtr PathNode::getNeighboor(Direction direction)
+{
+	return m_dirNeighboors[direction];
+}
+
 const std::vector<PathNode::SharedPtr> &NavigationMap::nodes()
 {
 	return m_collector.nodes;
@@ -45,12 +55,12 @@ void NavigationMap::connectNodes()
 	{
 		for( int i = 0; i < 4; i++ )
 		{
-			searchNeighboor(node, i);
+			searchNeighboor(node, static_cast<Direction>(i));
 		}
 	}
 }
 
-void NavigationMap::searchNeighboor(PathNode::SharedPtr node, int direction)
+void NavigationMap::searchNeighboor(PathNode::SharedPtr node, Direction direction)
 {
 	int c, r;
 	c = node->x();
@@ -63,37 +73,32 @@ void NavigationMap::searchNeighboor(PathNode::SharedPtr node, int direction)
 		int c_next, r_next;
 		bool is_next_free = false;
 
-		// UP
-		if( direction == 0 )
+		switch(direction)
 		{
+		case Direction::UP:
 			c_next = c;
 			r_next = r-1;
 			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
 			r--;
-		}
-		// RIGHT
-		else if( direction == 1 )
-		{
+			break;
+		case Direction::RIGHT:
 			c_next = c+1;
 			r_next = r;
 			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
 			c++;
-		}
-		// DOWN
-		else if( direction == 2 )
-		{
+			break;
+		case Direction::DOWN:
 			c_next = c;
 			r_next = r+1;
 			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
 			r++;
-		}
-		// LEFT
-		else if( direction == 3 )
-		{
+			break;
+		case Direction::LEFT:
 			c_next = c-1;
 			r_next = r;
 			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
 			c--;
+			break;
 		}
 
 		auto node_cell = m_collector.navigationMap->get(c_next, r_next);
@@ -103,6 +108,7 @@ void NavigationMap::searchNeighboor(PathNode::SharedPtr node, int direction)
 			// found one
 			search_state = 1;
 			node->addNieghboor(node_cell);
+			node->setNeighboor(direction, node_cell);
 		}
 		else if( !is_next_free )
 		{
@@ -127,7 +133,7 @@ int NavigationMap::ConvolutorCollector::operator ()(int d00, int d10, int d20, i
 		bool downfree = d13 == 0 && d23 == 0;
 		bool rightfree = d31 == 0 && d32 == 0;
 		bool leftfree = d01 == 0 && d02 == 0;
-		if (( upfree &&		(rightfree	|| leftfree)) ||
+		if (	( upfree &&		(rightfree	|| leftfree)) ||
 				( downfree &&	(rightfree	|| leftfree)) ||
 				( leftfree &&	(upfree		|| downfree)) ||
 				( rightfree &&	(upfree		|| downfree)))

@@ -6,6 +6,14 @@
 #include "../core/matrix.h"
 #include "../map/maputil.h"
 
+enum Direction : int
+{
+	UP = 0,
+	RIGHT = 1,
+	DOWN = 2,
+	LEFT = 3
+};
+
 /**
  * @brief A node representing a possible change of direction in the path.
  * One node positioned at x, y covers 4 tiles, this is, from x,y to x+1,y+1.
@@ -23,12 +31,16 @@ public:
 	int y();
 	const std::vector<PathNode::SharedPtr>& neighboors();
 
+	PathNode::SharedPtr getNeighboor( Direction direction );
+
 private:
 
 	void addNieghboor( PathNode::SharedPtr n );
+	void setNeighboor( Direction direction, PathNode::SharedPtr node );
 
 	int m_x, m_y;
 	std::vector<PathNode::SharedPtr> m_neighboors;
+	PathNode::SharedPtr m_dirNeighboors[4] = {nullptr, nullptr, nullptr, nullptr};
 
 };
 
@@ -65,6 +77,6 @@ private:
 	Matrix2Di::SharedPtr m_map;
 
 	void connectNodes();
-	void searchNeighboor( PathNode::SharedPtr node, int direction );
+	void searchNeighboor( PathNode::SharedPtr node, Direction direction );
 
 };
