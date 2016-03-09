@@ -17,6 +17,8 @@ public:
 	void update(double delta);
 	void render();
 
+	void debugRender();
+
 private:
 	Game* m_game;
 	Entity::SharedPtr m_player;
