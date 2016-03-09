@@ -1,6 +1,7 @@
 #include "allegroapp.h"
 #include <stdio.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_primitives.h>
 
 AllegroApp::AllegroApp( int screen_width, int screen_height )
 	: m_screenWidth(screen_width), m_screenHeight(screen_height)
@@ -10,6 +11,9 @@ AllegroApp::AllegroApp( int screen_width, int screen_height )
 
 AllegroApp::~AllegroApp() {
 
+	al_shutdown_primitives_addon();
+	al_shutdown_image_addon();
+
 }
 
 int AllegroApp::Init() {
@@ -18,13 +22,18 @@ int AllegroApp::Init() {
 		return -1;
 	}
 
+	if(!al_install_keyboard()) {
+		fprintf(stderr, "failed to initialize the keyboard!\n");
+		return -1;
+	}
+
 	if(!al_init_image_addon()) {
 		fprintf(stderr, "failed to initialize image addon!\n");
 		return -1;
 	}
 
-	if(!al_install_keyboard()) {
-		fprintf(stderr, "failed to initialize the keyboard!\n");
+	if(!al_init_primitives_addon()) {
+		fprintf(stderr, "failed to initialize primitives addon!\n");
 		return -1;
 	}
 
