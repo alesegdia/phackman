@@ -1,15 +1,12 @@
 #pragma once
 
-class Entity
+#include "../core/animation.h"
+#include "assets.h"
+
+struct Entity
 {
-public:
-	Entity(float x, float y);
-
-	float x();
-
-	float y();
-
-private:
-	float m_x, m_y;
-
+	float x = 0;
+	float y = 0;
+	std::shared_ptr<Animation> anim = nullptr;
+	AnimationData animData;
 };
