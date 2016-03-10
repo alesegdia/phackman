@@ -11,21 +11,19 @@ void Entity::update(double delta)
 {
 	m_animData.timer += delta;
 
-	float speed = 60;
-
 	switch(m_facing)
 	{
 	case Direction::UP:
-		m_y -= delta * speed;
+		m_y -= delta * m_speed;
 		break;
 	case Direction::RIGHT:
-		m_x += delta * speed;
+		m_x += delta * m_speed;
 		break;
 	case Direction::DOWN:
-		m_y += delta * speed;
+		m_y += delta * m_speed;
 		break;
 	case Direction::LEFT:
-		m_x -= delta * speed;
+		m_x -= delta * m_speed;
 		break;
 	}
 
