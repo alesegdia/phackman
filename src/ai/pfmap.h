@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <cmath>
 
 #include "../core/matrix.h"
 #include "../core/direction.h"
@@ -61,7 +62,16 @@ private:
 	};
 
 public:
+	typedef std::shared_ptr<NavigationMap> SharedPtr;
+
 	NavigationMap( Matrix2Di::SharedPtr input );
+
+	PathNode::SharedPtr getNodeAt( float x, float y )
+	{
+		int tx = round(x) / 16.f;
+		int ty = round(y) / 16.f;
+		printf("%d, %d\n", tx, ty);
+	}
 
 	const std::vector<PathNode::SharedPtr>& nodes();
 

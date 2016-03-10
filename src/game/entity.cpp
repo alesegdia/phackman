@@ -27,6 +27,7 @@ void Entity::update(double delta)
 		break;
 	}
 
+	PathNode::SharedPtr my_node = m_navmap->getNodeAt( m_x, m_y );
 }
 
 void Entity::render()
