@@ -1,8 +1,8 @@
 #include "entity.h"
 #include "../core/input.h"
 
-Entity::Entity(float x, float y)
-	: m_x(x), m_y(y)
+Entity::Entity(float x, float y, NavigationMap::SharedPtr navmap)
+	: m_x(x), m_y(y), m_navmap(navmap)
 {
 
 }
@@ -77,8 +77,8 @@ void Entity::setFacing(Direction dir)
 }
 
 
-Player::Player(float x, float y)
-	: Entity(x, y)
+Player::Player(float x, float y, NavigationMap::SharedPtr navmap)
+	: Entity(x, y, navmap)
 {
 	setAnim(Assets::instance->characterAnim);
 }

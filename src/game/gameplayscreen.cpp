@@ -25,7 +25,7 @@ void GameplayScreen::wake()
 	m_navmap.reset(new NavigationMap(m_map));
 
 	auto start_node = m_navmap->nodes()[0];
-	m_player.reset(new Player((start_node->x()) * 16, (start_node->y()) * 16));
+	m_player.reset(new Player((start_node->x()) * 16, (start_node->y()) * 16, m_navmap));
 }
 
 void GameplayScreen::update(double delta)
