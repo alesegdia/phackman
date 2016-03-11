@@ -1,4 +1,5 @@
 #include "input.h"
+#include <algorithm>
 
 Input* Input::instance = nullptr;
 
@@ -19,7 +20,7 @@ bool Input::IsKeyDown(int key)
 
 Input::Input()
 {
-
+	std::fill(std::begin(m_keyStates), std::begin(m_keyStates) + ALLEGRO_KEY_MAX, false);
 }
 
 void Input::notifyKeyDown(int key)
