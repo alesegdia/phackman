@@ -52,12 +52,17 @@ void GameplayScreen::debugRender()
 	{
 		for( int c = 0; c < m_map->cols(); c++ )
 		{
+			int x1, y1, x2, y2;
+			x1 = c * 16; y1 = r * 16;
+			x2 = (c+1) * 16; y2 = (r+1) * 16;
+
 			if( m_map->get(c, r) == 1 )
 			{
-				int x1, y1, x2, y2;
-				x1 = c * 16; y1 = r * 16;
-				x2 = (c+1) * 16; y2 = (r+1) * 16;
-				al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(100, 100, 0));
+				al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 255, 0));
+			}
+			else
+			{
+				al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 255));
 			}
 		}
 	}
