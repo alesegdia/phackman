@@ -49,6 +49,90 @@ NavigationMap::NavigationMap(Matrix2Di::SharedPtr input)
 	connectNodes();
 }
 
+PathNode::SharedPtr NavigationMap::getNodeAt(float x, float y)
+{
+	int tx = round(x / 16.f) - 1;
+	int ty = round(y / 16.f) - 1;
+
+	PathNode::SharedPtr mah_node = nullptr;
+	int col, row;
+	for( col = 0; col < 3; col++ )
+	{
+		for( row = 0; row < 3; row++ )
+		{
+			PathNode::SharedPtr cell = m_collector.navigationMap->get(tx + col, ty + row);
+			if( cell != nullptr )
+			{
+				mah_node = cell;
+				break;
+			}
+		}
+		if( mah_node != nullptr )
+		{
+			break;
+		}
+	}
+
+	if( mah_node != nullptr )
+	{
+		float dx = x - (col+tx) * 16 ;
+		float dy = y - (row+ty) * 16 ;
+
+		float dist = sqrt((dx * dx) + (dy * dy));
+
+		printf("dist: %f\n", dist);
+		fflush(0);
+
+		if( dist < 2.f )
+		{
+			return mah_node;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+bool NavigationMap::canMove(float x, float y, Direction dir)
+{
+	int tx = round(x + 8.f) / 16.f;
+	int ty = round(y + 8.f) / 16.f;
+
+	int c_next, r_next;
+	bool is_next_free = false;
+
+	switch(dir)
+	{
+	case Direction::UP:
+		c_next = tx;
+		r_next = ty-1;
+		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
+		break;
+	case Direction::RIGHT:
+		c_next = tx+1;
+		r_next = ty;
+		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
+		break;
+	case Direction::DOWN:
+		c_next = tx;
+		r_next = ty+1;
+		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
+		break;
+	case Direction::LEFT:
+		c_next = tx-1;
+		r_next = ty;
+		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
+		break;
+	}
+
+	return is_next_free;
+}
+
 void NavigationMap::connectNodes()
 {
 	for( PathNode::SharedPtr node : m_collector.nodes )

@@ -66,13 +66,8 @@ public:
 
 	NavigationMap( Matrix2Di::SharedPtr input );
 
-	PathNode::SharedPtr getNodeAt( float x, float y )
-	{
-		int tx = round(x) / 16.f;
-		int ty = round(y) / 16.f;
-		printf("%d, %d\n", tx, ty);
-	}
-
+	PathNode::SharedPtr getNodeAt( float x, float y );
+	bool canMove( float x, float y, Direction dir );
 	const std::vector<PathNode::SharedPtr>& nodes();
 
 private:
