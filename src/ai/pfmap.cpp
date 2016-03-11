@@ -78,12 +78,9 @@ PathNode::SharedPtr NavigationMap::getNodeAt(float x, float y)
 		float dx = x - (col+tx) * 16 ;
 		float dy = y - (row+ty) * 16 ;
 
-		float dist = sqrt((dx * dx) + (dy * dy));
+		float dist = (dx * dx) + (dy * dy);
 
-		printf("dist: %f\n", dist);
-		fflush(0);
-
-		if( dist < 2.f )
+		if( dist < 4.f )
 		{
 			return mah_node;
 		}
