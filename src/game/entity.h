@@ -19,7 +19,7 @@ public:
 
 protected:
 	void setAnim( Animation::SharedPtr anim );
-	void setFacing( Direction dir );
+	void setRequestedFacing( Direction dir );
 
 private:
 	float m_x = 0;
@@ -29,6 +29,8 @@ private:
 	NavigationMap::SharedPtr m_navmap;
 	AnimationData m_animData;
 	Direction m_facing = Direction::RIGHT;
+	Direction m_requestedFacing = Direction::RIGHT;
+	PathNode::SharedPtr m_lastNode = nullptr;
 
 };
 

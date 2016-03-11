@@ -72,9 +72,9 @@ void Entity::setAnim(Animation::SharedPtr anim)
 	m_animData.timer = 0;
 }
 
-void Entity::setFacing(Direction dir)
+void Entity::setRequestedFacing(Direction dir)
 {
-	m_facing = dir;
+	m_requestedFacing = dir;
 }
 
 
@@ -90,18 +90,18 @@ void Player::update(double delta)
 
 	if( Input::IsKeyDown(ALLEGRO_KEY_LEFT) )
 	{
-		setFacing(Direction::LEFT);
+		setRequestedFacing(Direction::LEFT);
 	}
 	else if( Input::IsKeyDown(ALLEGRO_KEY_RIGHT) )
 	{
-		setFacing(Direction::RIGHT);
+		setRequestedFacing(Direction::RIGHT);
 	}
 	else if( Input::IsKeyDown(ALLEGRO_KEY_DOWN) )
 	{
-		setFacing(Direction::DOWN);
+		setRequestedFacing(Direction::DOWN);
 	}
 	else if( Input::IsKeyDown(ALLEGRO_KEY_UP) )
 	{
-		setFacing(Direction::UP);
+		setRequestedFacing(Direction::UP);
 	}
 }
