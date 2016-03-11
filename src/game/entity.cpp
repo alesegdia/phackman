@@ -1,3 +1,6 @@
+
+#include <allegro5/allegro_primitives.h>
+
 #include "entity.h"
 #include "../core/input.h"
 
@@ -11,27 +14,61 @@ void Entity::update(double delta)
 {
 	m_animData.timer += delta;
 
+	if( ((m_requestedFacing == Direction::DOWN || m_requestedFacing == Direction::UP) &&
+		 (m_facing == Direction::UP || m_facing == Direction::DOWN ) ) ||
+		((m_requestedFacing == Direction::LEFT || m_requestedFacing == Direction::RIGHT) &&
+				 (m_facing == Direction::LEFT || m_facing == Direction::RIGHT ) ))
+	{
+		m_facing = m_requestedFacing;
+	}
+
+	float nx, ny;
+
+	PathNode::SharedPtr my_node = m_navmap->getNodeAt(m_x , m_y );
+
+	if( my_node != nullptr )
+	{
+		m_lastNode = my_node;
+		if( m_lastNode->getNeighboor(m_requestedFacing) != nullptr )
+		{
+			m_facing = m_requestedFacing;
+		}
+	}
+
 	switch(m_facing)
 	{
 	case Direction::UP:
-		m_y -= delta * m_speed;
+		nx = m_lastNode->x() * 16;
+		ny = m_y - delta * m_speed;
 		break;
 	case Direction::RIGHT:
-		m_x += delta * m_speed;
+		nx = m_x + delta * m_speed;
+		ny = m_lastNode->y() * 16;
 		break;
 	case Direction::DOWN:
-		m_y += delta * m_speed;
+		nx = m_lastNode->x() * 16;
+		ny = m_y + delta * m_speed;
 		break;
 	case Direction::LEFT:
-		m_x -= delta * m_speed;
+		nx = m_x - delta * m_speed;
+		ny = m_lastNode->y() * 16;
+		break;
+	case Direction::NONE:
+		assert(false);
 		break;
 	}
 
-	PathNode::SharedPtr my_node = m_navmap->getNodeAt( m_x, m_y );
+	if( m_lastNode != nullptr && m_lastNode->getNeighboor(m_facing) )
+	{
+		m_x = nx;
+		m_y = ny;
+	}
 }
 
 void Entity::render()
 {
+	//al_draw_filled_rectangle(m_x, m_y, m_x + 32, m_y + 32, al_map_rgb(255,0,0));
+
 	if( m_anim != nullptr )
 	{
 		m_anim->updateData(m_animData);
