@@ -23,14 +23,31 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 		int selected_col = -1;
 		int row;
 
+		Matrix2Di::SharedPtr the_shape;
+
+		int r = rng() % 4;
+		the_shape = rotate(*shape, r);
+
+		int f = rng() % 2;
+		if( f == 1 )
+		{
+			the_shape = flip(*the_shape, true);
+		}
+
+		f = rng() % 2;
+		if( f == 1 )
+		{
+			the_shape = flip(*the_shape, false);
+		}
+
 		while( selected_col == -1 )
 		{
-			row = rng() % (m_layoutMatrix->rows() - shape->rows());
-			int final_col = m_layoutMatrix->cols() - shape->cols();
+			row = rng() % (m_layoutMatrix->rows() - the_shape->rows());
+			int final_col = m_layoutMatrix->cols() - the_shape->cols();
 
 			for( int col = 0; col < final_col; col++ )
 			{
-				if( !collide(*m_layoutMatrix, *shape, col, row) )
+				if( !collide(*m_layoutMatrix, *the_shape, col, row) )
 				{
 					selected_col = col;
 					break;
@@ -39,7 +56,7 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 		}
 
 		assert(selected_col != -1);
-		plot(*shape, *m_layoutMatrix, selected_col, row, true, shape_index);
+		plot(*the_shape, *m_layoutMatrix, selected_col, row, true, shape_index);
 		shape_index++;
 	}
 
