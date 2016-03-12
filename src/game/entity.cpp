@@ -13,53 +13,66 @@ Entity::Entity(float x, float y, NavigationMap::SharedPtr navmap)
 void Entity::update(double delta)
 {
 	m_animData.timer += delta;
+	handleMovement();
+}
 
-	if( ((m_requestedFacing == Direction::DOWN || m_requestedFacing == Direction::UP) &&
-		 (m_facing == Direction::UP || m_facing == Direction::DOWN ) ) ||
-		((m_requestedFacing == Direction::LEFT || m_requestedFacing == Direction::RIGHT) &&
-				 (m_facing == Direction::LEFT || m_facing == Direction::RIGHT ) ))
-	{
-		m_facing = m_requestedFacing;
-	}
-
+void Entity::handleMovement()
+{
 	float nx, ny;
 
 	PathNode::SharedPtr my_node = m_navmap->getNodeAt(m_x , m_y );
 
-	if( my_node != nullptr )
+	// middle of a path
+	if( my_node == nullptr )
 	{
-		m_lastNode = my_node;
-		if( m_lastNode->getNeighboor(m_requestedFacing) != nullptr )
+		// path turn
+		if( (get_orientation(m_requestedFacing) == get_orientation(m_facing)) && (m_requestedFacing != m_facing) )
 		{
 			m_facing = m_requestedFacing;
+			PathNode::SharedPtr n = this->m_lastNode;
+			m_lastNode = m_targetNode;
+			m_targetNode = n;
 		}
 	}
-
-	switch(m_facing)
+	// over a node
+	else
 	{
-	case Direction::UP:
-		nx = m_lastNode->x() * 16;
-		ny = m_y - delta * m_speed;
-		break;
-	case Direction::RIGHT:
-		nx = m_x + delta * m_speed;
-		ny = m_lastNode->y() * 16;
-		break;
-	case Direction::DOWN:
-		nx = m_lastNode->x() * 16;
-		ny = m_y + delta * m_speed;
-		break;
-	case Direction::LEFT:
-		nx = m_x - delta * m_speed;
-		ny = m_lastNode->y() * 16;
-		break;
-	case Direction::NONE:
-		assert(false);
-		break;
+		m_lastNode = my_node;
+		PathNode::SharedPtr target_node = m_lastNode->getNeighboor(m_requestedFacing);
+		if( target_node != nullptr )
+		{
+			m_facing = m_requestedFacing;
+			m_targetNode = target_node;
+		}
+
 	}
 
+	// apply movement
 	if( m_lastNode != nullptr && m_lastNode->getNeighboor(m_facing) )
 	{
+		switch(m_facing)
+		{
+		case Direction::UP:
+			nx = m_lastNode->x() * 16;
+			ny = m_y - delta * m_speed;
+			break;
+		case Direction::RIGHT:
+			nx = m_x + delta * m_speed;
+			ny = m_lastNode->y() * 16;
+			break;
+		case Direction::DOWN:
+			nx = m_lastNode->x() * 16;
+			ny = m_y + delta * m_speed;
+			break;
+		case Direction::LEFT:
+			nx = m_x - delta * m_speed;
+			ny = m_lastNode->y() * 16;
+			break;
+		case Direction::NONE:
+			assert(false);
+			break;
+		}
+
 		m_x = nx;
 		m_y = ny;
 	}
@@ -116,7 +129,6 @@ void Entity::setRequestedFacing(Direction dir)
 {
 	m_requestedFacing = dir;
 }
-
 
 Player::Player(float x, float y, NavigationMap::SharedPtr navmap)
 	: Entity(x, y, navmap)
