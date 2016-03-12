@@ -23,6 +23,8 @@ protected:
 
 private:
 
+	void handleMovement(double delta);
+
 	static constexpr bool ENABLE_DEBUG = true;
 
 	float m_x = 0;

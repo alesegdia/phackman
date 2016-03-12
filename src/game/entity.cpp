@@ -13,10 +13,10 @@ Entity::Entity(float x, float y, NavigationMap::SharedPtr navmap)
 void Entity::update(double delta)
 {
 	m_animData.timer += delta;
-	handleMovement();
+	handleMovement(delta);
 }
 
-void Entity::handleMovement()
+void Entity::handleMovement(double delta)
 {
 	float nx, ny;
 
