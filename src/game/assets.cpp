@@ -7,10 +7,11 @@ Assets::Assets()
 {
 	characterBitmap = al_load_bitmap("assets/phakman-sheet.png");
 	characterSheet.reset(new Spritesheet(3, 4, characterBitmap));
-	characterAnim.reset(new Animation(0.1f, 3));
-	characterAnim->addFrame(characterSheet->getFrame(0));
-	characterAnim->addFrame(characterSheet->getFrame(1));
-	characterAnim->addFrame(characterSheet->getFrame(2));
+	phackmanWalk.reset(new Animation(0.1f, 4));
+	phackmanWalk->addFrame(characterSheet->getFrame(0));
+	phackmanWalk->addFrame(characterSheet->getFrame(1));
+	phackmanWalk->addFrame(characterSheet->getFrame(2));
+	phackmanWalk->addFrame(characterSheet->getFrame(3));
 }
 
 Assets::~Assets()

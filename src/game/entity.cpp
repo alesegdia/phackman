@@ -133,7 +133,7 @@ void Entity::setRequestedFacing(Direction dir)
 Player::Player(float x, float y, NavigationMap::SharedPtr navmap)
 	: Entity(x, y, navmap)
 {
-	setAnim(Assets::instance->characterAnim);
+	setAnim(Assets::instance->phackmanWalk);
 }
 
 void Player::update(double delta)
