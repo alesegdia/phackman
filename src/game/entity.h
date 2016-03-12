@@ -34,6 +34,7 @@ private:
 	Direction m_facing = Direction::RIGHT;
 	Direction m_requestedFacing = Direction::RIGHT;
 	PathNode::SharedPtr m_lastNode = nullptr;
+	PathNode::SharedPtr m_targetNode = nullptr;
 
 };
 
