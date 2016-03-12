@@ -22,6 +22,9 @@ protected:
 	void setRequestedFacing( Direction dir );
 
 private:
+
+	static constexpr bool ENABLE_DEBUG = true;
+
 	float m_x = 0;
 	float m_y = 0;
 	float m_speed = 60;

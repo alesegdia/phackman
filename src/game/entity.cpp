@@ -67,7 +67,10 @@ void Entity::update(double delta)
 
 void Entity::render()
 {
-	//al_draw_filled_rectangle(m_x, m_y, m_x + 32, m_y + 32, al_map_rgb(255,0,0));
+	if( ENABLE_DEBUG )
+	{
+		al_draw_filled_rectangle(m_x, m_y, m_x + 32, m_y + 32, al_map_rgb(255,0,0));
+	}
 
 	if( m_anim != nullptr )
 	{
