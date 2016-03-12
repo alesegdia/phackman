@@ -4,6 +4,7 @@
 #include "../core/animation.h"
 #include "../ai/pfmap.h"
 #include "entity.h"
+#include "player.h"
 
 class Game;
 
