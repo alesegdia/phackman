@@ -33,7 +33,14 @@ void PathNode::setNeighboor(Direction direction, PathNode::SharedPtr node)
 
 PathNode::SharedPtr PathNode::getNeighboor(Direction direction)
 {
-	return m_dirNeighboors[direction];
+	if( direction == Direction::NONE )
+	{
+		return nullptr;
+	}
+	else
+	{
+		return m_dirNeighboors[direction];
+	}
 }
 
 const std::vector<PathNode::SharedPtr> &NavigationMap::nodes()
