@@ -9,3 +9,11 @@ enum Direction : int
 	NONE = 4
 };
 
+/**
+ * @brief gets the orientation of a direction
+ * @param dir the direction
+ * @return < 0 if vertical, > 0 if horizontal, 0 if NONE
+ */
+int get_orientation( Direction dir );
+
+
