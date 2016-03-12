@@ -21,7 +21,7 @@ void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, bool nonzero
 /**
  * @brief rotates a matrix by an angle multiple of 90
  * @param matrix to rotate
- * @param angle index representing the angle (1: 90º, 2: 180º, 3: 270º)
+ * @param angle index representing the angle (0: 0º, 1: 90º, 2: 180º, 3: 270º)
  * @return a rotated matrix
  */
 Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle );
