@@ -22,6 +22,7 @@ GameplayScreen::~GameplayScreen()
 void GameplayScreen::wake()
 {
 	m_map = LayoutBuilder().generate(ShapeStorage().makeSample());
+	m_tileMap = convolute3x3(*m_map, draw_map_tiles_convolutor);
 	m_navmap.reset(new NavigationMap(m_map));
 
 	auto start_node = m_navmap->nodes()[0];
@@ -42,8 +43,25 @@ void GameplayScreen::render()
 	al_clear_to_color(al_map_rgb(20,20,20));
 	al_set_target_bitmap(al_get_backbuffer(m_game->display()));
 
-	debugRender();
+	//debugRender();
+	tilesRender();
 	m_player->render();
+}
+
+void GameplayScreen::tilesRender()
+{
+	for( int r = 0; r < m_tileMap->rows(); r++ )
+	{
+		for( int c = 0; c < m_tileMap->cols(); c++ )
+		{
+			int x1, y1, x2, y2;
+			x1 = c * 16; y1 = r * 16;
+			x2 = (c+1) * 16; y2 = (r+1) * 16;
+
+			ALLEGRO_BITMAP* bm = Assets::instance->maptilesSheet->getFrame(m_tileMap->get(c, r));
+			al_draw_bitmap(bm, x1, y1, 0);
+		}
+	}
 }
 
 void GameplayScreen::debugRender()

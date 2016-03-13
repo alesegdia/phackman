@@ -19,11 +19,13 @@ public:
 	void render();
 
 	void debugRender();
+	void tilesRender();
 
 private:
 	Game* m_game;
 	Player::SharedPtr m_player;
 	Matrix2Di::SharedPtr m_map;
+	Matrix2Di::SharedPtr m_tileMap;
 	std::shared_ptr<NavigationMap> m_navmap;
 
 };
