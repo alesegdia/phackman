@@ -18,7 +18,9 @@ public:
 	~Assets();
 
 	ALLEGRO_BITMAP* characterBitmap;
+	ALLEGRO_BITMAP* maptilesBitmap;
 	std::shared_ptr<Spritesheet> characterSheet;
 	std::shared_ptr<Animation> phackmanWalk;
+	std::shared_ptr<Spritesheet> maptilesSheet;
 
 };

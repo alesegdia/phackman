@@ -12,6 +12,9 @@ Assets::Assets()
 	phackmanWalk->addFrame(characterSheet->getFrame(1));
 	phackmanWalk->addFrame(characterSheet->getFrame(2));
 	phackmanWalk->addFrame(characterSheet->getFrame(3));
+
+	maptilesBitmap = al_load_bitmap("assets/maptiles.png");
+	maptilesSheet.reset(new Spritesheet(6, 6, maptilesBitmap));
 }
 
 Assets::~Assets()
