@@ -25,7 +25,7 @@ private:
 
 	void handleMovement(double delta);
 
-	static constexpr bool ENABLE_DEBUG = true;
+	static constexpr bool ENABLE_DEBUG = false;
 
 	float m_x = 0;
 	float m_y = 0;
