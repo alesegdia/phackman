@@ -124,6 +124,8 @@ int fill_zero_border_convolutor	( int d00, int d10, int d20, int d01, int d11, i
  */
 int shrink_pieces_convolutor	( int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22 );
 
+int draw_map_tiles_convolutor	( int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22 );
+
 /**
  * @brief turns all non-zero values in the matrix to a specified value
  * @param matrix the matrix
