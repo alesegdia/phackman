@@ -1,4 +1,5 @@
 #include <cassert>
+#include <random>
 
 #include "maputil.h"
 
@@ -290,9 +291,29 @@ Convolutor4x4::~Convolutor4x4()
 
 }
 
+std::mt19937 rng;
 
 int draw_map_tiles_convolutor(int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22)
 {
+	auto topF = []() {
+		int r = rng() % 4;
+		return r * 6 + 5;
+	};
+
+	auto botF = []() {
+		int r = rng() % 4;
+		return r * 6 + 4;
+	};
+
+	auto leftF = []() {
+		int r = rng() % 4;
+		return r * 6 + 3;
+	};
+
+	auto rightF = []() {
+		int r = rng() % 4;
+		return r * 6 + 2;
+	};
 
 	// INNERS
 	if( d00 == 1 && d10 == 1 && d20 == 1 &&
@@ -329,28 +350,28 @@ int draw_map_tiles_convolutor(int d00, int d10, int d20, int d01, int d11, int d
 			 d01 == 1 && d11 == 0 && d21 == 0 &&
 			 d02 == 1 && d12 == 0 && d22 == 0 )
 	{
-		return 3;
+		return leftF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 1 && d12 == 1 && d22 == 1 )
 	{
-		return 4;
+		return botF();
 	}
 
 	else if( d00 == 1 && d10 == 1 && d20 == 1 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 5;
+		return topF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 1 &&
 			 d01 == 0 && d11 == 0 && d21 == 1 &&
 			 d02 == 0 && d12 == 0 && d22 == 1 )
 	{
-		return 2;
+		return rightF();
 	}
 
 	// SIDES 2
@@ -358,84 +379,84 @@ int draw_map_tiles_convolutor(int d00, int d10, int d20, int d01, int d11, int d
 			 d01 == 1 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 3;
+		return leftF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 1 && d11 == 0 && d21 == 0 &&
 			 d02 == 1 && d12 == 0 && d22 == 0 )
 	{
-		return 3;
+		return leftF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 1 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 3;
+		return leftF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 1 && d22 == 1 )
 	{
-		return 4;
+		return botF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 1 && d12 == 1 && d22 == 0 )
 	{
-		return 4;
+		return botF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 1 && d22 == 0 )
 	{
-		return 4;
+		return botF();
 	}
 
 	else if( d00 == 1 && d10 == 1 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 5;
+		return topF();
 	}
 
 	else if( d00 == 0 && d10 == 1 && d20 == 1 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 5;
+		return topF();
 	}
 
 	else if( d00 == 0 && d10 == 1 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 5;
+		return topF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 1 &&
 			 d02 == 0 && d12 == 0 && d22 == 1 )
 	{
-		return 2;
+		return rightF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 1 &&
 			 d01 == 0 && d11 == 0 && d21 == 1 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 2;
+		return rightF();
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 1 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 2;
+		return rightF();
 	}
 
 	// OUTERS
@@ -466,8 +487,6 @@ int draw_map_tiles_convolutor(int d00, int d10, int d20, int d01, int d11, int d
 	{
 		return 18;
 	}
-
-
 
 	else if( d11 == 0 )
 	{
