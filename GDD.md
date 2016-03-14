@@ -2,7 +2,7 @@
 
 ## 0. Disclaimer
 
-This document is prone to modifications and will probably be changed in the development of the 7DRL Game Jam.
+This document is prone to modifications and will probably be changed during development.
 
 ## 1. Overview
 ### 1.1. Plot
