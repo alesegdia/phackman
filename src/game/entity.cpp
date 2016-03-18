@@ -133,3 +133,8 @@ void Entity::setRequestedFacing(Direction dir)
 	m_requestedFacing = dir;
 }
 
+void Entity::setEnableMovement(bool enable)
+{
+	m_canMove = enable;
+}
+

@@ -21,6 +21,7 @@ public:
 protected:
 	void setAnim( Animation::SharedPtr anim );
 	void setRequestedFacing( Direction dir );
+	void setEnableMovement( bool enable );
 
 private:
 
@@ -28,6 +29,7 @@ private:
 
 	static constexpr bool ENABLE_DEBUG = false;
 
+	bool m_canMove = true;
 	vec2 m_position;
 	float m_speed = 60;
 	Animation::SharedPtr m_anim = nullptr;
