@@ -4,6 +4,7 @@
 
 #include "../core/animation.h"
 #include "../core/direction.h"
+#include "../core/geometry.h"
 #include "../ai/pfmap.h"
 #include "assets.h"
 
@@ -27,8 +28,7 @@ private:
 
 	static constexpr bool ENABLE_DEBUG = false;
 
-	float m_x = 0;
-	float m_y = 0;
+	vec2 m_position;
 	float m_speed = 60;
 	Animation::SharedPtr m_anim = nullptr;
 	NavigationMap::SharedPtr m_navmap;

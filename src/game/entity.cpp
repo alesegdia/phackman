@@ -4,7 +4,7 @@
 #include "entity.h"
 
 Entity::Entity(float x, float y, NavigationMap::SharedPtr navmap)
-	: m_x(x), m_y(y), m_navmap(navmap)
+	: m_position(x, y), m_navmap(navmap)
 {
 
 }
@@ -12,14 +12,18 @@ Entity::Entity(float x, float y, NavigationMap::SharedPtr navmap)
 void Entity::update(double delta)
 {
 	m_animData.timer += delta;
-	handleMovement(delta);
+
+	if( m_canMove )
+	{
+		handleMovement(delta);
+	}
 }
 
 void Entity::handleMovement(double delta)
 {
 	float nx, ny;
 
-	PathNode::SharedPtr my_node = m_navmap->getNodeAt(m_x , m_y );
+	PathNode::SharedPtr my_node = m_navmap->getNodeAt(m_position.x , m_position.y );
 
 	// middle of a path
 	if( my_node == nullptr )
@@ -53,18 +57,18 @@ void Entity::handleMovement(double delta)
 		{
 		case Direction::UP:
 			nx = m_lastNode->x() * 16;
-			ny = m_y - delta * m_speed;
+			ny = m_position.y - delta * m_speed;
 			break;
 		case Direction::RIGHT:
-			nx = m_x + delta * m_speed;
+			nx = m_position.x + delta * m_speed;
 			ny = m_lastNode->y() * 16;
 			break;
 		case Direction::DOWN:
 			nx = m_lastNode->x() * 16;
-			ny = m_y + delta * m_speed;
+			ny = m_position.y + delta * m_speed;
 			break;
 		case Direction::LEFT:
-			nx = m_x - delta * m_speed;
+			nx = m_position.x - delta * m_speed;
 			ny = m_lastNode->y() * 16;
 			break;
 		case Direction::NONE:
@@ -72,8 +76,8 @@ void Entity::handleMovement(double delta)
 			break;
 		}
 
-		m_x = nx;
-		m_y = ny;
+		m_position.x = nx;
+		m_position.y = ny;
 	}
 }
 
@@ -81,7 +85,7 @@ void Entity::render()
 {
 	if( ENABLE_DEBUG )
 	{
-		al_draw_filled_rectangle(m_x, m_y, m_x + 32, m_y + 32, al_map_rgb(255,0,0));
+		al_draw_filled_rectangle(m_position.x, m_position.y, m_position.x + 32, m_position.y + 32, al_map_rgb(255,0,0));
 	}
 
 	if( m_anim != nullptr )
@@ -114,7 +118,7 @@ void Entity::render()
 			break;
 		}
 
-		al_draw_rotated_bitmap(frame, cx, cy, m_x, m_y, angle, 0 );
+		al_draw_rotated_bitmap(frame, cx, cy, m_position.x, m_position.y, angle, 0 );
 	}
 }
 
