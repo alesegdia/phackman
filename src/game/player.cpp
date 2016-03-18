@@ -11,19 +11,27 @@ void Player::update(double delta)
 {
 	Entity::update(delta);
 
-	if( Input::IsKeyDown(ALLEGRO_KEY_LEFT) )
+	bool u, d, l, r;
+	u = Input::IsKeyDown(ALLEGRO_KEY_UP);
+	d = Input::IsKeyDown(ALLEGRO_KEY_DOWN);
+	l = Input::IsKeyDown(ALLEGRO_KEY_LEFT);
+	r = Input::IsKeyDown(ALLEGRO_KEY_RIGHT);
+
+	setEnableMovement( u | d | l | r );
+
+	if( l )
 	{
 		setRequestedFacing(Direction::LEFT);
 	}
-	else if( Input::IsKeyDown(ALLEGRO_KEY_RIGHT) )
+	else if( r )
 	{
 		setRequestedFacing(Direction::RIGHT);
 	}
-	else if( Input::IsKeyDown(ALLEGRO_KEY_DOWN) )
+	else if( d )
 	{
 		setRequestedFacing(Direction::DOWN);
 	}
-	else if( Input::IsKeyDown(ALLEGRO_KEY_UP) )
+	else if( u )
 	{
 		setRequestedFacing(Direction::UP);
 	}
