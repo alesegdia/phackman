@@ -1,8 +1,9 @@
 # Phack Man
 
+<small>**This document is prone to modifications and will evolve during development.**</small>
+
 ## Table of Contents
 
-0. [Disclaimer](#0-disclaimer)
 1. [Plot](#1-plot)
 2. [Gameplay](#2-gameplay)
 3. [Objectives](#3-objectives)
@@ -15,11 +16,9 @@
 ### Appendix
 1. [Map generation](#a1-map-generation)
 
+
 ---
 
-## 0. Disclaimer
-
-This document is prone to modifications and will probably be changed during development.
 
 ## 1. Plot
 The **INV4D-312** is a transport spaceship that was just intercepted by an alien race classified as the **Zenytp-3D3**. Take control of **Phack Man** in his mission to clear all the floors of the cargo bay from these little bastards.
