@@ -9,7 +9,7 @@
 4. [Input](#4-input)
 5. [Gadgets](#5-gadgets)
 6. [Map](#6-map)
-7. [Enemy behaviors](#7-enemy-behaviors)
+7. [Enemies](#7-enemies)
 8. [Possible upgrades](#8-possible-upgrades)
 
 ### Appendix
@@ -106,7 +106,7 @@ The map is a generated maze with progressive size depending on the floor. We can
 
 The walkable path will be 2 tiles width, instead of 1 like in Pac-Man. The walls of the map can have a minimum of 1 tile width. The generation will be defined later.
 
-## 7. Enemy behaviors
+## 7. Enemies
 
 There will be defined a few behaviors, but probably **only one will be implemented** (the easiest) for time economy reasons.
 
