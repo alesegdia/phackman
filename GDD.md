@@ -2,18 +2,18 @@
 
 ## Table of Contents
 
-0. [Disclaimer](#disclaimer)
-1. [Plot](#plot)
-2. [Gameplay](#gameplay)
-3. [Objectives](#objectives)
-4. [Input](#input)
-5. [Gadgets](#gadgets)
-6. [Map](#map)
-7. [Enemy behaviors](#enemy-behaviors)
-8. [Possible upgrades](#possible-upgrades)
+0. [Disclaimer](#0-disclaimer)
+1. [Plot](#1-plot)
+2. [Gameplay](#2-gameplay)
+3. [Objectives](#3-objectives)
+4. [Input](#4-input)
+5. [Gadgets](#5-gadgets)
+6. [Map](#6-map)
+7. [Enemy behaviors](#7-enemy-behaviors)
+8. [Possible upgrades](#8-possible-upgrades)
 
 ### Appendix
-1. [Map generation](#map-generation)
+1. [Map generation](#a1-map-generation)
 
 ---
 
@@ -126,7 +126,7 @@ These upgrades won't probably be implemented, but they will be kept here for the
 * **Weaknesses and resistances** so that a certain mod can be strong against certain type of enemies and weak against others.
 * **Vary enemy colors** to determine its toughness or Weakness&Resistances.
 
-### A.1. Map generation
+## A.1. Map generation
 
 After doing a little of research, I found a really interesting [pacman-like maze generator idea](http://pacman.shaunew.com/play/mapgen/) by Shaun Williams, part of his [Pac-Man tribute project](http://pacman.shaunew.com/). As the author says, the doc is incomplete in details, but the base is **use tetromino shapes to aid on map generation**. The map will be generated following this very principle.
 
