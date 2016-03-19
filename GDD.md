@@ -21,20 +21,21 @@
 
 This document is prone to modifications and will probably be changed during development.
 
-## 1. Overview
-### 1.1. Plot
+## 1. Plot
 The **INV4D-312** is a transport spaceship that was just intercepted by an alien race classified as the **Zenytp-3D3**. Take control of **Phack Man** in his mission to clear all the floors of the cargo bay from these little bastards.
 
-### 1.2. Gameplay
-Phack Man's gameplay resembles the good ol’ Pacman mechanics. The map is a generated maze and entities can move freely through it. Phack Man can shoot with Lock & Stock, his loyal twin miniguns, among other gadgets he will find in his path. The objective is to clear the floor from aliens, collect the key and open the stairs to the next floor.
+## 2. Gameplay
+Phack Man's gameplay resembles the good ol’ Pacman mechanics. The map is a generated maze and entities can move freely through it. Phack Man can shoot with Lock & Stock, his loyal twin miniguns, among other gadgets he will find in his path.
 
-### 1.3. Map
-The map is a generated maze with progressive size depending on the floor. The algorithm used is undefined by now, but some ideas arise:
+## 3. Objectives
 
-* Use a classic algorithm to create a maze, or even a lib that does this for us.
-* Generate small shapes and mirror them horizontally and/or vertically.
+The main and needed-to-advance objective is to collect the key and open the stairs to the next floor. Some secondary objectives for the player are:
 
-We can think of the map like a node graph where nodes are placed at maze positions where the player can turn 90 degrees.
+* Clear the floor from aliens.
+* Collect all nodes scattered around the map in the same way as Pac-Man has to collect all balls.
+
+The completion of these secondary objectives are rewarded with points, that could be used later to buy and enhance gadgets in the next level.
+
 
 ```
 # # # # # # # #
