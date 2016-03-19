@@ -36,6 +36,20 @@ The main and needed-to-advance objective is to collect the key and open the stai
 
 The completion of these secondary objectives are rewarded with points, that could be used later to buy and enhance gadgets in the next level.
 
+## 4. Input
+The player control consists of the following input:
+<center>
+
+| Key        | Action           |
+|:----------:|:----------------:|
+| ←↑→↓       | Movement         |
+| z/x        | Cycle gadget     |
+| 1-9        | Gadget shortcut  |
+| Space      | Use gadget       |
+
+</center>
+The player can advance the path by pressing the arrow keys. If the pressed key direction is not allowed in the current position, the player will advance following its current facing when pressing this key until it is possible to turn.
+
 
 ```
 # # # # # # # #
