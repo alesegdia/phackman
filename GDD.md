@@ -1,5 +1,22 @@
 # Phack Man
 
+## Table of Contents
+
+0. [Disclaimer](#disclaimer)
+1. [Plot](#plot)
+2. [Gameplay](#gameplay)
+3. [Objectives](#objectives)
+4. [Input](#input)
+5. [Gadgets](#gadgets)
+6. [Map](#map)
+7. [Enemy behaviors](#enemy-behaviors)
+8. [Possible upgrades](#possible-upgrades)
+
+### Appendix
+1. [Map generation](#map-generation)
+
+---
+
 ## 0. Disclaimer
 
 This document is prone to modifications and will probably be changed during development.
