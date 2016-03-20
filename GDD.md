@@ -117,6 +117,12 @@ There will be defined a few behaviors, but probably **only one will be implement
 
 Enemies can shoot, or might be buildings too, this is to be defined better.
 
+#### Spawning
+
+Enemies could be spawned all at the start, and/or from spawning buildings. This way, the player might need to inhibit these spawners, via destroying them or via another gadget (the inhibitor).
+
+Spawners could spawn enemies near it or just anywhere, and is the player objective to inhibit all the spawners in order to get the key to travel to the next floor.
+
 ## 8. Possible upgrades
 
 These upgrades won't probably be implemented, but they will be kept here for the record.
