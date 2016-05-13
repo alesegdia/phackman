@@ -1,17 +1,19 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include <alligator/input/input.h>
 #include <iostream>
 
 #include "gameplayscreen.h"
-#include "game.h"
+#include "phackmangame.h"
 #include "assets.h"
-#include "../core/matrix.h"
+#include <alligator/util/matrix.h>
 #include "../map/mapgen.h"
 #include "../ai/pfmap.h"
 
-GameplayScreen::GameplayScreen( Game* g )
+GameplayScreen::GameplayScreen( PhackmanGame* g )
+	: m_game(g)
 {
-	m_game = g;
+
 }
 
 GameplayScreen::~GameplayScreen()
@@ -19,7 +21,7 @@ GameplayScreen::~GameplayScreen()
 
 }
 
-void GameplayScreen::wake()
+void GameplayScreen::show()
 {
 	m_map = LayoutBuilder().generate(ShapeStorage().makeSample());
 	m_tileMap = convolute3x3(*m_map, draw_map_tiles_convolutor);
@@ -34,7 +36,7 @@ void GameplayScreen::update(double delta)
 	m_player->update(delta);
 	if( Input::IsKeyDown(ALLEGRO_KEY_ESCAPE) )
 	{
-		m_game->close();
+
 	}
 }
 
@@ -46,6 +48,11 @@ void GameplayScreen::render()
 	//debugRender();
 	tilesRender();
 	m_player->render();
+}
+
+void GameplayScreen::hide()
+{
+
 }
 
 void GameplayScreen::tilesRender()

@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../core/animation.h"
+#include <alligator/graphics/animation.h>
 #include "../core/direction.h"
 #include "../core/geometry.h"
 #include "../ai/pfmap.h"

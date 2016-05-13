@@ -3,7 +3,7 @@
 #include <limits>
 #include <functional>
 
-#include "../core/matrix.h"
+#include <alligator/util/matrix.h>
 
 /**
  * @brief copies one matrix into another matrix using an offset for the destination

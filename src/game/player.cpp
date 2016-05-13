@@ -1,5 +1,5 @@
 #include "player.h"
-#include "../core/input.h"
+#include <alligator/input/input.h>
 
 Player::Player(float x, float y, NavigationMap::SharedPtr navmap)
 	: Entity(x, y, navmap)

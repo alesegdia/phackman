@@ -2,8 +2,9 @@
 
 #include <memory>
 #include <allegro5/allegro.h>
-#include "../core/spritesheet.h"
-#include "../core/animation.h"
+
+#include <alligator/graphics/spritesheet.h>
+#include <alligator/graphics/animation.h>
 
 class Assets
 {

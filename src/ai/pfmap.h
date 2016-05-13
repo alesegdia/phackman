@@ -4,7 +4,7 @@
 #include <memory>
 #include <cmath>
 
-#include "../core/matrix.h"
+#include <alligator/util/matrix.h>
 #include "../core/direction.h"
 #include "../map/maputil.h"
 

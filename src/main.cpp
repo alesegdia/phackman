@@ -1,7 +1,7 @@
-#include "game/game.h"
+#include "game/phackmangame.h"
 
 int main(int argc, char** argv) {
-	Game tsr(640, 480);
-	tsr.Exec();
+	PhackmanGame tsr(640, 480);
+	tsr.exec();
 	return 0;
 }

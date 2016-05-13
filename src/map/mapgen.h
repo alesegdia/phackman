@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "../core/matrix.h"
+#include <alligator/util/matrix.h>
 
 
 /**

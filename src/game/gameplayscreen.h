@@ -1,28 +1,30 @@
 #pragma once
 
-#include "../core/iscreen.h"
-#include "../core/animation.h"
+#include <alligator/game/iscreen.h>
+#include <alligator/util/matrix.h>
+
 #include "../ai/pfmap.h"
 #include "entity.h"
 #include "player.h"
 
-class Game;
+class PhackmanGame;
 
 class GameplayScreen : public IScreen {
 public:
-	GameplayScreen(Game* g);
+	GameplayScreen(PhackmanGame* g);
 	virtual ~GameplayScreen();
 
 	// IScreen interface
-	void wake();
-	void update(double delta);
-	void render();
+	void show() override;
+	void update(double delta) override;
+	void render() override;
+	void hide() override;
 
 	void debugRender();
 	void tilesRender();
 
 private:
-	Game* m_game;
+	PhackmanGame* m_game;
 	Player::SharedPtr m_player;
 	Matrix2Di::SharedPtr m_map;
 	Matrix2Di::SharedPtr m_tileMap;
