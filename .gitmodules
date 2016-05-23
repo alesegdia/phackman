@@ -1,3 +1,6 @@
 [submodule "module/alligator"]
 	path = module/alligator
 	url = git@github.com:alesegdia/alligator.git
+[submodule "module/secs"]
+	path = module/secs
+	url = git@github.com:alesegdia/secs.git
