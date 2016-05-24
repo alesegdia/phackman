@@ -94,31 +94,20 @@ void Entity::render()
 
 		ALLEGRO_BITMAP* frame = m_animData.currentFrame;
 
-		float cx, cy, angle;
+		float cx = static_cast<float>(al_get_bitmap_width(frame)) / 2.f;
+		float cy = static_cast<float>(al_get_bitmap_height(frame)) / 2.f;
 
+		float angle;
 		switch( m_facing )
 		{
-		case UP:
-			cx = 0; cy = 0; angle = 0;
-			break;
-		case RIGHT:
-			cx = 0;
-			cy = ((float)al_get_bitmap_height(frame));
-			angle = M_PI_2;
-			break;
-		case DOWN:
-			cx = ((float)al_get_bitmap_width(frame));
-			cy = ((float)al_get_bitmap_height(frame));
-			angle = M_PI;
-			break;
-		case LEFT:
-			cx = ((float)al_get_bitmap_width(frame));
-			cy = 0;
-			angle = -M_PI_2;
-			break;
+		case UP:	angle = 0; break;
+		case RIGHT:	angle = M_PI_2; break;
+		case DOWN:	angle = M_PI; break;
+		case LEFT:  angle = -M_PI_2; break;
+		default:	angle = 0; break;
 		}
 
-		al_draw_rotated_bitmap(frame, cx, cy, m_position.x, m_position.y, angle, 0 );
+		al_draw_rotated_bitmap(frame, cx, cy, m_position.x + cx, m_position.y + cy, angle, 0 );
 	}
 }
 
