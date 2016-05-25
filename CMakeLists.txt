@@ -7,8 +7,10 @@ list(APPEND CMAKE_CXX_FLAGS "-std=c++11 -g -ftest-coverage -fprofile-arcs")
 
 file(GLOB_RECURSE CPPs src/**/*.cpp)
 file(GLOB_RECURSE HPPs src/**/*.h)
+file(GLOB_RECURSE SECS module/secs/src/lib/**/*.h module/secs/src/lib/**/*.cpp)
 
 include_directories(module/alligator/src)
+include_directories(module/secs/src/lib)
 
 if(WIN32)
 	# i686-w64-mingw32-g++ -o phakman-w32.exe -static-libstdc++ -static-libgcc src/*/**.cpp --std=c++11 -lallegro-5.0.10-monolith-mt -lwinpthread
@@ -18,7 +20,7 @@ if(WIN32)
 	target_link_libraries(phakman-w32 allegro-5.0.10-monolith-mt)
 elseif(UNIX)
 	set(EXECUTABLE_OUTPUT_PATH ${CMAKE_HOME_DIRECTORY}/bin/linux)
-	add_executable(phakman ${CPPs} ${HPPs} src/main.cpp)
+	add_executable(phakman ${SECS} ${CPPs} ${HPPs} src/main.cpp)
 	include_directories(phakman ${ALLIGATOR_INCLUDES})
 	target_link_libraries(phakman alligator)
 	target_link_libraries(phakman allegro)
@@ -29,5 +31,3 @@ elseif(UNIX)
 	target_link_libraries(phakman allegro_audio)
 	target_link_libraries(phakman allegro_acodec)
 endif()
-
-
