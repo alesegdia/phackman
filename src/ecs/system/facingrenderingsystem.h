@@ -13,7 +13,7 @@ public:
 		setNeededComponents<TransformComponent, FacingComponent>();
 	}
 
-	void process(const secs::Entity &e)
+	void process( float delta, const secs::Entity &e ) override
 	{
 		auto& transform_comp = m_world.component<TransformComponent>(e);
 		auto& facing_comp = m_world.component<FacingComponent>(e);

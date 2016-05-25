@@ -14,7 +14,7 @@ public:
 		setNeededComponents<RenderComponent, AnimationComponent>();
 	}
 
-	void process(const secs::Entity &e)
+	void process( float delta, const secs::Entity &e ) override
 	{
 		auto& render_comp = m_world.component<RenderComponent>(e);
 		auto& anim_comp = m_world.component<AnimationComponent>(e);

@@ -10,10 +10,11 @@ public:
 	RenderingSystem( secs::Engine& world )
 		: m_world(world)
 	{
+		renderingSystem( true );
 		setNeededComponents<RenderComponent, TransformComponent>();
 	}
 
-	void process(const secs::Entity &e)
+	void process(float delta, const secs::Entity &e) override
 	{
 		auto& render_comp = m_world.component<RenderComponent>(e);
 		auto& transform_comp = m_world.component<TransformComponent>(e);
@@ -30,7 +31,6 @@ public:
 					transform_comp.position.x() + cx,
 					transform_comp.position.y() + cy,
 					transform_comp.angle, 0 );
-
 
 	}
 
