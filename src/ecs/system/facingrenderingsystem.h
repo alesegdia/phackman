@@ -22,8 +22,8 @@ public:
 		{
 		case FacingComponent::Facing::Up:		transform_comp.angle = 0; break;
 		case FacingComponent::Facing::Down:		transform_comp.angle = M_PI; break;
-		case FacingComponent::Facing::Left:		transform_comp.angle = M_PI_2; break;
-		case FacingComponent::Facing::Right:	transform_comp.angle = -M_PI_2; break;
+		case FacingComponent::Facing::Left:		transform_comp.angle = -M_PI_2; break;
+		case FacingComponent::Facing::Right:	transform_comp.angle = M_PI_2; break;
 		}
 
 	}
