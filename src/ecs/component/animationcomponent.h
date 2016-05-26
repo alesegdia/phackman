@@ -4,6 +4,6 @@
 
 struct AnimationComponent
 {
-	Animation* animation = nullptr;
+	Animation::SharedPtr animation = nullptr;
 	AnimationData animationData;
 };
