@@ -1,8 +1,10 @@
 #pragma once
 
-#include <secs/secs.h>
 #include "component/components.h"
+
+#include <secs/secs.h>
 #include "system/systems.h"
+#include "../game/assets.h"
 
 class GameWorld
 {
@@ -11,11 +13,13 @@ public:
 	GameWorld()
 		: m_renderingSystem(m_world),
 		  m_animationSystem(m_world),
-		  m_facingRenderingSystem(m_world)
+		  m_facingRenderingSystem(m_world),
+		  m_keyboardInputSystem(m_world)
 	{
 		m_world.pushSystem(&m_renderingSystem);
 		m_world.pushSystem(&m_facingRenderingSystem);
 		m_world.pushSystem(&m_animationSystem);
+		m_world.pushSystem(&m_keyboardInputSystem);
 	}
 
 	void makePlayer( float x, float y )
@@ -25,10 +29,13 @@ public:
 		auto& transform_comp = addComponent<TransformComponent>(player);
 		transform_comp.position.set( x, y );
 
-		auto& render_comp = addComponent<RenderComponent>(player);
+		addComponent<RenderComponent>(player);
 
 		auto& animation_comp = addComponent<AnimationComponent>(player);
-		auto& facing_comp = addComponent<FacingComponent>(player);
+		animation_comp.animation = Assets::instance->phackmanWalk;
+
+		addComponent<FacingComponent>(player);
+		addComponent<KeyboardInputComponent>(player);
 	}
 
 	template <typename ComponentType>
@@ -52,5 +59,6 @@ private:
 	RenderingSystem m_renderingSystem;
 	AnimationSystem m_animationSystem;
 	FacingRenderingSystem m_facingRenderingSystem;
+	KeyboardInputSystem m_keyboardInputSystem;
 
 };

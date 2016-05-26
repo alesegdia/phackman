@@ -28,7 +28,7 @@ void ECSScreen::show()
 	m_navmap.reset(new NavigationMap(m_map));
 
 	auto start_node = m_navmap->nodes()[0];
-	//m_player.reset(new Player((start_node->x()) * 16, (start_node->y()) * 16, m_navmap));
+	gw.makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
 }
 
 void ECSScreen::update(double delta)
@@ -38,6 +38,8 @@ void ECSScreen::update(double delta)
 	{
 		m_game->close();
 	}
+
+	gw.step( static_cast<float>(delta) );
 }
 
 void ECSScreen::render()
@@ -48,6 +50,7 @@ void ECSScreen::render()
 	//debugRender();
 	tilesRender();
 	//m_player->render();
+	gw.render();
 }
 
 void ECSScreen::hide()

@@ -7,6 +7,7 @@
 #include "../ai/pfmap.h"
 #include "entity.h"
 #include "player.h"
+#include "../ecs/world.h"
 
 class PhackmanGame;
 
@@ -30,6 +31,7 @@ private:
 	Matrix2Di::SharedPtr m_map;
 	Matrix2Di::SharedPtr m_tileMap;
 	std::shared_ptr<NavigationMap> m_navmap;
-	secs::Engine m_world;
+
+	GameWorld gw;
 
 };
