@@ -4,3 +4,4 @@
 #include "rendercomponent.h"
 #include "animationcomponent.h"
 #include "facingcomponent.h"
+#include "keyboardinputcomponent.h"
