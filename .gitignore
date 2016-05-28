@@ -1,6 +1,4 @@
 CMakeLists.txt.user
-bin/linux/phakman
-bin/win32/phakman-w32.exe
-build
-bin/liballigator.a
+/bin/
+/build/
 
