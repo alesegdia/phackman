@@ -26,14 +26,14 @@ void PathNode::addNieghboor(PathNode::SharedPtr n)
 	m_neighboors.push_back(n);
 }
 
-void PathNode::setNeighboor(Direction direction, PathNode::SharedPtr node)
+void PathNode::setNeighboor(Facing direction, PathNode::SharedPtr node)
 {
 	m_dirNeighboors[direction] = node;
 }
 
-PathNode::SharedPtr PathNode::getNeighboor(Direction direction)
+PathNode::SharedPtr PathNode::getNeighboor(Facing direction)
 {
-	if( direction == Direction::NONE )
+	if( direction == Facing::None )
 	{
 		return nullptr;
 	}
@@ -102,7 +102,7 @@ PathNode::SharedPtr NavigationMap::getNodeAt(float x, float y)
 	}
 }
 
-bool NavigationMap::canMove(float x, float y, Direction dir)
+bool NavigationMap::canMove(float x, float y, Facing dir)
 {
 	int tx = round(x + 8.f) / 16.f;
 	int ty = round(y + 8.f) / 16.f;
@@ -112,22 +112,22 @@ bool NavigationMap::canMove(float x, float y, Direction dir)
 
 	switch(dir)
 	{
-	case Direction::UP:
+	case Facing::Up:
 		c_next = tx;
 		r_next = ty-1;
 		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
 		break;
-	case Direction::RIGHT:
+	case Facing::Right:
 		c_next = tx+1;
 		r_next = ty;
 		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
 		break;
-	case Direction::DOWN:
+	case Facing::Down:
 		c_next = tx;
 		r_next = ty+1;
 		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
 		break;
-	case Direction::LEFT:
+	case Facing::Left:
 		c_next = tx-1;
 		r_next = ty;
 		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
@@ -143,12 +143,12 @@ void NavigationMap::connectNodes()
 	{
 		for( int i = 0; i < 4; i++ )
 		{
-			searchNeighboor(node, static_cast<Direction>(i));
+			searchNeighboor(node, static_cast<Facing>(i));
 		}
 	}
 }
 
-void NavigationMap::searchNeighboor(PathNode::SharedPtr node, Direction direction)
+void NavigationMap::searchNeighboor(PathNode::SharedPtr node, Facing direction)
 {
 	int c, r;
 	c = node->x();
@@ -163,25 +163,25 @@ void NavigationMap::searchNeighboor(PathNode::SharedPtr node, Direction directio
 
 		switch(direction)
 		{
-		case Direction::UP:
+		case Facing::Up:
 			c_next = c;
 			r_next = r-1;
 			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
 			r--;
 			break;
-		case Direction::RIGHT:
+		case Facing::Right:
 			c_next = c+1;
 			r_next = r;
 			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
 			c++;
 			break;
-		case Direction::DOWN:
+		case Facing::Down:
 			c_next = c;
 			r_next = r+1;
 			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
 			r++;
 			break;
-		case Direction::LEFT:
+		case Facing::Left:
 			c_next = c-1;
 			r_next = r;
 			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;

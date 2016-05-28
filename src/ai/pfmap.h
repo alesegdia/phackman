@@ -5,7 +5,7 @@
 #include <cmath>
 
 #include <alligator/util/matrix.h>
-#include "../core/direction.h"
+#include "../core/facing.h"
 #include "../map/maputil.h"
 
 /**
@@ -25,12 +25,12 @@ public:
 	int y();
 	const std::vector<PathNode::SharedPtr>& neighboors();
 
-	PathNode::SharedPtr getNeighboor( Direction direction );
+	PathNode::SharedPtr getNeighboor( Facing direction );
 
 private:
 
 	void addNieghboor( PathNode::SharedPtr n );
-	void setNeighboor( Direction direction, PathNode::SharedPtr node );
+	void setNeighboor( Facing direction, PathNode::SharedPtr node );
 
 	int m_x, m_y;
 	std::vector<PathNode::SharedPtr> m_neighboors;
@@ -67,7 +67,7 @@ public:
 	NavigationMap( Matrix2Di::SharedPtr input );
 
 	PathNode::SharedPtr getNodeAt( float x, float y );
-	bool canMove( float x, float y, Direction dir );
+	bool canMove( float x, float y, Facing dir );
 	const std::vector<PathNode::SharedPtr>& nodes();
 
 private:
@@ -75,6 +75,6 @@ private:
 	Matrix2Di::SharedPtr m_map;
 
 	void connectNodes();
-	void searchNeighboor( PathNode::SharedPtr node, Direction direction );
+	void searchNeighboor( PathNode::SharedPtr node, Facing direction );
 
 };

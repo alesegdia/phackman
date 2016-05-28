@@ -55,23 +55,23 @@ void Entity::handleMovement(double delta)
 	{
 		switch(m_facing)
 		{
-		case Direction::UP:
+		case Facing::Up:
 			nx = m_lastNode->x() * 16;
 			ny = m_position.y - delta * m_speed;
 			break;
-		case Direction::RIGHT:
+		case Facing::Right:
 			nx = m_position.x + delta * m_speed;
 			ny = m_lastNode->y() * 16;
 			break;
-		case Direction::DOWN:
+		case Facing::Down:
 			nx = m_lastNode->x() * 16;
 			ny = m_position.y + delta * m_speed;
 			break;
-		case Direction::LEFT:
+		case Facing::Left:
 			nx = m_position.x - delta * m_speed;
 			ny = m_lastNode->y() * 16;
 			break;
-		case Direction::NONE:
+		case Facing::None:
 			assert(false);
 			break;
 		}
@@ -100,10 +100,10 @@ void Entity::render()
 		float angle;
 		switch( m_facing )
 		{
-		case UP:	angle = 0; break;
-		case RIGHT:	angle = M_PI_2; break;
-		case DOWN:	angle = M_PI; break;
-		case LEFT:  angle = -M_PI_2; break;
+		case Up:	angle = 0; break;
+		case Right:	angle = M_PI_2; break;
+		case Down:	angle = M_PI; break;
+		case Left:  angle = -M_PI_2; break;
 		default:	angle = 0; break;
 		}
 
@@ -117,7 +117,7 @@ void Entity::setAnim(Animation::SharedPtr anim)
 	m_animData.timer = 0;
 }
 
-void Entity::setRequestedFacing(Direction dir)
+void Entity::setRequestedFacing(Facing dir)
 {
 	m_requestedFacing = dir;
 }

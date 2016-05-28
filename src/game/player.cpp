@@ -21,18 +21,18 @@ void Player::update(double delta)
 
 	if( l )
 	{
-		setRequestedFacing(Direction::LEFT);
+		setRequestedFacing(Facing::Left);
 	}
 	else if( r )
 	{
-		setRequestedFacing(Direction::RIGHT);
+		setRequestedFacing(Facing::Right);
 	}
 	else if( d )
 	{
-		setRequestedFacing(Direction::DOWN);
+		setRequestedFacing(Facing::Down);
 	}
 	else if( u )
 	{
-		setRequestedFacing(Direction::UP);
+		setRequestedFacing(Facing::Up);
 	}
 }

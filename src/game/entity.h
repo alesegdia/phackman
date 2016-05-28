@@ -3,7 +3,7 @@
 #include <memory>
 
 #include <alligator/graphics/animation.h>
-#include "../core/direction.h"
+#include "../core/facing.h"
 #include "../core/geometry.h"
 #include "../ai/pfmap.h"
 #include "assets.h"
@@ -20,7 +20,7 @@ public:
 
 protected:
 	void setAnim( Animation::SharedPtr anim );
-	void setRequestedFacing( Direction dir );
+	void setRequestedFacing( Facing dir );
 	void setEnableMovement( bool enable );
 
 private:
@@ -35,8 +35,8 @@ private:
 	Animation::SharedPtr m_anim = nullptr;
 	NavigationMap::SharedPtr m_navmap;
 	AnimationData m_animData;
-	Direction m_facing = Direction::RIGHT;
-	Direction m_requestedFacing = Direction::RIGHT;
+	Facing m_facing = Facing::Right;
+	Facing m_requestedFacing = Facing::Right;
 	PathNode::SharedPtr m_lastNode = nullptr;
 	PathNode::SharedPtr m_targetNode = nullptr;
 
