@@ -21,7 +21,6 @@ void Entity::update(double delta)
 
 void Entity::handleMovement(double delta)
 {
-	float nx, ny;
 
 	PathNode::SharedPtr my_node = m_navmap->getNodeAt(m_position.x , m_position.y );
 
@@ -53,6 +52,8 @@ void Entity::handleMovement(double delta)
 	// apply movement
 	if( m_lastNode != nullptr && m_lastNode->getNeighboor(m_facing) )
 	{
+		float nx, ny;
+
 		switch(m_facing)
 		{
 		case Facing::Up:
