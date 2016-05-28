@@ -2,10 +2,10 @@
 
 #include <alligator/game/iscreen.h>
 #include <alligator/util/matrix.h>
+#include <secs/secs.h>
 
 #include "../ai/pfmap.h"
-#include "entity.h"
-#include "player.h"
+#include "../ecs/world.h"
 
 class PhackmanGame;
 
@@ -25,9 +25,11 @@ public:
 
 private:
 	PhackmanGame* m_game;
-	Player::SharedPtr m_player;
+
 	Matrix2Di::SharedPtr m_map;
 	Matrix2Di::SharedPtr m_tileMap;
 	std::shared_ptr<NavigationMap> m_navmap;
+
+	GameWorld gw;
 
 };

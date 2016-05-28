@@ -17,9 +17,8 @@ void PhackmanGame::create()
 	Assets::Initialize();
 
 	m_gameplayScreen.reset(new GameplayScreen(this));
-	m_ecsScreen.reset(new ECSScreen(this));
 
-	setScreen(m_ecsScreen);
+	setScreen(m_gameplayScreen);
 }
 
 void PhackmanGame::dispose()

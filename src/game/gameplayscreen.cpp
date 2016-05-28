@@ -9,6 +9,7 @@
 #include <alligator/util/matrix.h>
 #include "../map/mapgen.h"
 #include "../ai/pfmap.h"
+#include "../ai/blackboard.h"
 
 GameplayScreen::GameplayScreen( PhackmanGame* g )
 	: m_game(g)
@@ -26,18 +27,21 @@ void GameplayScreen::show()
 	m_map = LayoutBuilder().generate(ShapeStorage().makeSample());
 	m_tileMap = convolute3x3(*m_map, draw_map_tiles_convolutor);
 	m_navmap.reset(new NavigationMap(m_map));
+	Blackboard::instance.navigationMap = m_navmap;
 
 	auto start_node = m_navmap->nodes()[0];
-	m_player.reset(new Player((start_node->x()) * 16, (start_node->y()) * 16, m_navmap));
+	gw.makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
 }
 
 void GameplayScreen::update(double delta)
 {
-	m_player->update(delta);
+	//m_player->update(delta);
 	if( Input::IsKeyDown(ALLEGRO_KEY_ESCAPE) )
 	{
-
+		m_game->close();
 	}
+
+	gw.step( static_cast<float>(delta) );
 }
 
 void GameplayScreen::render()
@@ -47,7 +51,8 @@ void GameplayScreen::render()
 
 	//debugRender();
 	tilesRender();
-	m_player->render();
+	//m_player->render();
+	gw.render();
 }
 
 void GameplayScreen::hide()

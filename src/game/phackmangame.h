@@ -7,7 +7,6 @@
 #include <alligator/game/game.h>
 
 #include "gameplayscreen.h"
-#include "ecsscreen.h"
 
 class PhackmanGame : public Game {
 
@@ -21,7 +20,6 @@ public:
 
 	// all screens
 	std::shared_ptr<GameplayScreen> m_gameplayScreen;
-	std::shared_ptr<ECSScreen> m_ecsScreen;
 
 };
 
