@@ -12,31 +12,40 @@ public:
 	KeyboardInputSystem( secs::Engine& world )
 		: m_world(world)
 	{
-		setNeededComponents<KeyboardInputComponent, FacingComponent>();
+		setNeededComponents<KeyboardInputComponent,
+							RenderFacingComponent,
+							MapAgentInputComponent>();
 	}
 
 	void process( float delta, const secs::Entity &e ) override
 	{
-		auto& facing_comp = m_world.component<FacingComponent>(e);
+		auto& agtinput_comp = m_world.component<MapAgentInputComponent>(e);
 
-		if( Input::IsKeyDown( ALLEGRO_KEY_LEFT ) )
-		{
-			facing_comp.facing = FacingComponent::Facing::Left;
-		}
-		else if( Input::IsKeyDown( ALLEGRO_KEY_RIGHT ) )
-		{
-			facing_comp.facing = FacingComponent::Facing::Right;
-		}
+		bool u, d, r, l;
+		u = Input::IsKeyDown( ALLEGRO_KEY_UP );
+		d = Input::IsKeyDown( ALLEGRO_KEY_DOWN );
+		r = Input::IsKeyDown( ALLEGRO_KEY_RIGHT );
+		l = Input::IsKeyDown( ALLEGRO_KEY_LEFT );
 
-		if( Input::IsKeyDown( ALLEGRO_KEY_UP ) )
+		if( u )
 		{
-			facing_comp.facing = FacingComponent::Facing::Up;
+			agtinput_comp.requestedFacing = Facing::Up;
 		}
-		if( Input::IsKeyDown( ALLEGRO_KEY_DOWN ) )
+		else if( d )
 		{
-			facing_comp.facing = FacingComponent::Facing::Down;
+			agtinput_comp.requestedFacing = Facing::Down;
 		}
 
+		if( l )
+		{
+			agtinput_comp.requestedFacing = Facing::Left;
+		}
+		else if( r )
+		{
+			agtinput_comp.requestedFacing = Facing::Right;
+		}
+
+		agtinput_comp.inputRequested = u | d | l | r;
 	}
 
 private:

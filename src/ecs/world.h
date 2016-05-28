@@ -14,12 +14,14 @@ public:
 		: m_renderingSystem(m_world),
 		  m_animationSystem(m_world),
 		  m_facingRenderingSystem(m_world),
-		  m_keyboardInputSystem(m_world)
+		  m_keyboardInputSystem(m_world),
+		  m_navigationSystem(m_world)
 	{
 		m_world.pushSystem(&m_renderingSystem);
 		m_world.pushSystem(&m_facingRenderingSystem);
 		m_world.pushSystem(&m_animationSystem);
 		m_world.pushSystem(&m_keyboardInputSystem);
+		m_world.pushSystem(&m_navigationSystem);
 	}
 
 	void makePlayer( float x, float y )
@@ -34,8 +36,11 @@ public:
 		auto& animation_comp = addComponent<AnimationComponent>(player);
 		animation_comp.animation = Assets::instance->phackmanWalk;
 
-		addComponent<FacingComponent>(player);
+		addComponent<RenderFacingComponent>(player);
 		addComponent<KeyboardInputComponent>(player);
+
+		addComponent<MapAgentInputComponent>(player);
+		addComponent<MapAgentStateComponent>(player);
 	}
 
 	template <typename ComponentType>
@@ -60,5 +65,6 @@ private:
 	AnimationSystem m_animationSystem;
 	FacingRenderingSystem m_facingRenderingSystem;
 	KeyboardInputSystem m_keyboardInputSystem;
+	MapNavigationSystem m_navigationSystem;
 
 };

@@ -9,6 +9,7 @@
 #include <alligator/util/matrix.h>
 #include "../map/mapgen.h"
 #include "../ai/pfmap.h"
+#include "../ai/blackboard.h"
 
 ECSScreen::ECSScreen( PhackmanGame* g )
 	: m_game(g)
@@ -26,6 +27,7 @@ void ECSScreen::show()
 	m_map = LayoutBuilder().generate(ShapeStorage().makeSample());
 	m_tileMap = convolute3x3(*m_map, draw_map_tiles_convolutor);
 	m_navmap.reset(new NavigationMap(m_map));
+	Blackboard::instance.navigationMap = m_navmap;
 
 	auto start_node = m_navmap->nodes()[0];
 	gw.makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
