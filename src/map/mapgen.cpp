@@ -5,7 +5,6 @@
 
 #include "mapgen.h"
 #include "maputil.h"
-#include "../core/geometry.h"
 
 LayoutBuilder::LayoutBuilder(Config cfg)
 	: rng(time(NULL)), m_config(cfg)
