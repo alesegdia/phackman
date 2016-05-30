@@ -30,7 +30,7 @@ void GameplayScreen::show()
 	Blackboard::instance.navigationMap = m_navmap;
 
 	auto start_node = m_navmap->nodes()[0];
-	gw.makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
+	gw.factory().makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
 }
 
 void GameplayScreen::update(double delta)
