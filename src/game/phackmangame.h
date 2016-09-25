@@ -15,8 +15,8 @@ public:
 	PhackmanGame ( int sw, int sh );
 	virtual ~PhackmanGame();
 
-	void create();
-	void dispose();
+	int create( int argc, char** argv ) override ;
+	void dispose() override ;
 
 	// all screens
 	std::shared_ptr<GameplayScreen> m_gameplayScreen;
