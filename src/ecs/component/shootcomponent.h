@@ -1,0 +1,4 @@
+#ifndef SHOOTCOMPONENT_H
+#define SHOOTCOMPONENT_H
+
+#endif // SHOOTCOMPONENT_H
