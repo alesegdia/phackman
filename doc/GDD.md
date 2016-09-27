@@ -64,11 +64,21 @@ The enhancement of gadgets could impact the number of placed objects at the same
 
 #### Lock&Stock
 
-Can shoot
+Can shoot. Shoot types are:
+
+* Two bullets
+* One big rocket?
+
+Parameters:
+* Rate
+* Power
+* Bullet speed
 
 #### Mines
 
-Upgradable:
+* Can be placed on the floor
+
+Parameters:
 
 * Number of simultaneously placed mines.
 * Power.
@@ -81,11 +91,19 @@ Upgradable:
 
 #### Drones
 
-Can set N wandering nodes?
+Can set N wandering nodes? Wanders randomly? follows player?
 
 #### Static turrets
 
-Can be placed in walls.
+* Can be placed in the floor.
+
+Parameters:
+
+* Detecting area
+* Bullet rate
+* Bullet power
+* Strike
+* Bullet speed
 
 #### Hook
 
