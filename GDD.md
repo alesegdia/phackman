@@ -43,6 +43,7 @@ The player control consists of the following input:
 |:----------:|:----------------:|
 | ←↑→↓       | Movement         |
 | z/x        | Cycle gadget     |
+| a/s        | Quick gadgets    |
 | 1-9        | Gadget shortcut  |
 | Space      | Use gadget       |
 
@@ -54,7 +55,7 @@ The player can advance the path by pressing the arrow keys. If the pressed key d
 The way to obtain gadgets is still to be polished. The player needs credits in order to buy and enhance gadgets. They could be extracted from a vending machine present in the map, or maybe in each mid-level stage. Gadgets fall in the following categories:
 
 * Buildings (turrets, lasers).
-* Placeable items (mines).
+* Placeable items (mines, bomberman-like mine).
 * Allied AI-controlled actors (drones, robots).
 * Guns (Lock&Stock basically).
 * Utility gadgets (running shoes, invisibility, repair tool, hook).
