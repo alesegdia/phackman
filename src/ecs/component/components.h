@@ -7,3 +7,7 @@
 #include "keyboardinputcomponent.h"
 #include "mapagentinputcomponent.h"
 #include "mapagentstatecomponent.h"
+#include "shootcomponent.h"
+#include "triggercomponent.h"
+
+
