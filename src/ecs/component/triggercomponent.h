@@ -1,4 +1,6 @@
-#ifndef TRIGGERCOMPONENT_H
-#define TRIGGERCOMPONENT_H
+#pragma once
 
-#endif // TRIGGERCOMPONENT_H
+class TriggerComponent
+{
+	bool wantsTrigger = false;
+};

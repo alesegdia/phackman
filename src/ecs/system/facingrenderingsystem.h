@@ -12,15 +12,15 @@ class FacingRenderingSystem : public secs::EntitySystem
 public:
 
 	FacingRenderingSystem( secs::Engine& world )
-		: m_world(world)
+		: m_engine(world)
 	{
 		setNeededComponents<TransformComponent, RenderFacingComponent>();
 	}
 
 	void process( float delta, const secs::Entity &e ) override
 	{
-		auto& transform_comp = m_world.component<TransformComponent>(e);
-		auto& facing_comp = m_world.component<RenderFacingComponent>(e);
+		auto& transform_comp = m_engine.component<TransformComponent>(e);
+		auto& facing_comp = m_engine.component<RenderFacingComponent>(e);
 
 		switch( facing_comp.facing )
 		{
@@ -33,6 +33,7 @@ public:
 	}
 
 private:
-	secs::Engine& m_world;
+	secs::Engine& m_engine;
 
 };
+
