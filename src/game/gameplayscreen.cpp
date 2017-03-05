@@ -10,6 +10,7 @@
 #include "../map/mapgen.h"
 #include "../ai/pfmap.h"
 #include "../ai/blackboard.h"
+#include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen( PhackmanGame* g )
 	: m_game(g)
@@ -53,6 +54,8 @@ void GameplayScreen::render()
 	tilesRender();
 	//m_player->render();
 	gw.render();
+
+    MapSolidDebug(m_tileMap).render();
 }
 
 void GameplayScreen::hide()

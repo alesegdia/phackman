@@ -22,13 +22,14 @@ public:
 
 	struct Config
 	{
+        Config() {}
 		// probability to carve each shape
 		std::vector<Matrix2Di::SharedPtr> shapes;
 		int canvasWidth = 0 ;
 		int canvasHeight = 0 ;
 	};
 
-	LayoutBuilder( Config cfg = {} );
+	LayoutBuilder( Config cfg = Config() /* cfg = {} */ );
 
 	Matrix2Di::SharedPtr generate( const std::vector<Matrix2Di::SharedPtr>& shapes );
 
