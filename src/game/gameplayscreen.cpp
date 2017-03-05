@@ -13,7 +13,7 @@
 #include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen( PhackmanGame* g )
-	: m_game(g)
+    : m_game(g), m_cam(new Camera())
 {
 
 }
@@ -31,7 +31,12 @@ void GameplayScreen::show()
 	Blackboard::instance.navigationMap = m_navmap;
 
 	auto start_node = m_navmap->nodes()[0];
-	gw.factory().makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
+
+    secs::Entity player = gw.factory().makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
+    TransformComponent& tc = gw.engine().component<PositionComponent>(player);
+
+    m_playerPositionComponent = &tc;
+
 }
 
 void GameplayScreen::update(double delta)
@@ -42,11 +47,24 @@ void GameplayScreen::update(double delta)
 		m_game->close();
 	}
 
+    if( Input::IsKeyDown(ALLEGRO_KEY_F1) )
+    {
+        m_shownodes = !m_shownodes;
+    }
+
+    if( Input::IsKeyDown(ALLEGRO_KEY_F2) )
+    {
+        m_showsolid = !m_showsolid;
+    }
+
 	gw.step( static_cast<float>(delta) );
 }
 
 void GameplayScreen::render()
 {
+    m_cam->position(m_player, 0);
+    m_cam->scale(1, 1);
+    m_cam->bind();
 	al_clear_to_color(al_map_rgb(20,20,20));
 	al_set_target_bitmap(al_get_backbuffer(m_game->display()));
 
@@ -55,7 +73,21 @@ void GameplayScreen::render()
 	//m_player->render();
 	gw.render();
 
-    MapSolidDebug(m_tileMap).render();
+    if( m_shownodes )
+    {
+        for( PathNode::SharedPtr node : m_navmap->nodes() )
+        {
+            float x, y;
+            x = (node->x()+1) * 16;
+            y = (node->y()+1) * 16;
+            al_draw_ellipse( x, y, 4, 4, al_map_rgb(255, 255, 0), 1);
+        }
+    }
+
+    if( m_showsolid )
+    {
+        MapSolidDebug(m_tileMap).render();
+    }
 }
 
 void GameplayScreen::hide()

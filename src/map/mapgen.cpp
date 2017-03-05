@@ -27,11 +27,11 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 		int r = rng() % 4;
 		the_shape = rotate(*shape, r);
 
-		int f = rng() % 2;
-		if( f == 1 )
-		{
-			the_shape = flip(*the_shape, true);
-		}
+        int f = rng() % 2;
+        if( f == 1 )
+        {
+            the_shape = flip(*the_shape, true);
+        }
 
 		f = rng() % 2;
 		if( f == 1 )

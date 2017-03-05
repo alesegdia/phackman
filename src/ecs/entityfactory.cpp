@@ -6,7 +6,7 @@ EntityFactory::EntityFactory(secs::Engine &world)
 
 }
 
-void EntityFactory::makePlayer(float x, float y)
+secs::Entity EntityFactory::makePlayer(float x, float y)
 {
 	secs::Entity player = m_world.processor().addEntity();
 
@@ -23,4 +23,6 @@ void EntityFactory::makePlayer(float x, float y)
 
 	addComponent<MapAgentInputComponent>(player);
 	addComponent<MapAgentStateComponent>(player);
+
+    return player;
 }

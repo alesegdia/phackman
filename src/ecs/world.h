@@ -16,6 +16,8 @@ public:
 
 	EntityFactory& factory();
 
+    secs::Engine& engine();
+
 private:
 	secs::Engine m_world;
 	RenderingSystem m_renderingSystem;

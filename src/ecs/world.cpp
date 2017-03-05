@@ -29,3 +29,8 @@ EntityFactory& GameWorld::factory()
 {
 	return m_factory;
 }
+
+secs::Engine &GameWorld::engine()
+{
+    return m_world;
+}

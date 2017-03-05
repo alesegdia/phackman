@@ -10,7 +10,7 @@ public:
 
 	EntityFactory( secs::Engine& world );
 
-	void makePlayer( float x, float y );
+    secs::Entity makePlayer( float x, float y );
 
 	template <typename ComponentType>
 	ComponentType& addComponent( const secs::Entity& e )
