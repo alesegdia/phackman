@@ -82,6 +82,7 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
 			for( int col_in = 0; col_in < matrix_in.cols(); col_in++ )
 			{
 				int row_out, col_out;
+				row_out = col_out = 0; // fixed ...
 				if( angle == 1 )
 				{
 					row_out = col_in;
@@ -92,7 +93,7 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
 					row_out = matrix_in.rows() - row_in - 1;
 					col_out = matrix_in.cols() - col_in - 1;
 				}
-				else if( angle == 3 )
+				else if( angle == 3 ) // ... warning here
 				{
 					row_out = matrix_in.cols() - col_in - 1;
 					col_out = row_in;

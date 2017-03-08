@@ -10,7 +10,7 @@
 #include "../map/mapgen.h"
 #include "../ai/pfmap.h"
 #include "../ai/blackboard.h"
-#include "../debug/mapsoliddebug.h"
+//#include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen( PhackmanGame* g )
     : m_game(g), m_cam(new Camera())
@@ -33,9 +33,9 @@ void GameplayScreen::show()
 	auto start_node = m_navmap->nodes()[0];
 
     secs::Entity player = gw.factory().makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
-    TransformComponent& tc = gw.engine().component<PositionComponent>(player);
+	TransformComponent& tc = gw.engine().component<TransformComponent>(player);
 
-    m_playerPositionComponent = &tc;
+	m_playerTransformComponent = &tc;
 
 }
 
@@ -62,8 +62,11 @@ void GameplayScreen::update(double delta)
 
 void GameplayScreen::render()
 {
-    m_cam->position(m_player, 0);
-    m_cam->scale(1, 1);
+	Vec2f new_pos = m_playerTransformComponent->position;
+    new_pos.x(-floor(new_pos.x()) * 2 + 300);
+    new_pos.y(-floor(new_pos.y()) * 2 + 200);
+	m_cam->position(new_pos.x(), new_pos.y());
+    m_cam->scale(2, 2);
     m_cam->bind();
 	al_clear_to_color(al_map_rgb(20,20,20));
 	al_set_target_bitmap(al_get_backbuffer(m_game->display()));
@@ -86,7 +89,7 @@ void GameplayScreen::render()
 
     if( m_showsolid )
     {
-        MapSolidDebug(m_tileMap).render();
+		//MapSolidDebug(m_tileMap).render();
     }
 }
 

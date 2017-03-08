@@ -27,10 +27,16 @@ public:
 
 	PathNode::SharedPtr getNeighboor( Facing direction );
 
+	float cost( Facing direction );
+
 private:
 
 	void addNieghboor( PathNode::SharedPtr n );
 	void setNeighboor( Facing direction, PathNode::SharedPtr node );
+
+	const float MAX = std::numeric_limits<float>::max();
+
+	float m_costs[4] = { MAX, MAX, MAX, MAX };
 
 	int m_x, m_y;
 	std::vector<PathNode::SharedPtr> m_neighboors;
@@ -48,7 +54,6 @@ private:
 	class ConvolutorCollector : public Convolutor4x4
 	{
 	public:
-
 		std::vector<PathNode::SharedPtr> nodes;
 		Matrix2D<PathNode::SharedPtr>::SharedPtr navigationMap;
 

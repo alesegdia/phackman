@@ -1,5 +1,7 @@
 #include "pfmap.h"
 
+#include <alligator/util/math.h>
+
 PathNode::PathNode(int x, int y)
 	: m_x(x), m_y(y)
 {
@@ -26,8 +28,16 @@ void PathNode::addNieghboor(PathNode::SharedPtr n)
 	m_neighboors.push_back(n);
 }
 
+
 void PathNode::setNeighboor(Facing direction, PathNode::SharedPtr node)
 {
+	auto distance = []( float x1, float y1, float x2, float y2 ) {
+		float dx = x2 - x1;
+		float dy = y2 - y1;
+		return sqrtf( dx * dx + dy * dy );
+	}(m_x, m_y, node->m_x, node->m_y);
+
+	m_costs[direction] = distance;
 	m_dirNeighboors[direction] = node;
 }
 
@@ -41,6 +51,10 @@ PathNode::SharedPtr PathNode::getNeighboor(Facing direction)
 	{
 		return m_dirNeighboors[direction];
 	}
+}
+
+float PathNode::cost(Facing direction) {
+	return m_costs[direction];
 }
 
 const std::vector<PathNode::SharedPtr> &NavigationMap::nodes()
