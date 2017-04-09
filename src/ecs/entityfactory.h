@@ -12,6 +12,8 @@ public:
 
     secs::Entity makePlayer( float x, float y );
 
+	secs::Entity makeEnemy( float x, float y );
+
 	template <typename ComponentType>
 	ComponentType& addComponent( const secs::Entity& e )
 	{
