@@ -4,3 +4,6 @@
 [submodule "module/secs"]
 	path = module/secs
 	url = git@github.com:alesegdia/secs.git
+[submodule "module/hadron"]
+	path = module/hadron
+	url = git@github.com:alesegdia/hadron.git
