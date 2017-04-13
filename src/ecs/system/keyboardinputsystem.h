@@ -17,7 +17,7 @@ public:
 							MapAgentInputComponent>();
 	}
 
-	void process( float delta, const secs::Entity &e ) override
+    void process( double delta, const secs::Entity &e ) override
 	{
 		auto& agtinput_comp = m_world.component<MapAgentInputComponent>(e);
 

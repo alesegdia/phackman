@@ -57,17 +57,19 @@ void GameplayScreen::update(double delta)
         m_showsolid = !m_showsolid;
     }
 
-	gw.step( static_cast<float>(delta) );
+    gw.step( delta );
 }
 
 void GameplayScreen::render()
 {
 	Vec2f new_pos = m_playerTransformComponent->position;
-    new_pos.x(-floor(new_pos.x()) * 2 + 300);
-    new_pos.y(-floor(new_pos.y()) * 2 + 200);
+    new_pos.x(-floor(new_pos.x()) * 2 + 400 - 16);
+    new_pos.y(-floor(new_pos.y()) * 2 + 300 - 16);
+
 	m_cam->position(new_pos.x(), new_pos.y());
     m_cam->scale(2, 2);
     m_cam->bind();
+
 	al_clear_to_color(al_map_rgb(20,20,20));
 	al_set_target_bitmap(al_get_backbuffer(m_game->display()));
 

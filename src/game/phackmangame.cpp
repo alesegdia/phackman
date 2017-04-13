@@ -4,7 +4,8 @@
 PhackmanGame::PhackmanGame(int sw, int sh)
 	: Game( sw, sh )
 {
-
+    this->setRenderFPS(16);
+    this->setUpdateFPS(32);
 }
 
 PhackmanGame::~PhackmanGame()

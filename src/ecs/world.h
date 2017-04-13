@@ -10,7 +10,7 @@ public:
 
 	GameWorld();
 
-	void step( float delta );
+    void step(double delta );
 
 	void render();
 

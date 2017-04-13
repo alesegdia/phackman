@@ -17,7 +17,7 @@ public:
 		setNeededComponents<TransformComponent, RenderFacingComponent>();
 	}
 
-	void process( float delta, const secs::Entity &e ) override
+    void process( double delta, const secs::Entity &e ) override
 	{
 		auto& transform_comp = m_engine.component<TransformComponent>(e);
 		auto& facing_comp = m_engine.component<RenderFacingComponent>(e);

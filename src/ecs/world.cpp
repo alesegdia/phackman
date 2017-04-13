@@ -15,7 +15,7 @@ GameWorld::GameWorld()
 	m_world.pushSystem(&m_navigationSystem);
 }
 
-void GameWorld::step(float delta)
+void GameWorld::step(double delta)
 {
 	m_world.step( delta );
 }

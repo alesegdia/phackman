@@ -8,7 +8,7 @@ RenderingSystem::RenderingSystem(secs::Engine &world)
 	setNeededComponents<RenderComponent, TransformComponent>();
 }
 
-void RenderingSystem::process(float delta, const secs::Entity &e)
+void RenderingSystem::process(double delta, const secs::Entity &e)
 {
 	auto& render_comp = m_world.component<RenderComponent>(e);
 	auto& transform_comp = m_world.component<TransformComponent>(e);

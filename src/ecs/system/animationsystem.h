@@ -14,12 +14,12 @@ public:
 		setNeededComponents<RenderComponent, AnimationComponent>();
 	}
 
-	void process( float delta, const secs::Entity &e ) override
+    void process( double delta, const secs::Entity &e ) override
 	{
 		auto& render_comp = m_world.component<RenderComponent>(e);
 		auto& anim_comp = m_world.component<AnimationComponent>(e);
 
-		anim_comp.animationData.timer += 0.025f;
+        anim_comp.animationData.timer += 0.025f;
 		anim_comp.animation->updateData( anim_comp.animationData );
 		render_comp.bitmap = anim_comp.animationData.currentFrame;
 	}

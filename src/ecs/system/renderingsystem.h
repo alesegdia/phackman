@@ -9,7 +9,7 @@ public:
 
 	RenderingSystem( secs::Engine& world );
 
-	void process(float delta, const secs::Entity &e) override;
+    void process(double delta, const secs::Entity &e) override;
 
 private:
 	secs::Engine& m_world;

@@ -18,7 +18,7 @@ public:
 							RenderFacingComponent>();
 	}
 
-	void process( float delta, const secs::Entity &e ) override
+    void process( double delta, const secs::Entity &e ) override
 	{
 		auto& agtinput_comp = m_world.component<MapAgentInputComponent>(e);
 
@@ -58,23 +58,25 @@ public:
 			if( agtstate_comp.lastNode != nullptr && agtstate_comp.lastNode->getNeighboor( facing_comp.facing ) )
 			{
 				float nx, ny;
+                const float speed = agtinput_comp.speed;
+                //std::cout << "update system: " << delta << std::endl;
 
 				switch( facing_comp.facing )
 				{
 				case Up:
 					nx = agtstate_comp.lastNode->x() * 16;
-					ny = transform_comp.position.y() - delta * 60;
+                    ny = transform_comp.position.y() - float(delta * speed);
 					break;
 				case Right:
-					nx = transform_comp.position.x() + delta * 60;
-					ny = agtstate_comp.lastNode->y() * 16;
+                    nx = transform_comp.position.x() + float(delta * speed);
+                    ny = agtstate_comp.lastNode->y() * 16;
 					break;
 				case Down:
 					nx = agtstate_comp.lastNode->x() * 16;
-					ny = transform_comp.position.y() + delta * 60;
+                    ny = transform_comp.position.y() + float(delta * speed);
 					break;
 				case Left:
-					nx = transform_comp.position.x() - delta * 60;
+                    nx = transform_comp.position.x() - float(delta * speed);
 					ny = agtstate_comp.lastNode->y() * 16;
 					break;
 				}
