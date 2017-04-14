@@ -74,7 +74,7 @@ void GameplayScreen::render()
 	al_set_target_bitmap(al_get_backbuffer(m_game->display()));
 
 	//debugRender();
-	tilesRender();
+    tilesRender();
 	//m_player->render();
 	gw.render();
 
@@ -102,6 +102,7 @@ void GameplayScreen::hide()
 
 void GameplayScreen::tilesRender()
 {
+    al_hold_bitmap_drawing(true);
 	for( int r = 0; r < m_tileMap->rows(); r++ )
 	{
 		for( int c = 0; c < m_tileMap->cols(); c++ )
@@ -110,10 +111,11 @@ void GameplayScreen::tilesRender()
 			x1 = c * 16; y1 = r * 16;
 			x2 = (c+1) * 16; y2 = (r+1) * 16;
 
-			ALLEGRO_BITMAP* bm = Assets::instance->maptilesSheet->getFrame(m_tileMap->get(c, r));
-			al_draw_bitmap(bm, x1, y1, 0);
-		}
+            ALLEGRO_BITMAP* bm = Assets::instance->maptilesSheet->getFrame(m_tileMap->get(c, r));
+            al_draw_bitmap(bm, x1, y1, 0);
+        }
 	}
+    al_hold_bitmap_drawing(false);
 }
 
 void GameplayScreen::debugRender()
