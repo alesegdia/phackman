@@ -2,9 +2,10 @@
 
 #include "../../core/facing.h"
 
-struct MapAgentInputComponent
+struct AgentInputComponent
 {
 	Facing requestedFacing;
 	bool inputRequested = true;
-    int speed = 10;
+    int speed = 100;
+	bool requestedAttack = false;
 };

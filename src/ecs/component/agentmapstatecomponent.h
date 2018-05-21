@@ -2,7 +2,7 @@
 
 #include "../../ai/pfmap.h"
 
-struct MapAgentStateComponent
+struct AgentMapStateComponent
 {
 	PathNode::SharedPtr lastNode;
 	PathNode::SharedPtr targetNode;

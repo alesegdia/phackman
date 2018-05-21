@@ -6,6 +6,7 @@ GameWorld::GameWorld()
 	  m_facingRenderingSystem(m_world),
 	  m_keyboardInputSystem(m_world),
 	  m_navigationSystem(m_world),
+	  m_animatorSystem(m_world),
 	  m_factory(m_world)
 {
 	m_world.pushSystem(&m_renderingSystem);
@@ -13,6 +14,7 @@ GameWorld::GameWorld()
 	m_world.pushSystem(&m_animationSystem);
 	m_world.pushSystem(&m_keyboardInputSystem);
 	m_world.pushSystem(&m_navigationSystem);
+	m_world.pushSystem(&m_animatorSystem);
 }
 
 void GameWorld::step(double delta)

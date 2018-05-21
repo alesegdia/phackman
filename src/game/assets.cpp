@@ -13,6 +13,13 @@ Assets::Assets()
 	phackmanWalk->addFrame(characterSheet->getFrame(2));
 	phackmanWalk->addFrame(characterSheet->getFrame(3));
 
+	phackmanStand.reset(new Animation(1.f, 1));
+	phackmanStand->addFrame(characterSheet->getFrame(1));
+
+	phackmanAttack.reset(new Animation(.7f, 2));
+	phackmanAttack->addFrame(characterSheet->getFrame(8));
+	phackmanAttack->addFrame(characterSheet->getFrame(9));
+
 	maptilesBitmap = al_load_bitmap("assets/maptiles.png");
 	maptilesSheet.reset(new Spritesheet(6, 6, maptilesBitmap));
 }

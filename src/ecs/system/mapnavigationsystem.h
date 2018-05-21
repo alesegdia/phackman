@@ -13,19 +13,37 @@ public:
 		: m_world(world)
 	{
 		setNeededComponents<TransformComponent,
-							MapAgentInputComponent,
-							MapAgentStateComponent,
+							AgentInputComponent,
+							AgentMapStateComponent,
 							RenderFacingComponent>();
 	}
 
     void process( double delta, const secs::Entity &e ) override
 	{
-		auto& agtinput_comp = m_world.component<MapAgentInputComponent>(e);
-
-		if( agtinput_comp.inputRequested )
+		auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
+	
+		if (agtinput_comp.requestedAttack)
 		{
+			return;
+		}
+
+		bool do_process = true;
+		if (m_activateDebug)
+		{
+			static float accumulated_time = 0;
+			accumulated_time += delta;
+			const float time_to_process = 0.f;
+			do_process = accumulated_time >= time_to_process;
+			if (do_process) {
+				accumulated_time -= time_to_process;
+			}
+		}
+
+		if( do_process && agtinput_comp.inputRequested )
+		{
+
 			auto& transform_comp = m_world.component<TransformComponent>(e);
-			auto& agtstate_comp = m_world.component<MapAgentStateComponent>(e);
+			auto& agtstate_comp = m_world.component<AgentMapStateComponent>(e);
 			auto& facing_comp = m_world.component<RenderFacingComponent>(e);
 
 			PathNode::SharedPtr my_node = Blackboard::instance.navigationMap->getNodeAt(
@@ -58,6 +76,17 @@ public:
 			auto facing_neighboor = agtstate_comp.lastNode->getNeighboor( facing_comp.facing );
 			if( agtstate_comp.lastNode != nullptr && facing_neighboor != nullptr )
 			{
+				// get furthest neighboor
+				// a velocidades muy altas, todavía da comportamientos raros
+				// como que se pasa de largo y atraviesa paredes; REVISAR
+				if ( agtinput_comp.requestedFacing == facing_comp.facing )
+				{
+					while (facing_neighboor->getNeighboor(facing_comp.facing) != nullptr)
+					{
+						facing_neighboor = facing_neighboor->getNeighboor(facing_comp.facing);
+					}
+				}
+
 				float nx, ny;
 				const float speed = agtinput_comp.speed;
 				float displacement = float(delta * speed);
@@ -68,10 +97,6 @@ public:
 				float neighboor_dist = abs((np.x() - p.x()) + (np.y() - p.y()));
 				float odisp = displacement;
 				displacement = displacement < neighboor_dist ? displacement : neighboor_dist;
-
-				// ahora mismo la entidad va dando saltitos en cada nodo porque se ajusta siempre la posición al nodo
-				// para arreglar esto, miraremos hasta qué nodo podemos llegar con el desplazamiento indicado y
-				// haremos toda la comprobación con ese nodo, en lugar de simplemente con el siguiente
 
 				switch (facing_comp.facing)
 				{
@@ -100,5 +125,6 @@ public:
 
 private:
 	secs::Engine& m_world;
+	bool m_activateDebug = false;
 
 };

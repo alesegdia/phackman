@@ -25,6 +25,7 @@ private:
 	FacingRenderingSystem m_facingRenderingSystem;
 	KeyboardInputSystem m_keyboardInputSystem;
 	MapNavigationSystem m_navigationSystem;
+	AnimatorSystem m_animatorSystem;
 	EntityFactory m_factory;
 
 };

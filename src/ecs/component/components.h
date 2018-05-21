@@ -5,9 +5,10 @@
 #include "animationcomponent.h"
 #include "renderfacingcomponent.h"
 #include "keyboardinputcomponent.h"
-#include "mapagentinputcomponent.h"
-#include "mapagentstatecomponent.h"
+#include "agentinputcomponent.h"
+#include "agentmapstatecomponent.h"
 #include "shootcomponent.h"
 #include "triggercomponent.h"
+#include "animatorcomponent.h"
 
 

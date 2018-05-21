@@ -7,7 +7,7 @@
 #include "maputil.h"
 
 LayoutBuilder::LayoutBuilder(Config cfg)
-	: rng(time(NULL)), m_config(cfg)
+	: rng(123), m_config(cfg)
 {
 
 }

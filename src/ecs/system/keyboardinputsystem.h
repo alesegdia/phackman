@@ -14,18 +14,19 @@ public:
 	{
 		setNeededComponents<KeyboardInputComponent,
 							RenderFacingComponent,
-							MapAgentInputComponent>();
+							AgentInputComponent>();
 	}
 
     void process( double delta, const secs::Entity &e ) override
 	{
-		auto& agtinput_comp = m_world.component<MapAgentInputComponent>(e);
+		auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
 
-		bool u, d, r, l;
+		bool u, d, r, l, space;
 		u = Input::IsKeyDown( ALLEGRO_KEY_UP );
 		d = Input::IsKeyDown( ALLEGRO_KEY_DOWN );
 		r = Input::IsKeyDown( ALLEGRO_KEY_RIGHT );
-		l = Input::IsKeyDown( ALLEGRO_KEY_LEFT );
+		l = Input::IsKeyDown(ALLEGRO_KEY_LEFT);
+		space = Input::IsKeyDown(ALLEGRO_KEY_SPACE);
 
 		if( u )
 		{
@@ -45,7 +46,8 @@ public:
 			agtinput_comp.requestedFacing = Facing::Right;
 		}
 
-		agtinput_comp.inputRequested = u | d | l | r;
+		agtinput_comp.inputRequested = (u | d | l | r) && !space;
+		agtinput_comp.requestedAttack = space;
 	}
 
 private:
