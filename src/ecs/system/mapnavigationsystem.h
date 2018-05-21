@@ -55,33 +55,45 @@ public:
 				}
 			}
 
-			if( agtstate_comp.lastNode != nullptr && agtstate_comp.lastNode->getNeighboor( facing_comp.facing ) )
+			auto facing_neighboor = agtstate_comp.lastNode->getNeighboor( facing_comp.facing );
+			if( agtstate_comp.lastNode != nullptr && facing_neighboor != nullptr )
 			{
 				float nx, ny;
-                const float speed = agtinput_comp.speed;
-                //std::cout << "update system: " << delta << std::endl;
+				const float speed = agtinput_comp.speed;
+				float displacement = float(delta * speed);
+				
+				const Vec2f np = Vec2f(facing_neighboor->x() * 16, facing_neighboor->y() * 16);
+				const Vec2f p = transform_comp.position;
+				
+				float neighboor_dist = abs((np.x() - p.x()) + (np.y() - p.y()));
+				float odisp = displacement;
+				displacement = displacement < neighboor_dist ? displacement : neighboor_dist;
 
-				switch( facing_comp.facing )
+				// ahora mismo la entidad va dando saltitos en cada nodo porque se ajusta siempre la posición al nodo
+				// para arreglar esto, miraremos hasta qué nodo podemos llegar con el desplazamiento indicado y
+				// haremos toda la comprobación con ese nodo, en lugar de simplemente con el siguiente
+
+				switch (facing_comp.facing)
 				{
 				case Up:
 					nx = agtstate_comp.lastNode->x() * 16;
-                    ny = transform_comp.position.y() - float(delta * speed);
+					ny = transform_comp.position.y() - displacement;
 					break;
 				case Right:
-                    nx = transform_comp.position.x() + float(delta * speed);
-                    ny = agtstate_comp.lastNode->y() * 16;
+					nx = transform_comp.position.x() + displacement;
+					ny = agtstate_comp.lastNode->y() * 16;
 					break;
 				case Down:
 					nx = agtstate_comp.lastNode->x() * 16;
-                    ny = transform_comp.position.y() + float(delta * speed);
+					ny = transform_comp.position.y() + displacement;
 					break;
 				case Left:
-                    nx = transform_comp.position.x() - float(delta * speed);
+					nx = transform_comp.position.x() - displacement;
 					ny = agtstate_comp.lastNode->y() * 16;
 					break;
 				}
 
-				transform_comp.position.set( nx, ny );
+				transform_comp.position.set(nx, ny);
 			}
 		}
 	}
