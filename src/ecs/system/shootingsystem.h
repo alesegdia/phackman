@@ -5,16 +5,22 @@
 
 #include "../component/components.h"
 
-class ShootingSystem : public secs::TypedEntitySystem<TriggerComponent, ShootComponent>
+class ShootingSystem : public secs::TypedEntitySystem<AgentInputComponent, ShootComponent>
 {
 public:
-	ShootingSystem();
 
-	void process( float delta, const secs::Entity &e, TriggerComponent& tc, ShootComponent& sc )
-	{
-		processor()->removeComponent<TriggerComponent>(e);
-		sc.shoot(e);
-	}
+    void process( double delta, const secs::Entity &e, AgentInputComponent& aic, ShootComponent& sc )
+    {
+        if( sc.nextShotAvailable > 0 )
+        {
+            sc.nextShotAvailable -= delta;
+        }
+        if( aic.requestedAttack && sc.nextShotAvailable <= 0 )
+        {
+            processor()->addComponent<TriggerComponent>(e);
+            sc.nextShotAvailable = sc.rate;
+        }
+    }
 };
 
 #endif // SHOOTINGSYSTEM_H

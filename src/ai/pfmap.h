@@ -23,7 +23,8 @@ public:
 	PathNode( int x, int y );
 	int x();
 	int y();
-	const std::vector<PathNode::SharedPtr>& neighboors();
+    const std::vector<PathNode::SharedPtr>& neighboors();
+    const std::vector<Facing>& facings();
 
 	PathNode::SharedPtr getNeighboor( Facing direction );
 
@@ -31,7 +32,6 @@ public:
 
 private:
 
-	void addNieghboor( PathNode::SharedPtr n );
 	void setNeighboor( Facing direction, PathNode::SharedPtr node );
 
 	const float MAX = std::numeric_limits<float>::max();
@@ -39,8 +39,9 @@ private:
 	float m_costs[4] = { MAX, MAX, MAX, MAX };
 
 	int m_x, m_y;
-	std::vector<PathNode::SharedPtr> m_neighboors;
-	PathNode::SharedPtr m_dirNeighboors[4] = {nullptr, nullptr, nullptr, nullptr};
+    std::vector<PathNode::SharedPtr> m_neighboors;
+    std::vector<Facing> m_facings;
+    PathNode::SharedPtr m_dirNeighboors[4] = {nullptr, nullptr, nullptr, nullptr};
 
 };
 

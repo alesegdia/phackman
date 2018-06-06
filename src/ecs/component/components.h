@@ -10,5 +10,7 @@
 #include "shootcomponent.h"
 #include "triggercomponent.h"
 #include "animatorcomponent.h"
-
-
+#include "aiagentrandomwandercomponent.h"
+#include "infectcomponent.h"
+#include "dieonstopcomponent.h"
+#include "wallplacementcomponent.h"

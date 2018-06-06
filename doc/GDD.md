@@ -1,115 +1,87 @@
 # Phack Man
 
-<small>**This document is prone to modifications and will evolve during development.**</small>
 
-## Table of Contents
+# 1. Brief
 
-1. [Plot](#1-plot)
-2. [Gameplay](#2-gameplay)
-3. [Objectives](#3-objectives)
-4. [Input](#4-input)
-5. [Gadgets](#5-gadgets)
-6. [Map](#6-map)
-7. [Enemies](#7-enemies)
-8. [Possible upgrades](#8-possible-upgrades)
+Tower defense roguelike with pacman design elements about a maintenance guy on a ship trying to clean up the lower cargo bays with the help of a gun, a few gadgets and some placeable machines.
 
-### Appendix
-1. [Map generation](#a1-map-generation)
+# 2. Summary
 
-
----
-
-
-## 1. Plot
+## 2.1. Plot
 The **INV4D-312** is a transport spaceship that was just intercepted by an alien race classified as the **Zenytp-3D3**. Take control of **Phack Man** in his mission to clear all the floors of the cargo bay from these little bastards.
 
-## 2. Gameplay
-Phack Man's gameplay resembles the good ol’ Pacman mechanics. The map is a generated maze and entities can move freely through it. Phack Man can shoot with Lock & Stock, his loyal twin miniguns, among other gadgets he will find in his path.
+## 2.2. Basic gameplay
 
-## 3. Objectives
+Phack Man's gameplay resembles the good ol’ Pacman mechanics. The map is a generated maze and entities can move freely through it. The objective is to find the key node to open the stairs for the next floor and proceed to go to the next floor. There will be infinite floors.
 
-The main and needed-to-advance objective is to collect the key and open the stairs to the next floor. Some secondary objectives for the player are:
+Floor and wall tiles can be infected, normal or secured. When an alien enemy steps over a tile, it gets automatically infected, unless the tile is secured. When a tile is infected, you can not use the floor or walls to place gadgets because of the infection. If there was a previously placed gadget, this will just be destroyed.
 
-* Clear the floor from aliens.
-* Collect all nodes scattered around the map in the same way as Pac-Man has to collect all balls.
+Phack Man can shoot with his two miniguns Lock & Stock (L&S from now on), but only when the battery is charged. In order to charge the battery, the player needs to collect power nodes (like Pacman power pills). Battery charge will decrease over time even if the player is not using them. These guns have several parameters like rate, power or bullet speed, but can be also raycasted. TBD.
 
-The completion of these secondary objectives are rewarded with points, that could be used later to buy and enhance gadgets in the next level.
+There are a few nodes that can be found in the game:
 
-## 4. Input
-The player control consists of the following input:
-<center>
+| Name | Usage | Obtainability |
+|:---:|:---:|:---:|
+| IndustryNode | **Build** constructions and place gadgets | Spread around the map |
+| ScienceNode | **Enhance** gadgets and constructions | Dropped by spawners |
+| PowerNode | **Recharge** L&S batteries | Rarely spread around the map |
+| CleanseNode | **Clean** infection | Dropped by enemies |
+| KeyNode | **Open** stairs to the next floor | One per floor |
 
-| Key        | Action           |
-|:----------:|:----------------:|
-| ←↑→↓       | Movement         |
-| z/x        | Cycle gadget     |
-| a/s        | Quick gadgets    |
-| 1-9        | Gadget shortcut  |
-| Space      | Use gadget       |
+## 2.3. Gadgets
 
-</center>
-The player can advance the path by pressing the arrow keys. If the pressed key direction is not allowed in the current position, the player will advance following its current facing when pressing this key until it is possible to turn.
+The player will acquire construction nodes in the stage and can spend them in using gadgets. Some of them can be upgraded in the midstage so that parameters like power, rate, strike, time-to-live can change. Gadgets fall in these categories:
 
-## 5. Gadgets
+### 2.3.1. Buildings
 
-The way to obtain gadgets is still to be polished. The player needs credits in order to buy and enhance gadgets. They could be extracted from a vending machine present in the map, or maybe in each mid-level stage. Gadgets fall in the following categories:
+You can place those and repair them with construction nodes.
 
-* Buildings (turrets, lasers).
-* Placeable items (mines, bomberman-like mine).
-* Allied AI-controlled actors (drones, robots).
-* Guns (Lock&Stock basically).
-* Utility gadgets (running shoes, invisibility, repair tool, hook).
+| Name | Description | Upgrades |
+|:---:|:---:|:---:|
+| Laser | Countdown explosion and branches explosion like in bomberman | Power |
+| FixedTurret | Cheap but can shoot in one direction | Advance, SimultaneosulyPlaced |
+| MovableTurret | Deals damage to enemies passing over it | TimeToLive, SimultaneosulyPlaced |
+| SnailDevice | Slows nearby enemies | SlowPower |
 
-The enhancement of gadgets could impact the number of placed objects at the same time, the power, the time-to-live or the cooldown.
+### 2.3.2. Consumable
 
-#### Lock&Stock
+like mines or bombs in a bomberman way
 
-Can shoot. Shoot types are:
+| Name | Description | Upgrades |
+|:---:|:---:|:---:|
+| Spread Bomb | Countdown explosion and branches explosion like in bomberman | Advance |
+| Spread Mine | Explodes on contact | Advance, SimultaneosulyPlaced |
+| Electric field | Deals damage to enemies passing over it | TimeToLive, SimultaneosulyPlaced |
+| Remote Bomb | Explodes on detonation, deals high damage in single block | Power |
 
-* Two bullets
-* One big rocket?
+### 2.3.3. Drones
 
-Parameters:
-* Rate
-* Power
-* Bullet speed
+Follows player and provides enhancements. When the player is reached by an enemy, a drone explodes instead of dying the player. The enemy or enemy bullet would explode as well as the enemy. The number of drones is TBD, but the decision ranges from 1 to 3.
 
-#### Mines
+| Name | Description | Upgrades |
+|:---:|:---:|:---:|
+| BarrierDrone | Deploys a barrier which explodes on enemy contact. | RegenTime, Capacity |
+| PulseDrone | Shoots pulse bullets to enemies in front | ShootBack, DualShoot |
 
-* Can be placed on the floor
+## 3. Interface
 
-Parameters:
+* The player will have an active gadget/building shown in the UI that can be changed by cycling.
+* The player control consists of the following input:
+* The player can advance the path by pressing the arrow keys.
+* If the pressed key direction is not allowed in the current position, the player will advance following its current facing when pressing this key until it is possible to turn.
 
-* Number of simultaneously placed mines.
-* Power.
-* Cooldown.
+| Action | Keyboard | Gamepad |
+|:---:|:---:|:---:|
+| Movement | Arrows | D-Pad |
+| Shoot L&S | Space | B |
+| Use gadget | C | Y |
+| Gadget menu | V | X |
+| Cycle gadget | Z/X | L/R |
 
-#### Lasers
+When the player presses the 'Use gadget' button, time will stop and you'll be able to mount gadgets in nearby floor or wall tiles.
 
-* Number of simultaneously placed lasers.
-* Power.
+## 4. Map
 
-#### Drones
-
-Can set N wandering nodes? Wanders randomly? follows player?
-
-#### Static turrets
-
-* Can be placed in the floor.
-
-Parameters:
-
-* Detecting area
-* Bullet rate
-* Bullet power
-* Strike
-* Bullet speed
-
-#### Hook
-
-Lets you quickly travel by launching the hook to the front-facing wall and getting you quickly to it.
-
-## 6. Map
 The map is a generated maze with progressive size depending on the floor. We can think of the map like a node graph where nodes are placed at maze positions where the player can turn 90 degrees.
 
 ```
@@ -124,7 +96,7 @@ The map is a generated maze with progressive size depending on the floor. We can
 
 The walkable path will be 2 tiles width, instead of 1 like in Pac-Man. The walls of the map can have a minimum of 1 tile width. The generation will be defined later.
 
-## 7. Enemies
+## 5. Enemies
 
 There will be defined a few behaviors, but probably **only one will be implemented** (the easiest) for time economy reasons.
 
@@ -142,15 +114,16 @@ Enemies could be spawned all at the start, and/or from spawning buildings. This 
 
 Spawners could spawn enemies near it or just anywhere, and is the player objective to inhibit all the spawners in order to get the key to travel to the next floor.
 
-## 8. Possible upgrades
+## A.1. Possible upgrades
 
 These upgrades won't probably be implemented, but they will be kept here for the record.
 
 * **Lock&Stock mods**. These mods can change the rate, speed, or damage of L&S shoots.
 * **Weaknesses and resistances** so that a certain mod can be strong against certain type of enemies and weak against others.
 * **Vary enemy colors** to determine its toughness or Weakness&Resistances.
+* Bosses
 
-## A.1. Map generation
+## A.2. Map generation
 
 After doing a little of research, I found a really interesting [pacman-like maze generator idea](http://pacman.shaunew.com/play/mapgen/) by Shaun Williams, part of his [Pac-Man tribute project](http://pacman.shaunew.com/). As the author says, the doc is incomplete in details, but the base is **use tetromino shapes to aid on map generation**. The map will be generated following this very principle.
 

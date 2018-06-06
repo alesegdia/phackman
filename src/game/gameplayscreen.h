@@ -7,6 +7,7 @@
 
 #include "../ai/pfmap.h"
 #include "../ecs/world.h"
+#include "../map/mapscene.h"
 
 class PhackmanGame;
 
@@ -27,16 +28,14 @@ public:
 private:
 	PhackmanGame* m_game;
 
-	Matrix2Di::SharedPtr m_map;
-	Matrix2Di::SharedPtr m_tileMap;
-	std::shared_ptr<NavigationMap> m_navmap;
-
+    MapScene m_mapScene;
     bool m_shownodes = false;
     bool m_showsolid = false;
 
     Camera::SharedPtr m_cam;
+    Camera::SharedPtr m_guiCam;
 
-    TransformComponent* m_playerTransformComponent;
+    secs::Entity m_playerEntity;
 
 	GameWorld gw;
 

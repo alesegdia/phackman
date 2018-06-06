@@ -5,10 +5,16 @@
 
 #include "../component/components.h"
 
-class TriggerSystem : public secs::TypedEntitySystem<TriggerComponent>
+class TriggerSystem : public secs::TypedEntitySystem<TriggerComponent, ShootComponent>
 {
 public:
-	TriggerSystem();
+
+    void process( double delta, const secs::Entity &e, TriggerComponent& tc, ShootComponent& sc )
+    {
+        processor()->removeComponent<TriggerComponent>(e);
+        sc.shoot(e);
+    }
+
 };
 
 #endif // TRIGGERSYSTEM_H

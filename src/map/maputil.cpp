@@ -112,33 +112,50 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
 
 Matrix2Di::SharedPtr scale(const Matrix2Di &input, int factor)
 {
-	Matrix2Di::SharedPtr output;
-	output.reset(new Matrix2Di(input.cols() * factor, input.rows() * factor));
+    Matrix2Di::SharedPtr output;
+    output.reset(new Matrix2Di(input.cols() * factor, input.rows() * factor));
 
-	for( int row_in = 0; row_in < input.rows(); row_in++ )
-	{
-		for( int col_in = 0; col_in < input.cols(); col_in++ )
-		{
-			int value = input.get(col_in, row_in);
-			for( int row_out = row_in * factor; row_out < (row_in + 1) * factor; row_out++ )
-			{
-				for( int col_out = col_in * factor; col_out < (col_in + 1) * factor; col_out++ )
-				{
-					output->set(col_out, row_out, value);
-				}
-			}
-		}
-	}
+    for( int row_in = 0; row_in < input.rows(); row_in++ )
+    {
+        for( int col_in = 0; col_in < input.cols(); col_in++ )
+        {
+            int value = input.get(col_in, row_in);
+            for( int row_out = row_in * factor; row_out < (row_in + 1) * factor; row_out++ )
+            {
+                for( int col_out = col_in * factor; col_out < (col_in + 1) * factor; col_out++ )
+                {
+                    output->set(col_out, row_out, value);
+                }
+            }
+        }
+    }
 
-	return output;
+    return output;
+}
+
+Matrix2Di::SharedPtr scale_down(const Matrix2Di &input, int factor)
+{
+    Matrix2Di::SharedPtr output;
+    output.reset(new Matrix2Di(input.cols() / factor, input.rows() / factor));
+
+    for( int row_in = 0; row_in < input.rows(); row_in += factor )
+    {
+        for( int col_in = 0; col_in < input.cols(); col_in += factor )
+        {
+            int value = input.get(col_in, row_in);
+            output->set(col_in / factor, row_in / factor, value);
+        }
+    }
+
+    return output;
 }
 
 Matrix2Di::SharedPtr add_border( const Matrix2Di& input, int border_size )
 {
-	Matrix2Di::SharedPtr output;
-	output.reset(new Matrix2Di(input.cols() + border_size * 2, input.rows() + border_size * 2, 0));
-	plot(input, *output, border_size, border_size);
-	return output;
+    Matrix2Di::SharedPtr output;
+    output.reset(new Matrix2Di(input.cols() + border_size * 2, input.rows() + border_size * 2, 0));
+    plot(input, *output, border_size, border_size);
+    return output;
 }
 
 
@@ -321,28 +338,28 @@ int draw_map_tiles_convolutor(int d00, int d10, int d20, int d01, int d11, int d
 		d01 == 1 && d11 == 0 && d21 == 0 &&
 		d02 == 1 && d12 == 0 && d22 == 0 )
 	{
-		return 6;
+        return 6;
 	}
 
 	else if( d00 == 1 && d10 == 0 && d20 == 0 &&
 			 d01 == 1 && d11 == 0 && d21 == 0 &&
 			 d02 == 1 && d12 == 1 && d22 == 1 )
 	{
-		return 12;
+        return 12;
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 1 &&
 			 d01 == 0 && d11 == 0 && d21 == 1 &&
 			 d02 == 1 && d12 == 1 && d22 == 1 )
 	{
-		return 13;
+        return 13;
 	}
 
 	else if( d00 == 1 && d10 == 1 && d20 == 1 &&
 			 d01 == 0 && d11 == 0 && d21 == 1 &&
 			 d02 == 0 && d12 == 0 && d22 == 1 )
 	{
-		return 7;
+        return 7;
 	}
 
 
@@ -497,4 +514,23 @@ int draw_map_tiles_convolutor(int d00, int d10, int d20, int d01, int d11, int d
 	{
 		return 1;
 	}
+}
+
+int place_collectible_nodes(int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22)
+{
+    if( d11 == 0 )
+    {
+        int horiz   = d01 + d11 + d21;
+        int vert    = d10 + d11 + d12;
+        if( (horiz == 0 || vert == 0))
+        {
+            return 1;
+        }
+        else
+        {
+            return 2;
+        }
+    }
+
+    return 0;
 }

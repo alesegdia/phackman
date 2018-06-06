@@ -9,122 +9,127 @@ class MapNavigationSystem : public secs::EntitySystem
 {
 public:
 
-	MapNavigationSystem( secs::Engine& world )
-		: m_world(world)
-	{
-		setNeededComponents<TransformComponent,
-							AgentInputComponent,
-							AgentMapStateComponent,
-							RenderFacingComponent>();
-	}
+    MapNavigationSystem( secs::Engine& world )
+        : m_world(world)
+    {
+        setNeededComponents<TransformComponent,
+                            AgentInputComponent,
+                            AgentMapStateComponent,
+                            RenderFacingComponent>();
+    }
 
     void process( double delta, const secs::Entity &e ) override
-	{
-		auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
-	
-		if (agtinput_comp.requestedAttack)
-		{
-			return;
-		}
+    {
+        auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
 
-		bool do_process = true;
-		if (m_activateDebug)
-		{
-			static float accumulated_time = 0;
-			accumulated_time += delta;
-			const float time_to_process = 0.f;
-			do_process = accumulated_time >= time_to_process;
-			if (do_process) {
-				accumulated_time -= time_to_process;
-			}
-		}
+        if (agtinput_comp.requestedAttack)
+        {
+            return;
+        }
 
-		if( do_process && agtinput_comp.inputRequested )
-		{
+        bool do_process = true;
+        if (m_activateDebug)
+        {
+            static float accumulated_time = 0;
+            accumulated_time += delta;
+            const float time_to_process = 0.f;
+            do_process = accumulated_time >= time_to_process;
+            if (do_process) {
+                accumulated_time -= time_to_process;
+            }
+        }
 
-			auto& transform_comp = m_world.component<TransformComponent>(e);
-			auto& agtstate_comp = m_world.component<AgentMapStateComponent>(e);
-			auto& facing_comp = m_world.component<RenderFacingComponent>(e);
+        if( do_process && agtinput_comp.inputRequested )
+        {
 
-			PathNode::SharedPtr my_node = Blackboard::instance.navigationMap->getNodeAt(
-						transform_comp.position.x(),
-						transform_comp.position.y() );
+            auto& transform_comp = m_world.component<TransformComponent>(e);
+            auto& agtstate_comp = m_world.component<AgentMapStateComponent>(e);
+            auto& facing_comp = m_world.component<RenderFacingComponent>(e);
 
-			if( my_node == nullptr )
-			{
-				Orientation requested_orientation = get_orientation( agtinput_comp.requestedFacing );
-				Orientation current_orientation = get_orientation( facing_comp.facing );
-				if( requested_orientation == current_orientation && agtinput_comp.requestedFacing != facing_comp.facing )
-				{
-					facing_comp.facing = agtinput_comp.requestedFacing;
-					PathNode::SharedPtr last_node = agtstate_comp.lastNode;
-					agtstate_comp.lastNode = agtstate_comp.targetNode;
-					agtstate_comp.targetNode = last_node;
-				}
-			}
-			else
-			{
-				agtstate_comp.lastNode = my_node;
-				PathNode::SharedPtr target_node = agtstate_comp.lastNode->getNeighboor( agtinput_comp.requestedFacing );
-				if( target_node != nullptr )
-				{
-					facing_comp.facing = agtinput_comp.requestedFacing;
-					agtstate_comp.targetNode = target_node;
-				}
-			}
+            PathNode::SharedPtr my_node = Blackboard::instance.navigationMap->getNodeAt(
+                        transform_comp.position.x(),
+                        transform_comp.position.y() );
 
-			auto facing_neighboor = agtstate_comp.lastNode->getNeighboor( facing_comp.facing );
-			if( agtstate_comp.lastNode != nullptr && facing_neighboor != nullptr )
-			{
-				// get furthest neighboor
-				// a velocidades muy altas, todavía da comportamientos raros
-				// como que se pasa de largo y atraviesa paredes; REVISAR
-				if ( agtinput_comp.requestedFacing == facing_comp.facing )
-				{
-					while (facing_neighboor->getNeighboor(facing_comp.facing) != nullptr)
-					{
-						facing_neighboor = facing_neighboor->getNeighboor(facing_comp.facing);
-					}
-				}
+            if( my_node == nullptr )
+            {
+                Orientation requested_orientation = get_orientation( agtinput_comp.requestedFacing );
+                Orientation current_orientation = get_orientation( facing_comp.facing );
+                if( requested_orientation == current_orientation && agtinput_comp.requestedFacing != facing_comp.facing )
+                {
+                    facing_comp.facing = agtinput_comp.requestedFacing;
+                    PathNode::SharedPtr last_node = agtstate_comp.lastNode;
+                    agtstate_comp.lastNode = agtstate_comp.targetNode;
+                    agtstate_comp.targetNode = last_node;
+                }
+            }
+            else
+            {
+                agtstate_comp.lastNode = my_node;
+                PathNode::SharedPtr target_node = agtstate_comp.lastNode->getNeighboor( agtinput_comp.requestedFacing );
+                if( target_node != nullptr )
+                {
+                    facing_comp.facing = agtinput_comp.requestedFacing;
+                    agtstate_comp.targetNode = target_node;
+                }
+            }
 
-				float nx, ny;
-				const float speed = agtinput_comp.speed;
-				float displacement = float(delta * speed);
-				
-				const Vec2f np = Vec2f(facing_neighboor->x() * 16, facing_neighboor->y() * 16);
-				const Vec2f p = transform_comp.position;
-				
-				float neighboor_dist = abs((np.x() - p.x()) + (np.y() - p.y()));
-				float odisp = displacement;
-				displacement = displacement < neighboor_dist ? displacement : neighboor_dist;
+            PathNode::SharedPtr facing_neighboor = nullptr;
+            if( agtstate_comp.lastNode != nullptr )
+            {
+                facing_neighboor = agtstate_comp.lastNode->getNeighboor( facing_comp.facing );
+            }
 
-				switch (facing_comp.facing)
-				{
-				case Up:
-					nx = agtstate_comp.lastNode->x() * 16;
-					ny = transform_comp.position.y() - displacement;
-					break;
-				case Right:
-					nx = transform_comp.position.x() + displacement;
-					ny = agtstate_comp.lastNode->y() * 16;
-					break;
-				case Down:
-					nx = agtstate_comp.lastNode->x() * 16;
-					ny = transform_comp.position.y() + displacement;
-					break;
-				case Left:
-					nx = transform_comp.position.x() - displacement;
-					ny = agtstate_comp.lastNode->y() * 16;
-					break;
-				}
+            if( agtstate_comp.lastNode != nullptr && facing_neighboor != nullptr )
+            {
+                // get furthest neighboor
+                // a velocidades muy altas, todavï¿½a da comportamientos raros
+                // como que se pasa de largo y atraviesa paredes; REVISAR
+                if ( agtinput_comp.requestedFacing == facing_comp.facing )
+                {
+                    while (facing_neighboor->getNeighboor(facing_comp.facing) != nullptr)
+                    {
+                        facing_neighboor = facing_neighboor->getNeighboor(facing_comp.facing);
+                    }
+                }
 
-				transform_comp.position.set(nx, ny);
-			}
-		}
-	}
+                float nx, ny;
+                const float speed = agtinput_comp.speed;
+                float displacement = float(delta * speed);
+
+                const Vec2f np = Vec2f(facing_neighboor->x() * 16, facing_neighboor->y() * 16);
+                const Vec2f p = transform_comp.position;
+
+                float neighboor_dist = abs((np.x() - p.x()) + (np.y() - p.y()));
+                float odisp = displacement;
+                displacement = displacement < neighboor_dist ? displacement : neighboor_dist;
+
+                switch (facing_comp.facing)
+                {
+                case Up:
+                    nx = agtstate_comp.lastNode->x() * 16;
+                    ny = transform_comp.position.y() - displacement;
+                    break;
+                case Right:
+                    nx = transform_comp.position.x() + displacement;
+                    ny = agtstate_comp.lastNode->y() * 16;
+                    break;
+                case Down:
+                    nx = agtstate_comp.lastNode->x() * 16;
+                    ny = transform_comp.position.y() + displacement;
+                    break;
+                case Left:
+                    nx = transform_comp.position.x() - displacement;
+                    ny = agtstate_comp.lastNode->y() * 16;
+                    break;
+                }
+
+                transform_comp.position.set(nx, ny);
+            }
+        }
+    }
 
 private:
-	secs::Engine& m_world;
-	bool m_activateDebug = false;
+    secs::Engine& m_world;
+    bool m_activateDebug = false;
 
 };

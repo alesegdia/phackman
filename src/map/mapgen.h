@@ -47,6 +47,8 @@ private:
 	Config m_config;
 	Matrix2Di::SharedPtr m_layoutMatrix;
 
+    bool m_originalPacman = false;
+
 };
 
 class ShapeStorage

@@ -46,6 +46,13 @@ bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy
  */
 Matrix2Di::SharedPtr scale( const Matrix2Di& input, int factor );
 
+/**
+ * @brief scales a matrix
+ * @param input the matrix to scale
+ * @param factor the factor to use on matrix scaling
+ * @return the scaled matrix
+ */
+Matrix2Di::SharedPtr scale_down( const Matrix2Di& input, int factor );
 
 /**
  * @brief adds a border of 0 to a matrix
@@ -55,6 +62,7 @@ Matrix2Di::SharedPtr scale( const Matrix2Di& input, int factor );
  */
 Matrix2Di::SharedPtr add_border( const Matrix2Di& input, int border_size );
 
+Matrix2Di::SharedPtr fill_borders( const Matrix2Di& input, int fill_value );
 
 /**
  * @brief adds an integer to every nonzero cell
@@ -98,7 +106,7 @@ public:
 	virtual ~Convolutor4x4() = 0 ;
 
 	virtual int operator()(int d00, int d10, int d20, int d30,
-					int d01, int d11, int d21, int d31,
+                    int d01, int d11, int d21, int d31,
 					int d02, int d12, int d22, int d32,
 					int d03, int d13, int d23, int d33, int x, int y) = 0 ;
 };
@@ -125,6 +133,10 @@ int fill_zero_border_convolutor	( int d00, int d10, int d20, int d01, int d11, i
 int shrink_pieces_convolutor	( int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22 );
 
 int draw_map_tiles_convolutor	( int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22 );
+
+int place_collectible_nodes 	( int d00, int d10, int d20,
+                                  int d01, int d11, int d21,
+                                  int d02, int d12, int d22 );
 
 /**
  * @brief turns all non-zero values in the matrix to a specified value

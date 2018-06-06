@@ -23,11 +23,10 @@ const std::vector<PathNode::SharedPtr> &PathNode::neighboors()
 	return m_neighboors;
 }
 
-void PathNode::addNieghboor(PathNode::SharedPtr n)
+const std::vector<Facing> &PathNode::facings()
 {
-	m_neighboors.push_back(n);
+    return m_facings;
 }
-
 
 void PathNode::setNeighboor(Facing direction, PathNode::SharedPtr node)
 {
@@ -37,6 +36,8 @@ void PathNode::setNeighboor(Facing direction, PathNode::SharedPtr node)
 		return sqrtf( dx * dx + dy * dy );
 	}(m_x, m_y, node->m_x, node->m_y);
 
+    m_neighboors.push_back(node);
+    m_facings.push_back(direction);
 	m_costs[direction] = distance;
 	m_dirNeighboors[direction] = node;
 }
@@ -209,7 +210,6 @@ void NavigationMap::searchNeighboor(PathNode::SharedPtr node, Facing direction)
 		{
 			// found one
 			search_state = 1;
-			node->addNieghboor(node_cell);
 			node->setNeighboor(direction, node_cell);
 		}
 		else if( !is_next_free )

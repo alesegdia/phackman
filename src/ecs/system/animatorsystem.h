@@ -19,8 +19,6 @@ public:
 		auto& anim_comp = m_world.component<AnimationComponent>(e);
 		auto& antr_comp = m_world.component<AnimatorComponent>(e);
 
-		printf("%d\n", agtinput_comp.inputRequested);
-
 		if (antr_comp.stand_animation != nullptr)
 		{
 			anim_comp.animation = antr_comp.stand_animation;
@@ -35,6 +33,16 @@ public:
 		{
 			anim_comp.animation = antr_comp.attack_animation;
 		}
+
+        if( agtinput_comp.inputRequested && agtinput_comp.requestedDesinfect && antr_comp.desinfect_walk_animation )
+        {
+            anim_comp.animation = antr_comp.desinfect_walk_animation;
+        }
+
+        if( false == agtinput_comp.inputRequested && agtinput_comp.requestedDesinfect && antr_comp.desinfect_stand_animation )
+        {
+            anim_comp.animation = antr_comp.desinfect_stand_animation;
+        }
 	}
 
 private:

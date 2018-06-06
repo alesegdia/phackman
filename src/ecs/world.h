@@ -8,7 +8,7 @@ class GameWorld
 {
 public:
 
-	GameWorld();
+    GameWorld(MapScene &map_scene);
 
     void step(double delta );
 
@@ -19,6 +19,7 @@ public:
     secs::Engine& engine();
 
 private:
+
 	secs::Engine m_world;
 	RenderingSystem m_renderingSystem;
 	AnimationSystem m_animationSystem;
@@ -26,6 +27,12 @@ private:
 	KeyboardInputSystem m_keyboardInputSystem;
 	MapNavigationSystem m_navigationSystem;
 	AnimatorSystem m_animatorSystem;
-	EntityFactory m_factory;
+    AIAgentRandomWanderSystem m_wanderSystem;
+    InfectionSystem m_infectionSystem;
+    TriggerSystem m_triggerSystem;
+    ShootingSystem m_shootingSystem;
+    DieOnStopSystem m_dieOnStopSystem;
+    WallPlacementSystem m_wallPlacementSystem;
+    EntityFactory m_factory;
 
 };

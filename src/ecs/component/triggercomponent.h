@@ -2,5 +2,5 @@
 
 class TriggerComponent
 {
-	bool wantsTrigger = false;
+
 };

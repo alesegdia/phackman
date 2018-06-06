@@ -19,14 +19,32 @@ public:
 
     void process( double delta, const secs::Entity &e ) override
 	{
-		auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
+        if( inhibit )
+        {
+            return;
+        }
 
-		bool u, d, r, l, space;
+        auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
+
+        bool u, d, r, l, space, desinfect;
 		u = Input::IsKeyDown( ALLEGRO_KEY_UP );
 		d = Input::IsKeyDown( ALLEGRO_KEY_DOWN );
 		r = Input::IsKeyDown( ALLEGRO_KEY_RIGHT );
 		l = Input::IsKeyDown(ALLEGRO_KEY_LEFT);
 		space = Input::IsKeyDown(ALLEGRO_KEY_SPACE);
+        agtinput_comp.requestedDesinfect = Input::IsKeyDown(ALLEGRO_KEY_X);
+
+        if( agtinput_comp.requestedDesinfect )
+        {
+            auto& ic = m_world.processor().addComponent<InfectComponent>(e);
+            ic.desinfect = true;
+            agtinput_comp.speed = agtinput_comp.lower_speed;
+        }
+        else
+        {
+            m_world.processor().removeComponent<InfectComponent>(e);
+            agtinput_comp.speed = agtinput_comp.normal_speed;
+        }
 
 		if( u )
 		{
@@ -48,7 +66,14 @@ public:
 
 		agtinput_comp.inputRequested = (u | d | l | r) && !space;
 		agtinput_comp.requestedAttack = space;
+
+        if( Input::IsKeyDown( ALLEGRO_KEY_W ) )
+        {
+            auto& wpc = m_world.processor().addComponent<WallPlacementComponent>(e);
+        }
 	}
+
+    bool inhibit = false;
 
 private:
 	secs::Engine& m_world;

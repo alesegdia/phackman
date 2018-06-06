@@ -61,14 +61,26 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 
 	Matrix2Di::SharedPtr output = flip(*m_layoutMatrix);
 	output = add_integer(*output, shape_index-1);
-	output = concat_horizontal(*output, *m_layoutMatrix);
-	output = scale(*output, 3);
-	output = add_border(*output, 4);
-	output = convolute3x3(*output, fill_zero_border_convolutor);
-	output = convolute3x3(*output, shrink_pieces_convolutor);
-	output = tint(*output, 1);
+    output = concat_horizontal(*output, *m_layoutMatrix);
 
-	return output;
+    if( false == m_originalPacman )
+    {
+        output = scale(*output, 4);
+    }
+    else
+    {
+        output = scale(*output, 3);
+    }
+
+    output = add_border(*output, 4);
+    output = convolute3x3(*output, fill_zero_border_convolutor);
+    output = convolute3x3(*output, shrink_pieces_convolutor);
+    output = tint(*output, 1);
+
+    Matrix2Di::SharedPtr real_output(new Matrix2Di(output->cols()-2, output->rows()-2, 0));
+    plot(*output, *real_output, -1, -1, true, 1);
+
+    return real_output;
 }
 
 
@@ -105,14 +117,14 @@ ShapeStorage::ShapeStorage()
 std::vector<std::shared_ptr<Matrix2Di> > ShapeStorage::makeSample()
 {
 	std::vector<Matrix2Di::SharedPtr> shapes;
-	shapes.push_back(m_L1);
-	shapes.push_back(m_L1);
+    shapes.push_back(m_L1);
+    shapes.push_back(m_L1);
 	shapes.push_back(m_L2);
-	shapes.push_back(m_L2);
-	shapes.push_back(m_L2);
+    shapes.push_back(m_L2);
+    shapes.push_back(m_L2);
 	shapes.push_back(m_T);
-	shapes.push_back(m_T);
-	return shapes;
+    shapes.push_back(m_T);
+    return shapes;
 }
 
 
