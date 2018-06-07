@@ -12,4 +12,5 @@
 #include "shootingsystem.h"
 #include "dieonstopsystem.h"
 #include "wallplacementsystem.h"
+#include "computetilesystem.h"
 

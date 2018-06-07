@@ -33,6 +33,7 @@ private:
     ShootingSystem m_shootingSystem;
     DieOnStopSystem m_dieOnStopSystem;
     WallPlacementSystem m_wallPlacementSystem;
+    ComputeTileSystem m_computeTileSystem;
     EntityFactory m_factory;
 
 };

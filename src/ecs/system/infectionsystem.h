@@ -6,7 +6,7 @@
 #include "../../map/mapscene.h"
 
 
-class InfectionSystem : public secs::EntitySystem
+class InfectionSystem : public secs::TypedEntitySystem<InfectComponent, TileComponent>
 {
 public:
 
@@ -15,21 +15,11 @@ public:
           m_mapScene(map_scene)
     {
         this->setStepConfiguration(true, true);
-        setNeededComponents<InfectComponent,
-                            TransformComponent>();
     }
 
-    void process( double delta, const secs::Entity &e ) override
+    void process( double delta, const secs::Entity &e, InfectComponent& infect, TileComponent& tlc ) override
     {
-
-        auto& transform = m_world.component<TransformComponent>(e);
-        auto& infect = m_world.component<InfectComponent>(e);
-
-        int x = (transform.position.x()+16) / 32;
-        int y = (transform.position.y()+16) / 32;
-
-
-        if( infect.last_x == x && infect.last_y == y )
+        if( tlc.previous == tlc.current )
         {
             if( infect.desinfectTimer > 0 )
             {
@@ -37,6 +27,9 @@ public:
             }
             else
             {
+                int x, y;
+                x = tlc.current.x();
+                y = tlc.current.y();
                 if( true == infect.desinfect )
                 {
                     m_mapScene.desinfect( x, y );
@@ -46,15 +39,12 @@ public:
                 {
                     m_mapScene.infect( x, y );
                 }
-
             }
         }
         else
         {
             infect.desinfectTimer = infect.desinfectDuration;
         }
-        infect.last_x = x;
-        infect.last_y = y;
 
         if( infect.desinfectTimer < 0 )
         {
@@ -65,14 +55,18 @@ public:
     void render( const secs::Entity& e ) override
     {
         auto& infect = m_world.component<InfectComponent>(e);
+        auto& tlc = m_world.component<TileComponent>(e);
+        int x, y;
+        x = tlc.current.x();
+        y = tlc.current.y();
 
         bool must_show =
-                ( infect.desinfect &&  m_mapScene.isInfected(infect.last_x, infect.last_y))
-             || (!infect.desinfect && !m_mapScene.isInfected(infect.last_x, infect.last_y));
+                ( infect.desinfect &&  m_mapScene.isInfected(x, y))
+             || (!infect.desinfect && !m_mapScene.isInfected(x, y));
 
         if( infect.desinfectTimer > 0 && must_show)
         {
-            auto tp = Vec2i(infect.last_x * 32, infect.last_y * 32);
+            auto tp = Vec2i(x * 32, y * 32);
             float xx = infect.desinfectTimer * 16 / infect.desinfectDuration;
             al_draw_filled_rectangle(tp.x() + 2, tp.y() + 2, tp.x() + xx + 2, tp.y() + 2 + 2, al_map_rgb(0, 255, 0));
         }

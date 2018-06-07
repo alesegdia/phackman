@@ -18,8 +18,9 @@ secs::Entity EntityFactory::makePlayer(float x, float y)
 	auto& animation_comp = addComponent<AnimationComponent>(player);
 	animation_comp.animation = Assets::instance->phackmanWalk;
 
-	addComponent<RenderFacingComponent>(player);
-	addComponent<KeyboardInputComponent>(player);
+    addComponent<TileComponent>(player);
+    addComponent<RenderFacingComponent>(player);
+    addComponent<KeyboardInputComponent>(player);
 
 	addComponent<AgentInputComponent>(player);
     addComponent<AgentMapStateComponent>(player);
@@ -59,6 +60,7 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
     animation_comp.animation = Assets::instance->slimeWalk;
 
     addComponent<RenderFacingComponent>(enemy);
+    addComponent<TileComponent>(enemy);
 
     auto& ainput = addComponent<AgentInputComponent>(enemy);
     ainput.speed = 20;

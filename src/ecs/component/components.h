@@ -14,3 +14,4 @@
 #include "infectcomponent.h"
 #include "dieonstopcomponent.h"
 #include "wallplacementcomponent.h"
+#include "tilecomponent.h"

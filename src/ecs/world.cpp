@@ -26,6 +26,7 @@ GameWorld::GameWorld(MapScene& map_scene)
     m_world.pushSystem(&m_shootingSystem);
     m_world.pushSystem(&m_dieOnStopSystem);
     m_world.pushSystem(&m_wallPlacementSystem);
+    m_world.pushSystem(&m_computeTileSystem);
 
     m_world.activateSystemGroup(SystemGroups::GuiStop);
     m_world.setSystemGroup(&m_keyboardInputSystem, SystemGroups::GuiStop);
