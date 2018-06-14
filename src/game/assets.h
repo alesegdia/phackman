@@ -32,6 +32,7 @@ public:
     std::shared_ptr<Animation> powerNode;
 
     std::shared_ptr<Animation> lsBullet;
+    std::shared_ptr<Animation> turretBullet;
 
     std::shared_ptr<Animation> phackmanWalk;
     std::shared_ptr<Animation> phackmanStand;

@@ -15,3 +15,6 @@
 #include "dieonstopcomponent.h"
 #include "wallplacementcomponent.h"
 #include "tilecomponent.h"
+#include "enemycomponent.h"
+#include "mapawarenesscomponent.h"
+#include "shootatsightcomponent.h"

@@ -21,23 +21,17 @@ public:
 
         m_solidnessMap = scale_down(*m_map, 2);
 
-        m_nodesMap = scale_down(*m_map, 2);
+        m_enemyVisibilityMap = scale_down(*m_map, 2);
+        printf("enemy visibility map\n");
+        m_enemyVisibilityMap->debugPrint();
+        printf("===========\n");
+        fflush(0);
 
+        m_nodesMap = scale_down(*m_map, 2);
         m_nodesMap = convolute3x3(*m_nodesMap, place_collectible_nodes);
         m_nodesMap->debugPrint();
 
         m_infectionMap->debugPrint();
-
-        for( int i = 0; i < m_infectionMap->cols(); i++ )
-        {
-            for( int j = 0; j < m_infectionMap->rows(); j++ )
-            {
-                if( m_infectionMap->get(i, j) == 0 )
-                {
-                    m_infectionMap->set(i, j, 0);
-                }
-            }
-        }
 
         m_renderMap = convolute3x3(*m_map, draw_map_tiles_convolutor);
 
@@ -65,6 +59,11 @@ public:
     Matrix2Di::SharedPtr nodesMap()
     {
         return m_nodesMap;
+    }
+
+    Matrix2Di::SharedPtr enemyVisibilityMap()
+    {
+        return m_enemyVisibilityMap;
     }
 
     void render()
@@ -169,9 +168,8 @@ private:
     std::shared_ptr<NavigationMap> m_navmap;
 
     Matrix2Di::SharedPtr m_nodesMap;
-
     Matrix2Di::SharedPtr m_solidnessMap;
-
+    Matrix2Di::SharedPtr m_enemyVisibilityMap;
 
 };
 

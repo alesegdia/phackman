@@ -38,6 +38,9 @@ Assets::Assets()
     turretStand.reset(new Animation(1.f, 1));
     turretStand->addFrame(buildingsSheet->getFrame(0));
 
+    turretBullet.reset(new Animation(1.f, 1));
+    turretBullet->addFrame(buildingsSheet->getFrame(1));
+
     phackmanAttack.reset(new Animation(.7f, 2));
     phackmanAttack->addFrame(characterSheet->getFrame(8));
 	phackmanAttack->addFrame(characterSheet->getFrame(9));

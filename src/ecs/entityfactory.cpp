@@ -65,6 +65,8 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
     auto& ainput = addComponent<AgentInputComponent>(enemy);
     ainput.speed = 20;
 
+    addComponent<EnemyComponent>(enemy);
+
     addComponent<AgentMapStateComponent>(enemy);
     addComponent<AIAgentRandomWanderComponent>(enemy);
     auto& ic = addComponent<InfectComponent>(enemy);
@@ -114,7 +116,7 @@ secs::Entity EntityFactory::makePowerNode(float x, float y)
     return node;
 }
 
-secs::Entity EntityFactory::makeLSBullet(float x, float y, Facing direction)
+secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr anim, Facing direction, float speed )
 {
     secs::Entity bullet = m_world.processor().addEntity();
 
@@ -123,22 +125,31 @@ secs::Entity EntityFactory::makeLSBullet(float x, float y, Facing direction)
 
     addComponent<RenderComponent>(bullet);
 
-    auto& animation_comp = addComponent<AnimationComponent>(bullet);
-    animation_comp.animation = Assets::instance->lsBullet;
-
     auto& rf = addComponent<RenderFacingComponent>(bullet);
     rf.facing = direction;
 
     auto& ainput = addComponent<AgentInputComponent>(bullet);
-    ainput.speed = 200;
+    ainput.speed = speed;
     ainput.inputRequested = true;
     ainput.requestedFacing = direction;
 
     addComponent<AgentMapStateComponent>(bullet);
-
     addComponent<DieOnStopComponent>(bullet);
 
+    auto& animation_comp = addComponent<AnimationComponent>(bullet);
+    animation_comp.animation = anim;
+
     return bullet;
+}
+
+secs::Entity EntityFactory::makeLSBullet(float x, float y, Facing direction)
+{
+    return makeBullet(x, y, Assets::instance->lsBullet, direction, 175);
+}
+
+secs::Entity EntityFactory::makeTurretBullet(float x, float y, Facing direction)
+{
+    return makeBullet(x, y, Assets::instance->turretBullet, direction, 250);
 }
 
 secs::Entity EntityFactory::makeBuildingOnWall(int tile_x, int tile_y, int building_type, Facing facing)
@@ -158,6 +169,11 @@ secs::Entity EntityFactory::makeBuildingOnWall(int tile_x, int tile_y, int build
     rfc.facing = facing;
 
     auto& aic = addComponent<AgentInputComponent>(building);
+    aic.lower_speed = 0;
+    aic.normal_speed = 0;
+    aic.speed = 0;
+
+    addComponent<TileComponent>(building);
 
     switch( building_type )
     {
@@ -175,4 +191,18 @@ secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
 
     auto& ac = addComponent<AnimationComponent>(e);
     ac.animation = Assets::instance->turretStand;
+
+    addComponent<MapAwarenessComponent>(e);
+    addComponent<ShootAtSightComponent>(e);
+
+    auto& sc = addComponent<ShootComponent>(e);
+    sc.shoot = [this](const secs::Entity& ent) {
+        TransformComponent tc = m_world.component<TransformComponent>(ent);
+        RenderFacingComponent rf = m_world.component<RenderFacingComponent>(ent);
+        ShootComponent scc = m_world.component<ShootComponent>(ent);
+        this->makeTurretBullet(tc.position.x(), tc.position.y(), scc.facing);
+    };
+
+    sc.rate = 0.8;
+
 }

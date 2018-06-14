@@ -22,15 +22,10 @@ public:
 	void render() override;
 	void hide() override;
 
-	void debugRender();
-	void tilesRender();
-
 private:
 	PhackmanGame* m_game;
 
     MapScene m_mapScene;
-    bool m_shownodes = false;
-    bool m_showsolid = false;
 
     Camera::SharedPtr m_cam;
     Camera::SharedPtr m_guiCam;
@@ -38,5 +33,7 @@ private:
     secs::Entity m_playerEntity;
 
 	GameWorld gw;
+
+    int m_scale = 1;
 
 };

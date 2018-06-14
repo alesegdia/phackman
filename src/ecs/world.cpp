@@ -12,7 +12,9 @@ GameWorld::GameWorld(MapScene& map_scene)
       m_animatorSystem(m_world),
       m_wanderSystem(m_world),
       m_infectionSystem(m_world, map_scene),
-      m_wallPlacementSystem(m_world, map_scene, m_factory)
+      m_wallPlacementSystem(m_world, map_scene, m_factory),
+      m_mapAwarenessSystem(map_scene.enemyVisibilityMap()),
+      m_placeEnemyInMapSystem(map_scene.enemyVisibilityMap())
 {
 	m_world.pushSystem(&m_renderingSystem);
 	m_world.pushSystem(&m_facingRenderingSystem);
@@ -27,6 +29,9 @@ GameWorld::GameWorld(MapScene& map_scene)
     m_world.pushSystem(&m_dieOnStopSystem);
     m_world.pushSystem(&m_wallPlacementSystem);
     m_world.pushSystem(&m_computeTileSystem);
+    m_world.pushSystem(&m_placeEnemyInMapSystem);
+    m_world.pushSystem(&m_mapAwarenessSystem);
+    m_world.pushSystem(&m_shootAtSightSystem);
 
     m_world.activateSystemGroup(SystemGroups::GuiStop);
     m_world.setSystemGroup(&m_keyboardInputSystem, SystemGroups::GuiStop);

@@ -37,7 +37,7 @@ void GameplayScreen::show()
         {
             if( i != 0 && j != 0 && i != nm->cols() -1 && j != nm->rows() - 1)
             {
-                auto cell = 10; //nm->get(i, j);
+                auto cell = nm->get(i, j);
                 int cx, cy;
                 cx = i * 32 + 8;
                 cy = j * 32 + 8;
@@ -70,15 +70,21 @@ void GameplayScreen::update(double delta)
 		m_game->close();
 	}
 
-    if( Input::IsKeyJustPressed(ALLEGRO_KEY_F1) )
+    if( Input::IsKeyDown(ALLEGRO_KEY_1) )
     {
-        m_shownodes = !m_shownodes;
+        m_scale = 1;
     }
 
-    if( Input::IsKeyJustPressed(ALLEGRO_KEY_F2) )
+    if( Input::IsKeyDown(ALLEGRO_KEY_2) )
     {
-        m_showsolid = !m_showsolid;
+        m_scale = 2;
     }
+
+    if( Input::IsKeyDown(ALLEGRO_KEY_3) )
+    {
+        m_scale = 3;
+    }
+
 
     gw.step( delta );
 }
@@ -86,11 +92,11 @@ void GameplayScreen::update(double delta)
 void GameplayScreen::render()
 {
     Vec2f new_pos = gw.engine().component<TransformComponent>(m_playerEntity).position;
-    new_pos.x(-floor(new_pos.x()) * 1 + 400 - 16);
-    new_pos.y(-floor(new_pos.y()) * 1 + 300 - 16);
+    new_pos.x(-floor(new_pos.x()) * m_scale + 400 - 16);
+    new_pos.y(-floor(new_pos.y()) * m_scale + 300 - 16);
 
 	m_cam->position(new_pos.x(), new_pos.y());
-    m_cam->scale(1, 1);
+    m_cam->scale(m_scale, m_scale);
     m_cam->bind();
 
 	al_clear_to_color(al_map_rgb(20,20,20));
@@ -100,11 +106,11 @@ void GameplayScreen::render()
 
     gw.render();
 
-    m_guiCam->scale(1, 2);
+    m_guiCam->scale(1, 1);
     m_guiCam->position(0, 0);
     m_guiCam->bind();
 
-    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(26), 0, 0, 0);
+    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(26), 0,  0, 0);
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(27), 0, 16, 0);
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(28), 0, 32, 0);
 
@@ -115,7 +121,4 @@ void GameplayScreen::hide()
 
 }
 
-void GameplayScreen::tilesRender()
-{
-}
 

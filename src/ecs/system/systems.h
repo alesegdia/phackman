@@ -13,4 +13,6 @@
 #include "dieonstopsystem.h"
 #include "wallplacementsystem.h"
 #include "computetilesystem.h"
-
+#include "placeinmapsystem.h"
+#include "mapawarenesssystem.h"
+#include "shootatsightsystem.h"

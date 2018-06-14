@@ -19,7 +19,6 @@ public:
     secs::Engine& engine();
 
 private:
-
 	secs::Engine m_world;
 	RenderingSystem m_renderingSystem;
 	AnimationSystem m_animationSystem;
@@ -34,6 +33,9 @@ private:
     DieOnStopSystem m_dieOnStopSystem;
     WallPlacementSystem m_wallPlacementSystem;
     ComputeTileSystem m_computeTileSystem;
+    PlaceEnemyInMapSystem m_placeEnemyInMapSystem;
+    MapAwarenessSystem m_mapAwarenessSystem;
+    ShootAtSightSystem m_shootAtSightSystem;
     EntityFactory m_factory;
 
 };
