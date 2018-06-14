@@ -30,10 +30,6 @@ private:
     {
         bool scan_result = scan(tlc.current, direction);
         mac.setDirectionSensor(0, direction, scan_result );
-        if( scan_result )
-        {
-            int a = 3;
-        }
     }
 
     bool scan(Vec2i pos, Facing direction)
@@ -42,22 +38,11 @@ private:
         bool did_sense = false;
         while( tile != 1 && did_sense == false )
         {
-            advance(pos, direction);
+            advanceFromFacing(pos, direction);
             tile = m_sensingMatrix->get( pos.x(), pos.y() );
             did_sense = tile == 2;
         }
         return did_sense;
-    }
-
-    void advance(Vec2i& pos, Facing direction)
-    {
-        switch( direction )
-        {
-        case Facing::Right: pos.x(pos.x() + 1); break;
-        case Facing::Left: pos.x(pos.x() - 1); break;
-        case Facing::Down: pos.y(pos.y() + 1); break;
-        case Facing::Up: pos.y(pos.y() - 1); break;
-        }
     }
 
     Matrix2Di::SharedPtr m_sensingMatrix;

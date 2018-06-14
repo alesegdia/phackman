@@ -21,6 +21,10 @@ public:
 
         m_solidnessMap = scale_down(*m_map, 2);
 
+        printf("SOLIDITY MAP\n");
+        m_solidnessMap->debugPrint();
+        printf("===========\n");
+
         m_enemyVisibilityMap = scale_down(*m_map, 2);
         printf("enemy visibility map\n");
         m_enemyVisibilityMap->debugPrint();

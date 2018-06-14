@@ -3,14 +3,14 @@
 #include <secs/secs.h>
 #include "../component/components.h"
 #include "../../ai/blackboard.h"
-
+#include "../../map/mapscene.h"
 
 class MapNavigationSystem : public secs::EntitySystem
 {
 public:
 
-    MapNavigationSystem( secs::Engine& world )
-        : m_world(world)
+    MapNavigationSystem( MapScene& map_scene )
+        : m_mapScene(map_scene)
     {
         setNeededComponents<TransformComponent,
                             AgentInputComponent,
@@ -20,7 +20,7 @@ public:
 
     void process( double delta, const secs::Entity &e ) override
     {
-        auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
+        auto& agtinput_comp = component<AgentInputComponent>(e);
 
         if (agtinput_comp.requestedAttack)
         {
@@ -42,9 +42,9 @@ public:
         if( do_process && agtinput_comp.inputRequested )
         {
 
-            auto& transform_comp = m_world.component<TransformComponent>(e);
-            auto& agtstate_comp = m_world.component<AgentMapStateComponent>(e);
-            auto& facing_comp = m_world.component<RenderFacingComponent>(e);
+            auto& transform_comp = component<TransformComponent>(e);
+            auto& agtstate_comp = component<AgentMapStateComponent>(e);
+            auto& facing_comp = component<RenderFacingComponent>(e);
 
             PathNode::SharedPtr my_node = Blackboard::instance.navigationMap->getNodeAt(
                         transform_comp.position.x(),
@@ -74,10 +74,14 @@ public:
             }
 
             PathNode::SharedPtr facing_neighboor = nullptr;
-            if( agtstate_comp.lastNode != nullptr )
+            auto pp = transform_comp.position;
+            Vec2i p(pp.x() / 32.f, pp.y() / 32.f);
+            if( agtstate_comp.lastNode == nullptr )
             {
-                facing_neighboor = agtstate_comp.lastNode->getNeighboor( facing_comp.facing );
+                agtstate_comp.lastNode = scanForNode(p, reverseFacing(facing_comp.facing));
             }
+
+            facing_neighboor = agtstate_comp.lastNode->getNeighboor( facing_comp.facing );
 
             if( agtstate_comp.lastNode != nullptr && facing_neighboor != nullptr )
             {
@@ -129,7 +133,21 @@ public:
     }
 
 private:
-    secs::Engine& m_world;
+
+    PathNode::SharedPtr scanForNode( Vec2i p, Facing direction )
+    {
+        int tile = 0;
+        PathNode::SharedPtr n = nullptr;
+        while( tile != 1 && n == nullptr )
+        {
+            tile = m_mapScene.getSolidness(p.x(), p.y());
+            n = m_mapScene.navmap()->getNodeAt(p.x() * 32, p.y() * 32);
+            advanceFromFacing(p, direction);
+        }
+        return n;
+    }
+
     bool m_activateDebug = false;
+    MapScene& m_mapScene;
 
 };

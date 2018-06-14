@@ -8,7 +8,7 @@ GameWorld::GameWorld(MapScene& map_scene)
 	  m_animationSystem(m_world),
 	  m_facingRenderingSystem(m_world),
 	  m_keyboardInputSystem(m_world),
-	  m_navigationSystem(m_world),
+      m_navigationSystem(map_scene),
       m_animatorSystem(m_world),
       m_wanderSystem(m_world),
       m_infectionSystem(m_world, map_scene),

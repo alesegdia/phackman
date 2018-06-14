@@ -31,7 +31,7 @@ public:
 
     void postUpdate(double delta)
     {
-        m_outputMatrix->debugPrint();
+        // m_outputMatrix->debugPrint();
     }
 
 

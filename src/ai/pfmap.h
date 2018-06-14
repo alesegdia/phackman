@@ -75,6 +75,10 @@ public:
 	PathNode::SharedPtr getNodeAt( float x, float y );
 	bool canMove( float x, float y, Facing dir );
 	const std::vector<PathNode::SharedPtr>& nodes();
+    Matrix2D<PathNode::SharedPtr>::SharedPtr nodesMatrix()
+    {
+        m_collector.navigationMap;
+    }
 
 private:
 	ConvolutorCollector m_collector;
