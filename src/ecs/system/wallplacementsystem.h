@@ -33,6 +33,7 @@ public:
         l = Input::IsKeyJustPressed(ALLEGRO_KEY_LEFT);
         r = Input::IsKeyJustPressed(ALLEGRO_KEY_RIGHT);
 
+
         if( u|l|d|r )
         {
             m_world.processor().removeComponent<WallPlacementComponent>(e);
@@ -46,7 +47,10 @@ public:
                 l && m_left ||
                 r && m_right )
             {
-                m_factory.makeBuildingOnWall(m_playerTile.x(), m_playerTile.y(), 0, f);
+                if( false == m_mapScene.isInfected(m_playerTile.x(), m_playerTile.y()) )
+                {
+                    m_factory.makeBuildingOnWall(m_playerTile.x(), m_playerTile.y(), 0, f);
+                }
             }
         }
     }
