@@ -32,6 +32,7 @@ GameWorld::GameWorld(MapScene& map_scene)
     m_world.pushSystem(&m_placeEnemyInMapSystem);
     m_world.pushSystem(&m_mapAwarenessSystem);
     m_world.pushSystem(&m_shootAtSightSystem);
+    m_world.pushSystem(&m_hadronCollisionSystem);
 
     m_world.activateSystemGroup(SystemGroups::GuiStop);
     m_world.setSystemGroup(&m_keyboardInputSystem, SystemGroups::GuiStop);

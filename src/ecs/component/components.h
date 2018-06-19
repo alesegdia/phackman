@@ -18,3 +18,6 @@
 #include "enemycomponent.h"
 #include "mapawarenesscomponent.h"
 #include "shootatsightcomponent.h"
+#include "hadroncollisioncomponent.h"
+#include "cellcomponent.h"
+#include "diecomponent.h"

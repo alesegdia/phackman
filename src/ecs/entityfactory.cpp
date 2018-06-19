@@ -43,6 +43,10 @@ secs::Entity EntityFactory::makePlayer(float x, float y)
     ac.desinfect_walk_animation = Assets::instance->phackmanDesinfectWalk;
     ac.desinfect_stand_animation = Assets::instance->phackmanDesinfectStand;
 
+    auto& hcc = addComponent<HadronCollisionComponent>(player);
+    hcc.body = new hadron::collision::Body(x, y, 12, 12);
+    hcc.offset.set(10, 10);
+
 	return player;
 }
 
@@ -96,9 +100,18 @@ secs::Entity EntityFactory::makeIndustryNode(float x, float y)
 
     auto& transform_comp = addComponent<TransformComponent>(node);
     transform_comp.position.set( x, y );
+
     addComponent<RenderComponent>(node);
+
     auto& animation_comp = addComponent<AnimationComponent>(node);
     animation_comp.animation = Assets::instance->industryNode;
+
+    auto& cc = addComponent<CellComponent>(node);
+    cc.type = CellType::IndustryCell;
+
+    auto& hcc = addComponent<HadronCollisionComponent>(node);
+    hcc.body = new hadron::collision::Body(x, y, 8, 8);
+    hcc.offset.set(4,4);
 
     return node;
 }
@@ -113,6 +126,13 @@ secs::Entity EntityFactory::makePowerNode(float x, float y)
     auto& animation_comp = addComponent<AnimationComponent>(node);
     animation_comp.animation = Assets::instance->powerNode;
 
+    auto& cc = addComponent<CellComponent>(node);
+    cc.type = CellType::IndustryCell;
+
+    auto& hcc = addComponent<HadronCollisionComponent>(node);
+    hcc.body = new hadron::collision::Body(x, y, 8, 8);
+    hcc.offset.set(4,4);
+
     return node;
 }
 
@@ -123,7 +143,8 @@ secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr a
     auto& transform_comp = addComponent<TransformComponent>(bullet);
     transform_comp.position.set( x, y );
 
-    addComponent<RenderComponent>(bullet);
+    auto& rc = addComponent<RenderComponent>(bullet);
+    rc.bitmap = anim->getFrame(0);
 
     auto& rf = addComponent<RenderFacingComponent>(bullet);
     rf.facing = direction;

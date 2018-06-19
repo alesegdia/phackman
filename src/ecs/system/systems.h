@@ -16,3 +16,5 @@
 #include "placeinmapsystem.h"
 #include "mapawarenesssystem.h"
 #include "shootatsightsystem.h"
+#include "diesystem.h"
+#include "hadroncollisionsystem.h"

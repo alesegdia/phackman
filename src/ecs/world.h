@@ -36,6 +36,7 @@ private:
     PlaceEnemyInMapSystem m_placeEnemyInMapSystem;
     MapAwarenessSystem m_mapAwarenessSystem;
     ShootAtSightSystem m_shootAtSightSystem;
+    HadronCollisionSystem m_hadronCollisionSystem;
     EntityFactory m_factory;
 
 };

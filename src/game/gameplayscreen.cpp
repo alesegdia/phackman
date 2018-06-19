@@ -26,16 +26,17 @@ void GameplayScreen::show()
 
     m_playerEntity = gw.factory().makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
 
-    gw.factory().makeEnemy(start_node->x() * 16, start_node->y() * 16);
-    gw.factory().makeSpawner(start_node->x() * 16, start_node->y() * 16);
+    //gw.factory().makeEnemy(start_node->x() * 16, start_node->y() * 16);
+    //gw.factory().makeSpawner(start_node->x() * 16, start_node->y() * 16);
 
     auto nm = m_mapScene.nodesMap();
 
+    int numnodes = 0;
     for( int i = 0; i < nm->cols(); i++ )
     {
         for( int j = 0; j < nm->rows(); j++ )
         {
-            if( i != 0 && j != 0 && i != nm->cols() -1 && j != nm->rows() - 1)
+            if( numnodes < 0 && i != 0 && j != 0 && i != nm->cols() -1 && j != nm->rows() - 1)
             {
                 auto cell = nm->get(i, j);
                 int cx, cy;
@@ -43,10 +44,12 @@ void GameplayScreen::show()
                 cy = j * 32 + 8;
                 if( cell == 1 )
                 {
+                    numnodes++;
                     gw.factory().makeIndustryNode( cx, cy );
                 }
                 else if (cell == 2 )
                 {
+                    numnodes++;
                     gw.factory().makePowerNode( cx, cy );
                 }
             }
@@ -85,7 +88,6 @@ void GameplayScreen::update(double delta)
         m_scale = 3;
     }
 
-
     gw.step( delta );
 }
 
@@ -113,7 +115,6 @@ void GameplayScreen::render()
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(26), 0,  0, 0);
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(27), 0, 16, 0);
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(28), 0, 32, 0);
-
 }
 
 void GameplayScreen::hide()
