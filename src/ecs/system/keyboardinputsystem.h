@@ -26,7 +26,7 @@ public:
 
         auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
 
-        bool u, d, r, l, space, desinfect;
+        bool u, d, r, l, space;
 		u = Input::IsKeyDown( ALLEGRO_KEY_UP );
 		d = Input::IsKeyDown( ALLEGRO_KEY_DOWN );
 		r = Input::IsKeyDown( ALLEGRO_KEY_RIGHT );

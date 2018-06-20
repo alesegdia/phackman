@@ -16,6 +16,7 @@ file(GLOB_RECURSE HADRON_SOURCES module/hadron/src/lib/**/*.h module/hadron/src/
 
 source_group(secs FILES ${SECS_SOURCES})
 source_group(game FILES ${PHACKMAN_SOURCES})
+source_group(hadron FILES ${HADRON_SOURCES})
 
 # add a new target with allegro, alligator and core sources. uses monolith for win32
 function(add_alleg_target EXEC-NAME SRCS)

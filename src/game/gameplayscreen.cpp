@@ -36,7 +36,7 @@ void GameplayScreen::show()
     {
         for( int j = 0; j < nm->rows(); j++ )
         {
-            if( numnodes < 0 && i != 0 && j != 0 && i != nm->cols() -1 && j != nm->rows() - 1)
+            if( numnodes < 291239213 && i != 0 && j != 0 && i != nm->cols() -1 && j != nm->rows() - 1)
             {
                 auto cell = nm->get(i, j);
                 int cx, cy;

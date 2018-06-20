@@ -11,6 +11,7 @@ Facing reverseFacing( Facing f )
     case Facing::Up: return Facing::Down;
     }
     assert(false);
+	return Facing::None;
 }
 
 Orientation get_orientation(Facing dir)
@@ -24,6 +25,9 @@ Orientation get_orientation(Facing dir)
 	{
 		return Vertical;
 	}
+
+	assert(false);
+	return NoOrientation;
 }
 
 

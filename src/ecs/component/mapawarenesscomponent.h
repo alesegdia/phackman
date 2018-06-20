@@ -15,7 +15,7 @@ struct MapAwarenessComponent
         return sensorGroups[group][int(direction)];
     }
 
-    bool setDirectionSensor( int group, Facing direction, bool value )
+    void setDirectionSensor( int group, Facing direction, bool value )
     {
         validateInput(group, direction);
         sensorGroups[group][int(direction)] = value;

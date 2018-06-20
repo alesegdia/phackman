@@ -12,7 +12,8 @@ enum Facing {
 
 enum Orientation {
 	Vertical = 0,
-	Horizontal
+	Horizontal,
+	NoOrientation
 };
 
 Orientation get_orientation( Facing dir );

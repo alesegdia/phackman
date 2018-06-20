@@ -226,4 +226,5 @@ secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
 
     sc.rate = 0.8;
 
+	return e;
 }
