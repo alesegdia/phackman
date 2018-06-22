@@ -4,7 +4,6 @@ project(phakman)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 add_subdirectory(module/alligator)
-add_subdirectory(module/hadron)
 
 if(NOT MSVC)
     find_package(Allegro REQUIRED)
@@ -40,7 +39,7 @@ function(add_alleg_target EXEC-NAME SRCS)
         if(NOT MSVC)
                 target_include_directories(${EXEC-NAME} PUBLIC "${ALLEGRO_INCLUDE_DIR}")
                 set_target_properties(${EXEC-NAME} PROPERTIES
-                        COMPILE_FLAGS "-std=gnu++11  -Wall -Wextra"
+                        COMPILE_FLAGS "-g -std=gnu++11  -Wall -Wextra"
                         LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
 			)
                 target_link_libraries(${EXEC-NAME} ${ALLEGRO_LIBRARIES})

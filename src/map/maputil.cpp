@@ -518,6 +518,11 @@ int draw_map_tiles_convolutor(int d00, int d10, int d20, int d01, int d11, int d
 
 int place_collectible_nodes(int d00, int d10, int d20, int d01, int d11, int d21, int d02, int d12, int d22)
 {
+    (void)d00;
+    (void)d20;
+    (void)d02;
+    (void)d22;
+
     if( d11 == 0 )
     {
         int horiz   = d01 + d11 + d21;

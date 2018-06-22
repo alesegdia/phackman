@@ -33,10 +33,11 @@ private:
     DieOnStopSystem m_dieOnStopSystem;
     WallPlacementSystem m_wallPlacementSystem;
     ComputeTileSystem m_computeTileSystem;
-    PlaceEnemyInMapSystem m_placeEnemyInMapSystem;
     MapAwarenessSystem m_mapAwarenessSystem;
+    PlaceEnemyInMapSystem m_placeEnemyInMapSystem;
     ShootAtSightSystem m_shootAtSightSystem;
     HadronCollisionSystem m_hadronCollisionSystem;
+    DieSystem m_dieSystem;
     EntityFactory m_factory;
 
 };

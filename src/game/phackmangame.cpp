@@ -15,6 +15,8 @@ PhackmanGame::~PhackmanGame()
 
 int PhackmanGame::create(int argc, char **argv)
 {
+    (void)argc;
+    (void)argv;
 	Assets::Initialize();
 
 	m_gameplayScreen.reset(new GameplayScreen(this));

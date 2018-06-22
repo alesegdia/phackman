@@ -77,9 +77,8 @@ public:
         {
             for( int c = 0; c < m_renderMap->cols(); c++ )
             {
-                int x1, y1, x2, y2;
+                int x1, y1;
                 x1 = c * 16; y1 = r * 16;
-                x2 = (c+1) * 16; y2 = (r+1) * 16;
 
                 int frame = m_renderMap->get(c, r);
 
