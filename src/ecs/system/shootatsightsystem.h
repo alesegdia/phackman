@@ -10,6 +10,8 @@ public:
 
     void process( double delta, const secs::Entity& e, AgentInputComponent& aic, ShootAtSightComponent& sc, MapAwarenessComponent& mac )
     {
+        SECS_UNUSED(delta);
+        SECS_UNUSED(sc);
         bool detected = false;
         for( int i = 0; i < 4; i++ )
         {

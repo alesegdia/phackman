@@ -219,7 +219,6 @@ secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
     auto& sc = addComponent<ShootComponent>(e);
     sc.shoot = [this](const secs::Entity& ent) {
         TransformComponent tc = m_world.component<TransformComponent>(ent);
-        RenderFacingComponent rf = m_world.component<RenderFacingComponent>(ent);
         ShootComponent scc = m_world.component<ShootComponent>(ent);
         this->makeTurretBullet(tc.position.x(), tc.position.y(), scc.facing);
     };

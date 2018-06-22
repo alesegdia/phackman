@@ -15,6 +15,7 @@ public:
 
 	void process(double delta, const secs::Entity &e) override
 	{
+        SECS_UNUSED(delta);
 		auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
 		auto& anim_comp = m_world.component<AnimationComponent>(e);
 		auto& antr_comp = m_world.component<AnimatorComponent>(e);

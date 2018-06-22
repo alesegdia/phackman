@@ -9,6 +9,7 @@ Facing reverseFacing( Facing f )
     case Facing::Right: return Facing::Left;
     case Facing::Down: return Facing::Up;
     case Facing::Up: return Facing::Down;
+    default:;
     }
     assert(false);
 	return Facing::None;
@@ -39,5 +40,6 @@ void advanceFromFacing(Vec2i& pos, Facing direction)
     case Facing::Left: pos.x(pos.x() - 1); break;
     case Facing::Down: pos.y(pos.y() + 1); break;
     case Facing::Up: pos.y(pos.y() - 1); break;
+    default: ;
     }
 }

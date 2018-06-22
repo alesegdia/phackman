@@ -19,6 +19,8 @@ public:
 
     void process( double delta, const secs::Entity &e, TileComponent& tlc ) override
     {
+        SECS_UNUSED(e);
+        SECS_UNUSED(delta);
         // this can lead to an enemy placing a 0 where a previous enemy is present and has placed a 1
         // we will just keep this in mind if this is an issue in the future, which I think will not
         // an option is to clean all the map at the preProcess()
@@ -31,6 +33,7 @@ public:
 
     void postUpdate(double delta)
     {
+        SECS_UNUSED(delta);
         // m_outputMatrix->debugPrint();
     }
 

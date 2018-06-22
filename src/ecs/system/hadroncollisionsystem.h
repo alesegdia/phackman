@@ -25,11 +25,14 @@ public:
 
     void postUpdate(double delta) override
     {
+        SECS_UNUSED(delta);
         m_physicsWorld.step();
     }
 
     void process(double delta, const secs::Entity &e, HadronCollisionComponent &hcc, TransformComponent& tc) override
     {
+        SECS_UNUSED(delta);
+        SECS_UNUSED(e);
         const auto& p = tc.position;
         hcc.body->setPosition(hadron::math::Vec2(p.x() + hcc.offset.x(), p.y() + hcc.offset.y()));
     }
@@ -43,7 +46,7 @@ public:
         x2 = x1 + aabb.width;
         y1 = aabb.y;
         y2 = y1 + aabb.height;
-        //al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 0, 255), 2.f );
+        al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 0, 255), 2.f );
     }
 
     void onAdded( const secs::Entity& e )
@@ -87,6 +90,8 @@ public:
             addComponent<DieComponent>(cell);
             */
             processor()->removeEntity(e2);
+            printf("removin\n"); fflush(0);
+            //addComponent<DieComponent>(e2);
         }
     }
 

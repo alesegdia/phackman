@@ -8,6 +8,8 @@ class ComputeTileSystem : public secs::TypedEntitySystem<TileComponent, Transfor
 public:
     void process(double delta, const secs::Entity &e, TileComponent &tlc, TransformComponent& trc)
     {
+        SECS_UNUSED(e);
+        SECS_UNUSED(delta);
         int tx, ty;
         tx = (trc.position.x() + 16) / 32;
         ty = (trc.position.y() + 16) / 32;

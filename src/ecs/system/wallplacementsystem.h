@@ -27,6 +27,9 @@ public:
 
     void process(double delta, const secs::Entity &e, WallPlacementComponent &wpc, TransformComponent& tc) override
     {
+        SECS_UNUSED(delta);
+        SECS_UNUSED(wpc);
+        SECS_UNUSED(tc);
         bool u, d, l, r;
         u = Input::IsKeyJustPressed(ALLEGRO_KEY_UP);
         d = Input::IsKeyJustPressed(ALLEGRO_KEY_DOWN);
@@ -42,10 +45,10 @@ public:
             if( d ) f = Facing::Up;
             if( l ) f = Facing::Right;
             if( r ) f = Facing::Left;
-            if( u && m_up ||
-                d && m_down ||
-                l && m_left ||
-                r && m_right )
+            if( (u && m_up) ||
+                (d && m_down) ||
+                (l && m_left) ||
+                (r && m_right) )
             {
                 if( false == m_mapScene.isInfected(m_playerTile.x(), m_playerTile.y()) )
                 {
@@ -58,6 +61,7 @@ public:
 
     void render(const secs::Entity &e) override
     {
+        SECS_UNUSED(e);
         if( m_up == 1 ) debugDrawRect(m_playerTile.x(), m_playerTile.y() - 1);
         if( m_down == 1 ) debugDrawRect(m_playerTile.x(), m_playerTile.y() + 1);
         if( m_right == 1 ) debugDrawRect(m_playerTile.x() + 1, m_playerTile.y());
@@ -75,6 +79,7 @@ public:
 
     void onRemoved(const secs::Entity &e) override
     {
+        SECS_UNUSED(e);
         m_world.enableGroup( SystemGroups::GuiStop );
     }
 

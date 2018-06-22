@@ -77,7 +77,7 @@ public:
 	const std::vector<PathNode::SharedPtr>& nodes();
     Matrix2D<PathNode::SharedPtr>::SharedPtr nodesMatrix()
     {
-        m_collector.navigationMap;
+        return m_collector.navigationMap;
     }
 
 private:

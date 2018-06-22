@@ -15,6 +15,8 @@ public:
 
     void process(double delta, const secs::Entity &e, TileComponent &tlc, MapAwarenessComponent& mac)
     {
+        SECS_UNUSED(e);
+        SECS_UNUSED(delta);
         for( int i = 0; i < 4; i++ )
         {
             handleDirection( (Facing)i, tlc, mac );

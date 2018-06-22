@@ -104,7 +104,6 @@ public:
                 const Vec2f p = transform_comp.position;
 
                 float neighboor_dist = abs((np.x() - p.x()) + (np.y() - p.y()));
-                float odisp = displacement;
                 displacement = displacement < neighboor_dist ? displacement : neighboor_dist;
 
                 switch (facing_comp.facing)
@@ -125,6 +124,7 @@ public:
                     nx = transform_comp.position.x() - displacement;
                     ny = agtstate_comp.lastNode->y() * 16;
                     break;
+                default: break;
                 }
 
                 transform_comp.position.set(nx, ny);

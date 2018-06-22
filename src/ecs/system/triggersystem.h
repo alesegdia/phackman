@@ -11,6 +11,8 @@ public:
 
     void process( double delta, const secs::Entity &e, TriggerComponent& tc, ShootComponent& sc )
     {
+        SECS_UNUSED(delta);
+        SECS_UNUSED(tc);
         processor()->removeComponent<TriggerComponent>(e);
         sc.shoot(e);
     }

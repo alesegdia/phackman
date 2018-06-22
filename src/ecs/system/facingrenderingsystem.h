@@ -23,6 +23,7 @@ public:
 
     void process( double delta, const secs::Entity &e ) override
 	{
+        SECS_UNUSED(delta);
 		auto& transform_comp = m_engine.component<TransformComponent>(e);
 		auto& facing_comp = m_engine.component<RenderFacingComponent>(e);
 
@@ -32,6 +33,7 @@ public:
 		case Facing::Down:	transform_comp.angle = M_PI; break;
 		case Facing::Right:	transform_comp.angle = M_PI_2; break;
 		case Facing::Left:	transform_comp.angle = -M_PI_2; break;
+        default: break;
 		}
 
 	}

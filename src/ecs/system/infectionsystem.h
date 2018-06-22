@@ -19,6 +19,7 @@ public:
 
     void process( double delta, const secs::Entity &e, InfectComponent& infect, TileComponent& tlc ) override
     {
+        SECS_UNUSED(e);
         if( tlc.previous == tlc.current )
         {
             if( infect.desinfectTimer > 0 )

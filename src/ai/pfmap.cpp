@@ -147,6 +147,7 @@ bool NavigationMap::canMove(float x, float y, Facing dir)
 		r_next = ty;
 		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
 		break;
+    default: break;
 	}
 
 	return is_next_free;
@@ -202,6 +203,7 @@ void NavigationMap::searchNeighboor(PathNode::SharedPtr node, Facing direction)
 			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
 			c--;
 			break;
+        default: assert(false); break;
 		}
 
 		auto node_cell = m_collector.navigationMap->get(c_next, r_next);
@@ -227,6 +229,10 @@ NavigationMap::ConvolutorCollector::ConvolutorCollector(int w, int h)
 
 int NavigationMap::ConvolutorCollector::operator ()(int d00, int d10, int d20, int d30, int d01, int d11, int d21, int d31, int d02, int d12, int d22, int d32, int d03, int d13, int d23, int d33, int x, int y)
 {
+    (void)d00;
+    (void)d30;
+    (void)d03;
+    (void)d33;
 	int ret = 0;
 	if( d11 == 0 && d12 == 0 && d21 == 0 && d22 == 0 )
 	{

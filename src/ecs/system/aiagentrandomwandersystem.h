@@ -21,10 +21,10 @@ public:
 
     void process( double delta, const secs::Entity &e ) override
     {
+        SECS_UNUSED(delta);
         auto& transf_comp = m_world.component<TransformComponent>(e);
         auto& wander_comp = m_world.component<AIAgentRandomWanderComponent>(e);
         auto& ainput_comp = m_world.component<AgentInputComponent>(e);
-        auto& amapst_comp = m_world.component<AgentMapStateComponent>(e);
 
         PathNode::SharedPtr my_node = Blackboard::instance.navigationMap->getNodeAt( transf_comp.position.x(), transf_comp.position.y() );
         if( my_node != nullptr && wander_comp.lastNodeDecided != my_node )

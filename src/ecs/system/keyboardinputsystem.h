@@ -19,6 +19,7 @@ public:
 
     void process( double delta, const secs::Entity &e ) override
 	{
+        SECS_UNUSED(delta);
         if( inhibit )
         {
             return;
@@ -69,7 +70,7 @@ public:
 
         if( Input::IsKeyDown( ALLEGRO_KEY_W ) )
         {
-            auto& wpc = m_world.processor().addComponent<WallPlacementComponent>(e);
+            m_world.processor().addComponent<WallPlacementComponent>(e);
         }
 	}
 
