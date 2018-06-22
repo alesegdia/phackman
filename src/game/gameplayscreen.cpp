@@ -24,43 +24,50 @@ void GameplayScreen::show()
 {
     auto start_node = m_mapScene.navmap()->nodes()[0];
 
-    m_playerEntity = gw.factory().makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
+    bool one_pill_test = true;
 
-    //gw.factory().makeEnemy(start_node->x() * 16, start_node->y() * 16);
+    m_playerEntity = gw.factory().makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
     //gw.factory().makeSpawner(start_node->x() * 16, start_node->y() * 16);
 
     auto nm = m_mapScene.nodesMap();
 
-    int numnodes = 0;
-    for( int i = 0; i < nm->cols(); i++ )
+    if( false == one_pill_test )
     {
-        for( int j = 0; j < nm->rows(); j++ )
+        for( int i = 0; i < nm->cols(); i++ )
         {
-            if( numnodes < 291239213 && i != 0 && j != 0 && i != nm->cols() -1 && j != nm->rows() - 1)
+            for( int j = 0; j < nm->rows(); j++ )
             {
-                auto cell = nm->get(i, j);
-                int cx, cy;
-                cx = i * 32 + 8;
-                cy = j * 32 + 8;
-                if( cell == 1 )
+                if( i != 0 && j != 0 && i != nm->cols() -1 && j != nm->rows() - 1)
                 {
-                    numnodes++;
-                    gw.factory().makeIndustryNode( cx, cy );
-                }
-                else if (cell == 2 )
-                {
-                    numnodes++;
-                    gw.factory().makePowerNode( cx, cy );
+                    auto cell = nm->get(i, j);
+                    int cx, cy;
+                    cx = i * 32 + 8;
+                    cy = j * 32 + 8;
+                    if( cell == 1 )
+                    {
+                        gw.factory().makeIndustryNode( cx, cy );
+                    }
+                    else if (cell == 2 )
+                    {
+                        gw.factory().makePowerNode( cx, cy );
+                    }
                 }
             }
         }
+    }
+    else
+    {
+        gw.factory().makeIndustryNode((start_node->x()) * 16, (start_node->y()) * 16);
     }
 
 	for( int i = 0; i < 10; i++ )
     {
         int idx = rand() % m_mapScene.navmap()->nodes().size();
         auto n = m_mapScene.navmap()->nodes()[idx];
-        gw.factory().makeEnemy(n->x() * 16, n->y() * 16);
+        if( false == one_pill_test )
+        {
+            gw.factory().makeEnemy(n->x() * 16, n->y() * 16);
+        }
     }
 
 }
