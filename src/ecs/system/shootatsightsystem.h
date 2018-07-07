@@ -2,7 +2,7 @@
 
 #include <secs/entitysystem.h>
 
-#include "../component/components.h"
+#include "../components.h"
 
 class ShootAtSightSystem : public secs::TypedEntitySystem<AgentInputComponent, ShootAtSightComponent, MapAwarenessComponent>
 {

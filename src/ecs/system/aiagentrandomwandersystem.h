@@ -1,7 +1,7 @@
 #pragma once
 
 #include <secs/secs.h>
-#include "../component/components.h"
+#include "../components.h"
 #include "../../ai/blackboard.h"
 
 

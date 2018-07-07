@@ -3,7 +3,7 @@
 
 #include <secs/entitysystem.h>
 
-#include "../component/components.h"
+#include "../components.h"
 
 class ShootingSystem : public secs::TypedEntitySystem<AgentInputComponent, ShootComponent>
 {

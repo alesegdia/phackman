@@ -2,7 +2,7 @@
 
 #include <secs/secs.h>
 
-#include "../component/components.h"
+#include "../components.h"
 
 #include <allegro5/allegro_primitives.h>
 

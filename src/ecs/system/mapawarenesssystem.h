@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../component/components.h"
+#include "../components.h"
 
 #include <secs/secs.h>
 

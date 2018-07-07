@@ -5,7 +5,7 @@
 
 #include <allegro5/allegro_primitives.h>
 
-#include "../component/components.h"
+#include "../components.h"
 #include "systemgroups.h"
 
 #include "../../map/mapscene.h"

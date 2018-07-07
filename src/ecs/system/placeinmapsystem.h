@@ -2,7 +2,7 @@
 
 #include <secs/secs.h>
 #include <alligator/input/input.h>
-#include "../component/components.h"
+#include "../components.h"
 #include "../../map/mapscene.h"
 
 

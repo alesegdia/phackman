@@ -1,7 +1,7 @@
 #pragma once
 
 #include <secs/secs.h>
-#include "system/systems.h"
+#include "systems.h"
 #include "entityfactory.h"
 
 class GameWorld
