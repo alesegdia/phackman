@@ -5,7 +5,7 @@
 #include "facingrenderingsystem.h"
 #include "mapnavigationsystem.h"
 #include "renderingsystem.h"
-#include "keyboardinputsystem.h"
+#include "playerinputsystem.h"
 #include "aiagentrandomwandersystem.h"
 #include "infectionsystem.h"
 #include "triggersystem.h"
