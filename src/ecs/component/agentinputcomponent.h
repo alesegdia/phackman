@@ -11,4 +11,5 @@ struct AgentInputComponent
     int normal_speed = 100;
     bool requestedAttack = false;
     bool requestedDesinfect = false;
+    bool requestedReinforce = false;
 };

@@ -46,7 +46,10 @@ public:
         x2 = x1 + aabb.width;
         y1 = aabb.y;
         y2 = y1 + aabb.height;
-        al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 0, 255), 2.f );
+        if( enabled )
+        {
+            al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 0, 255), 2.f );
+        }
     }
 
     void onAdded( const secs::Entity& e )
@@ -76,9 +79,17 @@ public:
         handleCollision( e1, e2 );
     }
 
+    void onCollisionExit(hadron::collision::Body &b1, hadron::collision::Body &b2)
+    {
+        SECS_UNUSED(b1);
+        SECS_UNUSED(b2);
+        printf("meh\n"); fflush(0);
+    }
+
     void handleCollision( const secs::Entity& e1, const secs::Entity& e2 )
     {
-        if( hasComponent<KeyboardInputComponent>(e1) && hasComponent<CellComponent>(e2) )
+        secs::Entity out1, out2;
+        if( entitiesHaveComponents<PlayerInputComponent, CellComponent>(e1, e2, &out1, &out2) )
         {
             /*
             auto& cell_comp = component<CellComponent>(cell);
@@ -87,15 +98,35 @@ public:
             case CellType::IndustryCell: cell_comp.industry++;
             case CellType::PowerCell: cell_comp.power++;
             }
-            addComponent<DieComponent>(cell);
             */
-            processor()->removeEntity(e2);
-            printf("removin\n"); fflush(0);
-            //addComponent<DieComponent>(e2);
+            processor()->removeEntity(out2);
+        }
+        else if( entitiesHaveComponents<PlayerBulletComponent, EnemyComponent>(e1, e2, &out1, &out2) )
+        {
+            processor()->removeEntity(out1);
+            auto& hc = component<HealthComponent>(out2);
+            hc.currentHealth--;
         }
     }
 
 private:
+
+    template <typename C1, typename C2>
+    bool entitiesHaveComponents(secs::Entity e1, secs::Entity e2, secs::Entity* ref1, secs::Entity* ref2)
+    {
+        bool check = false;
+        if( hasComponent<C1>(e1) && hasComponent<C2>(e2) )
+        {
+            *ref1 = e1; *ref2 = e2;
+            check = true;
+        }
+        else if( hasComponent<C1>(e2) && hasComponent<C2>(e1) )
+        {
+            *ref1 = e2; *ref2 = e1;
+            check = true;
+        }
+        return check;
+    }
 
     secs::Entity getEntityFromBody( hadron::collision::Body& b )
     {
@@ -104,5 +135,6 @@ private:
 
     hadron::collision::World m_physicsWorld;
 
+    bool enabled = false;
 
 };

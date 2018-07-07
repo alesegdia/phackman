@@ -55,6 +55,16 @@ public:
         m_infectionMap->set(x, y, 0);
     }
 
+    void undoReinforce(int x, int y)
+    {
+        desinfect(x, y);
+    }
+
+    void reinforce(int x, int y)
+    {
+        m_infectionMap->set(x, y, 4);
+    }
+
     std::shared_ptr<NavigationMap> navmap()
     {
         return m_navmap;
@@ -86,12 +96,12 @@ public:
                 ncx = c / 2;
                 ncy = r / 2;
 
-                if( m_infectionMap->get(ncx, ncy) == 3 )
+                if( isInfected(ncx, ncy) )
                 {
                     frame += 30;
                 }
 
-                if( m_infectionMap->get(ncx, ncy) == 4 )
+                if( isReinforced(ncx, ncy) )
                 {
                     frame += 60;
                 }
@@ -101,7 +111,6 @@ public:
             }
         }
         al_hold_bitmap_drawing(false);
-
     }
 
     int getSolidness(int x, int y)
@@ -111,7 +120,31 @@ public:
 
     bool isInfected(int x, int y)
     {
-        return m_infectionMap->get(x, y);
+        return m_infectionMap->get(x, y) == 3;
+    }
+
+    bool isReinforced(int x, int y)
+    {
+        return m_infectionMap->get(x, y) == 4;
+    }
+
+    void toggleReinforced(int x, int y)
+    {
+        if( false == isInfected(x, y) )
+        {
+            if( isReinforced(x, y) )
+            {
+                desinfect(x, y);
+            }
+            else
+            {
+                reinforce(x, y);
+            }
+        }
+        if( isReinforced(x, y) && ! isInfected(x, y) )
+        {
+
+        }
     }
 
     void debugRender()

@@ -21,3 +21,8 @@
 #include "hadroncollisioncomponent.h"
 #include "cellcomponent.h"
 #include "diecomponent.h"
+#include "bulletcomponent.h"
+#include "healthcomponent.h"
+#include "ondeathactioncomponent.h"
+#include "resourcestoragecomponent.h"
+#include "reinforcecomponent.h"

@@ -20,7 +20,7 @@ secs::Entity EntityFactory::makePlayer(float x, float y)
 
     addComponent<TileComponent>(player);
     addComponent<RenderFacingComponent>(player);
-    addComponent<KeyboardInputComponent>(player);
+    addComponent<PlayerInputComponent>(player);
 
 	addComponent<AgentInputComponent>(player);
     addComponent<AgentMapStateComponent>(player);
@@ -28,11 +28,7 @@ secs::Entity EntityFactory::makePlayer(float x, float y)
     sc.shoot = [this](const secs::Entity& e) {
         TransformComponent tc = m_world.component<TransformComponent>(e);
         RenderFacingComponent rf = m_world.component<RenderFacingComponent>(e);
-        auto b = this->makeLSBullet(tc.position.x(), tc.position.y(), rf.facing);
-        auto& ams = m_world.component<AgentMapStateComponent>(e);
-        auto& amsb = m_world.component<AgentMapStateComponent>(b);
-        amsb.lastNode = ams.lastNode;
-        amsb.targetNode = ams.targetNode;
+        this->makeLSBullet(tc.position.x(), tc.position.y(), rf.facing);
     };
     sc.rate = 0.2;
 
@@ -46,6 +42,9 @@ secs::Entity EntityFactory::makePlayer(float x, float y)
     auto& hcc = addComponent<HadronCollisionComponent>(player);
     hcc.body = new hadron::collision::Body(x, y, 12, 12);
     hcc.offset.set(10, 10);
+
+    auto& rsc = addComponent<ResourceStorageComponent>(player);
+    rsc.reinforceNodes = 10;
 
 	return player;
 }
@@ -75,6 +74,13 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
     addComponent<AIAgentRandomWanderComponent>(enemy);
     auto& ic = addComponent<InfectComponent>(enemy);
     ic.desinfectDuration = 0.8f;
+
+    auto& hcc = addComponent<HadronCollisionComponent>(enemy);
+    hcc.body = new hadron::collision::Body(x, y, 14, 14);
+    hcc.offset.set(8,8);
+
+    auto& hc = addComponent<HealthComponent>(enemy);
+    hc.maxHealth = 5;
 
     return enemy;
 }
@@ -160,17 +166,25 @@ secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr a
     auto& animation_comp = addComponent<AnimationComponent>(bullet);
     animation_comp.animation = anim;
 
+    auto& hcc = addComponent<HadronCollisionComponent>(bullet);
+    hcc.body = new hadron::collision::Body(x, y, 16, 16);
+    hcc.offset.set(8, 8);
+
     return bullet;
 }
 
 secs::Entity EntityFactory::makeLSBullet(float x, float y, Facing direction)
 {
-    return makeBullet(x, y, Assets::instance->lsBullet, direction, 175);
+    secs::Entity b = makeBullet(x, y, Assets::instance->lsBullet, direction, 175);
+    addComponent<PlayerBulletComponent>(b);
+    return b;
 }
 
 secs::Entity EntityFactory::makeTurretBullet(float x, float y, Facing direction)
 {
-    return makeBullet(x, y, Assets::instance->turretBullet, direction, 250);
+    secs::Entity b = makeBullet(x, y, Assets::instance->turretBullet, direction, 250);
+    addComponent<PlayerBulletComponent>(b);
+    return b;
 }
 
 secs::Entity EntityFactory::makeBuildingOnWall(int tile_x, int tile_y, int building_type, Facing facing)

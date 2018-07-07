@@ -37,6 +37,13 @@ public:
         // m_outputMatrix->debugPrint();
     }
 
+    void onRemoved(const secs::Entity& e)
+    {
+        auto& tlc = component<TileComponent>(e);
+        m_outputMatrix->set(tlc.previous.x(), tlc.previous.y(), 0);
+        m_outputMatrix->set(tlc.current.x(), tlc.current.y(), 0);
+    }
+
 
 private:
     Matrix2Di::SharedPtr m_outputMatrix;

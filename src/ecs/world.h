@@ -23,7 +23,7 @@ private:
 	RenderingSystem m_renderingSystem;
 	AnimationSystem m_animationSystem;
 	FacingRenderingSystem m_facingRenderingSystem;
-	KeyboardInputSystem m_keyboardInputSystem;
+    PlayerInputSystem m_playerInputSystem;
 	MapNavigationSystem m_navigationSystem;
 	AnimatorSystem m_animatorSystem;
     AIAgentRandomWanderSystem m_wanderSystem;
@@ -38,6 +38,8 @@ private:
     ShootAtSightSystem m_shootAtSightSystem;
     HadronCollisionSystem m_hadronCollisionSystem;
     DieSystem m_dieSystem;
+    HealthSystem m_healthSystem;
+    ReinforcingSystem m_reinforcingSystem;
     EntityFactory m_factory;
 
 };

@@ -5,27 +5,26 @@
 #include "../component/components.h"
 
 
-class KeyboardInputSystem : public secs::EntitySystem
+class PlayerInputSystem : public secs::EntitySystem
 {
 public:
 
-	KeyboardInputSystem( secs::Engine& world )
-		: m_world(world)
+    PlayerInputSystem()
 	{
-		setNeededComponents<KeyboardInputComponent,
-							RenderFacingComponent,
+        setNeededComponents<PlayerInputComponent,
 							AgentInputComponent>();
 	}
 
     void process( double delta, const secs::Entity &e ) override
 	{
         SECS_UNUSED(delta);
+
         if( inhibit )
         {
             return;
         }
 
-        auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
+        auto& agtinput_comp = component<AgentInputComponent>(e);
 
         bool u, d, r, l, space;
 		u = Input::IsKeyDown( ALLEGRO_KEY_UP );
@@ -34,17 +33,23 @@ public:
 		l = Input::IsKeyDown(ALLEGRO_KEY_LEFT);
 		space = Input::IsKeyDown(ALLEGRO_KEY_SPACE);
         agtinput_comp.requestedDesinfect = Input::IsKeyDown(ALLEGRO_KEY_X);
+        agtinput_comp.requestedReinforce = Input::IsKeyJustPressed(ALLEGRO_KEY_C);
 
         if( agtinput_comp.requestedDesinfect )
         {
-            auto& ic = m_world.processor().addComponent<InfectComponent>(e);
+            auto& ic = processor()->addComponent<InfectComponent>(e);
             ic.desinfect = true;
             agtinput_comp.speed = agtinput_comp.lower_speed;
         }
         else
         {
-            m_world.processor().removeComponent<InfectComponent>(e);
+            processor()->removeComponent<InfectComponent>(e);
             agtinput_comp.speed = agtinput_comp.normal_speed;
+        }
+
+         if( agtinput_comp.requestedReinforce )
+        {
+            processor()->addComponent<ReinforceComponent>(e);
         }
 
 		if( u )
@@ -70,13 +75,10 @@ public:
 
         if( Input::IsKeyDown( ALLEGRO_KEY_W ) )
         {
-            m_world.processor().addComponent<WallPlacementComponent>(e);
+            processor()->addComponent<WallPlacementComponent>(e);
         }
 	}
 
     bool inhibit = false;
-
-private:
-	secs::Engine& m_world;
 
 };

@@ -24,7 +24,7 @@ void GameplayScreen::show()
 {
     auto start_node = m_mapScene.navmap()->nodes()[0];
 
-    bool one_pill_test = true;
+    bool one_pill_test = false;
 
     m_playerEntity = gw.factory().makePlayer((start_node->x()) * 16, (start_node->y()) * 16);
     //gw.factory().makeSpawner(start_node->x() * 16, start_node->y() * 16);
@@ -58,6 +58,7 @@ void GameplayScreen::show()
     else
     {
         gw.factory().makeIndustryNode((start_node->x()) * 16, (start_node->y()) * 16);
+        gw.factory().makeIndustryNode((start_node->x()) * 32, (start_node->y()) * 16);
     }
 
 	for( int i = 0; i < 10; i++ )
@@ -115,7 +116,7 @@ void GameplayScreen::render()
 
     gw.render();
 
-    m_guiCam->scale(1, 1);
+    m_guiCam->scale(m_scale, m_scale);
     m_guiCam->position(0, 0);
     m_guiCam->bind();
 

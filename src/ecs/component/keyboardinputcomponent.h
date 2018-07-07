@@ -2,7 +2,7 @@
 
 #include <alligator/util/math.h>
 
-struct KeyboardInputComponent
+struct PlayerInputComponent
 {
 
 };

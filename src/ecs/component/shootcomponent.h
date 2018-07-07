@@ -1,5 +1,4 @@
-#ifndef SHOOTCOMPONENT_H
-#define SHOOTCOMPONENT_H
+#pragma once
 
 #include <functional>
 #include <secs/secs.h>
@@ -14,5 +13,3 @@ struct ShootComponent
     std::function<void(const secs::Entity& e)> shoot;
     Facing facing;
 };
-
-#endif // SHOOTCOMPONENT_H

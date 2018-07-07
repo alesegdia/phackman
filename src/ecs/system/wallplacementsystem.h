@@ -50,11 +50,12 @@ public:
                 (l && m_left) ||
                 (r && m_right) )
             {
-                if( false == m_mapScene.isInfected(m_playerTile.x(), m_playerTile.y()) )
+                if( true == m_mapScene.isReinforced(m_playerTile.x(), m_playerTile.y()) )
                 {
                     m_factory.makeBuildingOnWall(m_playerTile.x(), m_playerTile.y(), 0, f);
                 }
             }
+
         }
     }
 

@@ -18,3 +18,5 @@
 #include "shootatsightsystem.h"
 #include "diesystem.h"
 #include "hadroncollisionsystem.h"
+#include "healthsystem.h"
+#include "reinforcingsystem.h"
