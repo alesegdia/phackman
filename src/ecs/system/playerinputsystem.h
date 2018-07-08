@@ -49,7 +49,7 @@ public:
             agtinput_comp.speed = agtinput_comp.normal_speed;
         }
 
-         if( agtinput_comp.requestedReinforce )
+        if( agtinput_comp.requestedReinforce )
         {
             processor()->addComponent<ReinforceComponent>(e);
         }
@@ -75,7 +75,8 @@ public:
 		agtinput_comp.inputRequested = (u | d | l | r) && !space;
 		agtinput_comp.requestedAttack = space;
 
-        if( Input::IsKeyDown( ALLEGRO_KEY_W ) )
+        auto& tlc = component<TileComponent>(e);
+        if( Input::IsKeyDown( ALLEGRO_KEY_W ) && m_mapScene.isReinforced(tlc.current.x(), tlc.current.y()) )
         {
             processor()->addComponent<WallPlacementComponent>(e);
         }

@@ -9,6 +9,8 @@
 #include "../ecs/world.h"
 #include "../map/mapscene.h"
 
+#include <allegro5/allegro_ttf.h>
+
 class PhackmanGame;
 
 class GameplayScreen : public IScreen {

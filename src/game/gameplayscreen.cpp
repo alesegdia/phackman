@@ -123,6 +123,11 @@ void GameplayScreen::render()
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(26), 0,  0, 0);
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(27), 0, 16, 0);
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(28), 0, 32, 0);
+
+    auto& rsc = gw.engine().component<ResourceStorageComponent>(m_playerEntity);
+    char buff[4];
+    sprintf(buff, "%d", rsc.reinforceNodes);
+    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 1, 0, buff);
 }
 
 void GameplayScreen::hide()

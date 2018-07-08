@@ -6,6 +6,8 @@
 #include <alligator/graphics/spritesheet.h>
 #include <alligator/graphics/animation.h>
 
+#include <allegro5/allegro_ttf.h>
+
 class Assets
 {
 public:
@@ -45,6 +47,8 @@ public:
 
     std::shared_ptr<Animation> spawnerStand;
     std::shared_ptr<Animation> turretStand;
+
+    ALLEGRO_FONT* guiFont;
 
 
 };

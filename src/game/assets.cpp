@@ -82,11 +82,16 @@ Assets::Assets()
     phackmanDesinfectStand.reset(new Animation(1.f, 1));
     phackmanDesinfectStand->addFrame(characterSheet->getFrame(13));
 
+    guiFont = al_load_ttf_font("assets/bitcell.ttf", 16, 0);
 }
 
 Assets::~Assets()
 {
 	al_destroy_bitmap(characterBitmap);
+    al_destroy_bitmap(enemyBitmap);
+    al_destroy_bitmap(maptilesBitmap);
+    al_destroy_bitmap(buildingsBitmap);
+    al_destroy_font(guiFont);
 }
 
 void Assets::Initialize()

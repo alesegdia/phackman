@@ -40,9 +40,6 @@ GameWorld::GameWorld(MapScene& map_scene)
 
     m_world.activateSystemGroup(SystemGroups::GuiStop);
     m_world.setSystemGroup(&m_playerInputSystem, SystemGroups::GuiStop);
-    //m_world.setSystemGroup(&m_wanderSystem, SystemGroups::GuiStop);
-    //_world.setSystemGroup(&m_navigationSystem, SystemGroups::GuiStop);
-    //m_world.setSystemGroup(&m_animationSystem, SystemGroups::GuiStop);
 }
 
 void GameWorld::step(double delta)
