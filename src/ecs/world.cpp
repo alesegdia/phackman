@@ -6,6 +6,7 @@ GameWorld::GameWorld(MapScene& map_scene)
     : m_renderingSystem(m_world),
 	  m_animationSystem(m_world),
 	  m_facingRenderingSystem(m_world),
+      m_playerInputSystem(map_scene),
       m_navigationSystem(map_scene),
       m_animatorSystem(m_world),
       m_wanderSystem(m_world),

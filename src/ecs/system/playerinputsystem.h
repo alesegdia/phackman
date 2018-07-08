@@ -4,12 +4,14 @@
 #include <alligator/input/input.h>
 #include "../components.h"
 
+#include "../../map/mapscene.h"
 
 class PlayerInputSystem : public secs::EntitySystem
 {
 public:
 
-    PlayerInputSystem()
+    PlayerInputSystem(MapScene& map_scene)
+        : m_mapScene(map_scene)
 	{
         setNeededComponents<PlayerInputComponent,
 							AgentInputComponent>();
@@ -32,7 +34,7 @@ public:
 		r = Input::IsKeyDown( ALLEGRO_KEY_RIGHT );
 		l = Input::IsKeyDown(ALLEGRO_KEY_LEFT);
 		space = Input::IsKeyDown(ALLEGRO_KEY_SPACE);
-        agtinput_comp.requestedDesinfect = Input::IsKeyDown(ALLEGRO_KEY_X);
+        agtinput_comp.requestedDesinfect = Input::IsKeyDown(ALLEGRO_KEY_C);
         agtinput_comp.requestedReinforce = Input::IsKeyJustPressed(ALLEGRO_KEY_C);
 
         if( agtinput_comp.requestedDesinfect )
@@ -80,5 +82,8 @@ public:
 	}
 
     bool inhibit = false;
+
+private:
+    MapScene& m_mapScene;
 
 };

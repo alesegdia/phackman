@@ -30,6 +30,7 @@ public:
         SECS_UNUSED(delta);
         SECS_UNUSED(wpc);
         SECS_UNUSED(tc);
+
         bool u, d, l, r;
         u = Input::IsKeyJustPressed(ALLEGRO_KEY_UP);
         d = Input::IsKeyJustPressed(ALLEGRO_KEY_DOWN);
@@ -39,7 +40,7 @@ public:
 
         if( u|l|d|r )
         {
-            m_world.processor().removeComponent<WallPlacementComponent>(e);
+            processor()->removeComponent<WallPlacementComponent>(e);
             Facing f;
             if( u ) f = Facing::Down;
             if( d ) f = Facing::Up;
