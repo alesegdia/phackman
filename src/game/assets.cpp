@@ -96,7 +96,7 @@ Assets::~Assets()
 
 void Assets::Initialize()
 {
-	Assets::instance = new Assets();
+    Assets::instance = new Assets();
 }
 
 void Assets::Dispose()

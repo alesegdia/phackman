@@ -3,24 +3,21 @@
 #include <secs/secs.h>
 #include "../components.h"
 
-class AnimatorSystem : public secs::EntitySystem
+class AnimatorSystem : public secs::TypedEntitySystem<
+        AgentInputComponent,
+        AnimationComponent,
+        AnimatorComponent>
 {
 public:
-
-	AnimatorSystem(secs::Engine& world)
-		: m_world(world)
-	{
-		setNeededComponents<AgentInputComponent, AnimationComponent, AnimatorComponent>();
-	}
-
-	void process(double delta, const secs::Entity &e) override
+    void process(double delta, const secs::Entity &e,
+                 AgentInputComponent& agtinput_comp,
+                 AnimationComponent& anim_comp,
+                 AnimatorComponent& antr_comp) override
 	{
         SECS_UNUSED(delta);
-		auto& agtinput_comp = m_world.component<AgentInputComponent>(e);
-		auto& anim_comp = m_world.component<AnimationComponent>(e);
-		auto& antr_comp = m_world.component<AnimatorComponent>(e);
+        SECS_UNUSED(e);
 
-		if (antr_comp.stand_animation != nullptr)
+        if (antr_comp.stand_animation != nullptr)
 		{
 			anim_comp.animation = antr_comp.stand_animation;
 		}
@@ -45,8 +42,4 @@ public:
             anim_comp.animation = antr_comp.desinfect_stand_animation;
         }
 	}
-
-private:
-	secs::Engine& m_world;
-
 };

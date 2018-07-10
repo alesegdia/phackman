@@ -44,7 +44,7 @@ secs::Entity EntityFactory::makePlayer(float x, float y)
     hcc.offset.set(10, 10);
 
     auto& rsc = addComponent<ResourceStorageComponent>(player);
-    rsc.reinforceNodes = 10;
+    rsc.reinforceCells = 10;
 
 	return player;
 }
@@ -142,6 +142,26 @@ secs::Entity EntityFactory::makePowerNode(float x, float y)
     return node;
 }
 
+secs::Entity EntityFactory::makeCountdownText(float x, float y, const char *text)
+{
+    secs::Entity t = m_world.processor().addEntity();
+
+    auto& transform = addComponent<TransformComponent>(t);
+    auto& death = addComponent<DeathTimerComponent>(t);
+    auto& textcomp = addComponent<TextComponent>(t);
+    auto& fac = addComponent<FadeComponent>(t);
+    auto& fc = addComponent<FloatingComponent>(t);
+    auto& ctc = addComponent<ColorTintComponent>(t);
+    ctc.color = al_map_rgba(255, 255, 255, 255);
+    fc.speed = 0.1;
+    fac.rate = 0.01;
+    transform.position.set(x + 16, y-20);
+    death.ttl = 2;
+    textcomp.text = text;
+
+    return t;
+}
+
 secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr anim, Facing direction, float speed )
 {
     secs::Entity bullet = m_world.processor().addEntity();
@@ -231,13 +251,17 @@ secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
     addComponent<ShootAtSightComponent>(e);
 
     auto& sc = addComponent<ShootComponent>(e);
+    sc.rate = 0.8;
     sc.shoot = [this](const secs::Entity& ent) {
         TransformComponent tc = m_world.component<TransformComponent>(ent);
         ShootComponent scc = m_world.component<ShootComponent>(ent);
         this->makeTurretBullet(tc.position.x(), tc.position.y(), scc.facing);
     };
 
-    sc.rate = 0.8;
+    auto& pcc = addComponent<PowerConsumerComponent>(e);
+    pcc.unpowered_asset = Assets::instance->buildingsSheet->getFrame(0, 1);
+
 
 	return e;
 }
+

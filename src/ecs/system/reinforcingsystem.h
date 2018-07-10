@@ -4,14 +4,15 @@
 #include <alligator/input/input.h>
 #include "../components.h"
 #include "../../map/mapscene.h"
+#include "../entityfactory.h"
 
 
 class ReinforcingSystem : public secs::TypedEntitySystem<ReinforceComponent, TileComponent, ResourceStorageComponent>
 {
 public:
 
-    ReinforcingSystem( MapScene& map_scene )
-        : m_mapScene(map_scene)
+    ReinforcingSystem( MapScene& map_scene, EntityFactory& factory )
+        : m_mapScene(map_scene), m_factory(factory)
     {
 
     }
@@ -28,20 +29,24 @@ public:
         y = tlc.current.y();
         bool is_infected = m_mapScene.isInfected(x, y);
         bool is_reinforced = m_mapScene.isReinforced(x, y);
-        if( false == is_reinforced && false == is_infected && rsc.reinforceNodes > 0 )
+        auto& tc = component<TransformComponent>(e);
+        if( false == is_reinforced && false == is_infected && rsc.reinforceCells > 0 )
         {
             m_mapScene.reinforce(tlc.current.x(), tlc.current.y());
-            rsc.reinforceNodes--;
+            rsc.reinforceCells--;
+            m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "powered");
         }
         else if( true == is_reinforced )
         {
             m_mapScene.undoReinforce(x, y);
-            rsc.reinforceNodes++;
+            rsc.reinforceCells++;
+            m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "unpowered");
         }
         processor()->removeComponent<ReinforceComponent>(e);
     }
 
 private:
     MapScene& m_mapScene;
+    EntityFactory& m_factory;
 
 };

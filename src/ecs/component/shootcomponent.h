@@ -12,4 +12,5 @@ struct ShootComponent
     float streak;
     std::function<void(const secs::Entity& e)> shoot;
     Facing facing;
+    bool force_disable = false;
 };

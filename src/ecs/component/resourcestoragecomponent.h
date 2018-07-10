@@ -2,5 +2,7 @@
 
 struct ResourceStorageComponent
 {
-    int reinforceNodes = 0;
+    int reinforceCells = 0;
+    int industryCells = 0;
+    int powerCells = 0;
 };

@@ -28,6 +28,8 @@ public:
 
     secs::Entity makeBuildingTurret( const secs::Entity& e );
 
+    secs::Entity makeCountdownText( float x, float y, const char* text );
+
 private:
 
     secs::Entity makeBullet(float x, float y, Animation::SharedPtr anim , Facing direction, float speed);

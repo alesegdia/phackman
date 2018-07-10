@@ -36,6 +36,8 @@ private:
 
 	GameWorld gw;
 
-    int m_scale = 1;
+    int m_scale = 2;
+
+    bool m_pause = false;
 
 };

@@ -40,7 +40,6 @@ public:
 
         if( u|l|d|r )
         {
-            processor()->removeComponent<WallPlacementComponent>(e);
             Facing f;
             if( u ) f = Facing::Down;
             if( d ) f = Facing::Up;
@@ -53,10 +52,21 @@ public:
             {
                 if( true == m_mapScene.isReinforced(m_playerTile.x(), m_playerTile.y()) )
                 {
-                    m_factory.makeBuildingOnWall(m_playerTile.x(), m_playerTile.y(), 0, f);
+                    auto& rsc = component<ResourceStorageComponent>(e);
+                    static constexpr int COST = 3;
+                    if( rsc.industryCells >= COST )
+                    {
+                        rsc.industryCells -= COST;
+                        m_factory.makeBuildingOnWall(m_playerTile.x(), m_playerTile.y(), 0, f);
+                        m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "turret built");
+                    }
+                    else
+                    {
+                        m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "not enough nodes");
+                    }
                 }
             }
-
+            processor()->removeComponent<WallPlacementComponent>(e);
         }
     }
 

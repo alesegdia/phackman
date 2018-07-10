@@ -4,21 +4,24 @@
 #include <alligator/input/input.h>
 #include "../components.h"
 #include "../../map/mapscene.h"
+#include "../entityfactory.h"
 
-
-class InfectionSystem : public secs::TypedEntitySystem<InfectComponent, TileComponent>
+class InfectionSystem : public secs::EntitySystem
 {
 public:
 
-    InfectionSystem( secs::Engine& world, MapScene& map_scene )
-        : m_world(world),
-          m_mapScene(map_scene)
+    InfectionSystem( MapScene& map_scene, EntityFactory& factory )
+        : m_mapScene(map_scene),
+          m_factory(factory)
     {
         this->setStepConfiguration(true, true);
+        this->setNeededComponents<InfectComponent, TileComponent>();
     }
 
-    void process( double delta, const secs::Entity &e, InfectComponent& infect, TileComponent& tlc ) override
+    void process( double delta, const secs::Entity &e ) override
     {
+        auto& infect = component<InfectComponent>(e);
+        auto& tlc = component<TileComponent>(e);
         SECS_UNUSED(e);
         int x, y;
         x = tlc.current.x();
@@ -37,9 +40,15 @@ public:
                     int x, y;
                     x = tlc.current.x();
                     y = tlc.current.y();
+                    auto& tc = component<TransformComponent>(e);
                     if( true == infect.desinfect )
                     {
+                        bool prev = m_mapScene.isInfected( x, y );
                         m_mapScene.desinfect( x, y );
+                        if( prev )
+                        {
+                            m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "desinfected");
+                        }
                     }
                     else
                     {
@@ -61,8 +70,8 @@ public:
 
     void render( const secs::Entity& e ) override
     {
-        auto& infect = m_world.component<InfectComponent>(e);
-        auto& tlc = m_world.component<TileComponent>(e);
+        auto& infect = component<InfectComponent>(e);
+        auto& tlc = component<TileComponent>(e);
         int x, y;
         x = tlc.current.x();
         y = tlc.current.y();
@@ -83,7 +92,7 @@ public:
     }
 
 private:
-    secs::Engine& m_world;
     MapScene& m_mapScene;
+    EntityFactory& m_factory;
 
 };

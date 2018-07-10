@@ -6,15 +6,19 @@
 
 #include "../../map/mapscene.h"
 
+#include "../entityfactory.h"
+
 class PlayerInputSystem : public secs::EntitySystem
 {
 public:
 
-    PlayerInputSystem(MapScene& map_scene)
-        : m_mapScene(map_scene)
+    PlayerInputSystem(MapScene& map_scene, EntityFactory& factory)
+        : m_mapScene(map_scene),
+          m_factory(factory)
 	{
         setNeededComponents<PlayerInputComponent,
-							AgentInputComponent>();
+                            AgentInputComponent,
+                            TransformComponent>();
 	}
 
     void process( double delta, const secs::Entity &e ) override
@@ -76,15 +80,27 @@ public:
 		agtinput_comp.requestedAttack = space;
 
         auto& tlc = component<TileComponent>(e);
-        if( Input::IsKeyDown( ALLEGRO_KEY_W ) && m_mapScene.isReinforced(tlc.current.x(), tlc.current.y()) )
+        auto& tc = component<TransformComponent>(e);
+
+        if( Input::IsKeyJustPressed( ALLEGRO_KEY_W ) )
         {
-            processor()->addComponent<WallPlacementComponent>(e);
+            if( m_mapScene.isReinforced(tlc.current.x(), tlc.current.y()) )
+            {
+                processor()->addComponent<WallPlacementComponent>(e);
+            }
+            else
+            {
+                m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "needs power");
+            }
         }
 	}
 
     bool inhibit = false;
 
+
 private:
     MapScene& m_mapScene;
+    EntityFactory& m_factory;
+
 
 };

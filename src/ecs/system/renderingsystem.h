@@ -7,8 +7,7 @@ class RenderingSystem : public secs::EntitySystem
 {
 public:
 
-    RenderingSystem( secs::Engine& world )
-        : m_world(world)
+    RenderingSystem()
     {
         setStepConfiguration(false, true);
         setNeededComponents<RenderComponent, TransformComponent>();
@@ -16,8 +15,8 @@ public:
 
     void render( const secs::Entity &e) override
     {
-        auto& render_comp = m_world.component<RenderComponent>(e);
-        auto& transform_comp = m_world.component<TransformComponent>(e);
+        auto& render_comp = component<RenderComponent>(e);
+        auto& transform_comp = component<TransformComponent>(e);
 
         assert(render_comp.bitmap != nullptr);
 
@@ -33,8 +32,5 @@ public:
                     transform_comp.angle, 0 );
 
     }
-
-private:
-	secs::Engine& m_world;
 
 };

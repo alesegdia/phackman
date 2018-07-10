@@ -15,7 +15,7 @@ public:
         {
             sc.nextShotAvailable -= delta;
         }
-        if( aic.requestedAttack && sc.nextShotAvailable <= 0 )
+        if( aic.requestedAttack && sc.nextShotAvailable <= 0 && sc.force_disable == false )
         {
             processor()->addComponent<TriggerComponent>(e);
             sc.nextShotAvailable = sc.rate;

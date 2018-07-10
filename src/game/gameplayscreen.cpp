@@ -96,7 +96,15 @@ void GameplayScreen::update(double delta)
         m_scale = 3;
     }
 
-    gw.step( delta );
+    if( Input::IsKeyJustPressed(ALLEGRO_KEY_P) )
+    {
+        m_pause = ! m_pause;
+    }
+
+    if( false == m_pause )
+    {
+        gw.step( delta );
+    }
 }
 
 void GameplayScreen::render()
@@ -125,9 +133,13 @@ void GameplayScreen::render()
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(28), 0, 32, 0);
 
     auto& rsc = gw.engine().component<ResourceStorageComponent>(m_playerEntity);
-    char buff[4];
-    sprintf(buff, "%d", rsc.reinforceNodes);
-    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 1, 0, buff);
+    char rc[4]; char ic[4]; char pc[4];
+    sprintf(rc, "%d", rsc.reinforceCells);
+    sprintf(ic, "%d", rsc.industryCells);
+    sprintf(pc, "%d", rsc.powerCells);
+    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 0, 0, rc);
+    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 16, 0, ic);
+    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 32, 0, pc);
 }
 
 void GameplayScreen::hide()

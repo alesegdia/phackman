@@ -91,15 +91,15 @@ public:
         secs::Entity out1, out2;
         if( entitiesHaveComponents<PlayerInputComponent, CellComponent>(e1, e2, &out1, &out2) )
         {
-            /*
-            auto& cell_comp = component<CellComponent>(cell);
-            switch(cell_comp)
+            auto& cell_comp = component<CellComponent>(out2);
+            auto& resources = component<ResourceStorageComponent>(out1);
+            switch(cell_comp.type)
             {
-            case CellType::IndustryCell: cell_comp.industry++;
-            case CellType::PowerCell: cell_comp.power++;
+            case CellType::IndustryCell: resources.industryCells++; break;
+            case CellType::PowerCell: resources.powerCells++; break;
             }
-            */
             processor()->removeEntity(out2);
+
         }
         else if( entitiesHaveComponents<PlayerBulletComponent, EnemyComponent>(e1, e2, &out1, &out2) )
         {

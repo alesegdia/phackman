@@ -3,19 +3,15 @@
 #include "../ecs/system/systemgroups.h"
 
 GameWorld::GameWorld(MapScene& map_scene)
-    : m_renderingSystem(m_world),
-	  m_animationSystem(m_world),
-	  m_facingRenderingSystem(m_world),
-      m_playerInputSystem(map_scene),
+    : m_factory(m_world),
       m_navigationSystem(map_scene),
-      m_animatorSystem(m_world),
-      m_wanderSystem(m_world),
-      m_infectionSystem(m_world, map_scene),
+      m_infectionSystem(map_scene, m_factory),
       m_wallPlacementSystem(m_world, map_scene, m_factory),
       m_mapAwarenessSystem(map_scene.enemyVisibilityMap()),
       m_placeEnemyInMapSystem(map_scene.enemyVisibilityMap()),
-      m_reinforcingSystem(map_scene),
-      m_factory(m_world)
+      m_reinforcingSystem(map_scene, m_factory),
+      m_poweringSystem(map_scene, m_factory),
+      m_playerInputSystem(map_scene, m_factory)
 {
 	m_world.pushSystem(&m_renderingSystem);
 	m_world.pushSystem(&m_facingRenderingSystem);
@@ -37,6 +33,13 @@ GameWorld::GameWorld(MapScene& map_scene)
     m_world.pushSystem(&m_dieSystem);
     m_world.pushSystem(&m_healthSystem);
     m_world.pushSystem(&m_reinforcingSystem);
+    m_world.pushSystem(&m_poweringSystem);
+    m_world.pushSystem(&m_disableShootWhenUnpoweredSystem);
+    m_world.pushSystem(&m_unpoweredGraphicOverridingSystem);
+    m_world.pushSystem(&m_textRenderingSystem);
+    m_world.pushSystem(&m_deathCountdownSystem);
+    m_world.pushSystem(&m_floatingSystem);
+    m_world.pushSystem(&m_fadingSystem);
 
     m_world.activateSystemGroup(SystemGroups::GuiStop);
     m_world.setSystemGroup(&m_playerInputSystem, SystemGroups::GuiStop);
