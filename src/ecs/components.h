@@ -23,7 +23,6 @@
 #include "component/mapawarenesscomponent.h"
 #include "component/ondeathactioncomponent.h"
 #include "component/onhitactioncomponent.h"
-#include "component/placedinwallcomponent.h"
 #include "component/powerconsumercomponent.h"
 #include "component/reinforcecomponent.h"
 #include "component/rendercomponent.h"
@@ -35,5 +34,6 @@
 #include "component/tilecomponent.h"
 #include "component/transformcomponent.h"
 #include "component/triggercomponent.h"
+#include "component/wallawareplacedcomponent.h"
 #include "component/wallplacementcomponent.h"
 

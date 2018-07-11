@@ -6,6 +6,7 @@
 #include <alligator/util/math.h>
 
 #include "../map/mapgen.h"
+#include "../map/placementmap.h"
 #include "../ai/pfmap.h"
 #include "../ai/blackboard.h"
 #include "../game/assets.h"
@@ -20,6 +21,8 @@ public:
         m_infectionMap = scale_down(*m_map, 2);
 
         m_solidnessMap = scale_down(*m_map, 2);
+
+        m_placementMap.reset( m_solidnessMap->cols(), m_solidnessMap->rows() );
 
         printf("SOLIDITY MAP\n");
         m_solidnessMap->debugPrint();
@@ -196,12 +199,18 @@ public:
 
     }
 
+    PlacementMap& placementMap()
+    {
+        return m_placementMap;
+    }
+
 
 private:
     Matrix2Di::SharedPtr m_map;
     Matrix2Di::SharedPtr m_renderMap;
     Matrix2Di::SharedPtr m_infectionMap;
     std::shared_ptr<NavigationMap> m_navmap;
+    PlacementMap m_placementMap;
 
     Matrix2Di::SharedPtr m_nodesMap;
     Matrix2Di::SharedPtr m_solidnessMap;

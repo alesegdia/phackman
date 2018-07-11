@@ -30,11 +30,18 @@ public:
         bool is_infected = m_mapScene.isInfected(x, y);
         bool is_reinforced = m_mapScene.isReinforced(x, y);
         auto& tc = component<TransformComponent>(e);
-        if( false == is_reinforced && false == is_infected && rsc.reinforceCells > 0 )
+        if( false == is_reinforced && false == is_infected )
         {
-            m_mapScene.reinforce(tlc.current.x(), tlc.current.y());
-            rsc.reinforceCells--;
-            m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "powered");
+            if( rsc.reinforceCells > 0 )
+            {
+                m_mapScene.reinforce(tlc.current.x(), tlc.current.y());
+                rsc.reinforceCells--;
+                m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "powered");
+            }
+            else
+            {
+                m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "no power cells");
+            }
         }
         else if( true == is_reinforced )
         {

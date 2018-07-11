@@ -133,7 +133,7 @@ secs::Entity EntityFactory::makePowerNode(float x, float y)
     animation_comp.animation = Assets::instance->powerNode;
 
     auto& cc = addComponent<CellComponent>(node);
-    cc.type = CellType::IndustryCell;
+    cc.type = CellType::PowerCell;
 
     auto& hcc = addComponent<HadronCollisionComponent>(node);
     hcc.body = new hadron::collision::Body(x, y, 8, 8);
@@ -229,6 +229,7 @@ secs::Entity EntityFactory::makeBuildingOnWall(int tile_x, int tile_y, int build
     aic.speed = 0;
 
     addComponent<TileComponent>(building);
+    addComponent<WallAwarePlacedComponent>(building);
 
     switch( building_type )
     {

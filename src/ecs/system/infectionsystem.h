@@ -84,9 +84,17 @@ public:
 
             if( infect.desinfectTimer > 0 && must_show)
             {
+                static constexpr float BORDER   = 4;
+                static constexpr float BARSIZE  = 32 - BORDER * 2;
+                static constexpr float BARHEIGHT = 3;
                 auto tp = Vec2i(x * 32, y * 32);
-                float xx = infect.desinfectTimer * 16 / infect.desinfectDuration;
-                al_draw_filled_rectangle(tp.x() + 2, tp.y() + 2, tp.x() + xx + 2, tp.y() + 2 + 2, al_map_rgb(0, 255, 0));
+                float xx = infect.desinfectTimer * BARSIZE / infect.desinfectDuration;
+                float x0, y0, x1, y1;
+                x0 = tp.x() + BORDER;
+                y0 = tp.y() + BORDER;
+                x1 = x0 + xx;
+                y1 = y0 + BARHEIGHT;
+                al_draw_filled_rectangle(x0, y0, x1, y1, al_map_rgb(0, 255, 0));
             }
         }
     }

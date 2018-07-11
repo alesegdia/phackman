@@ -52,17 +52,24 @@ public:
             {
                 if( true == m_mapScene.isReinforced(m_playerTile.x(), m_playerTile.y()) )
                 {
-                    auto& rsc = component<ResourceStorageComponent>(e);
-                    static constexpr int COST = 3;
-                    if( rsc.industryCells >= COST )
+                    if( true == m_mapScene.placementMap().isUsed( m_playerTile.x(), m_playerTile.y(), f ) )
                     {
-                        rsc.industryCells -= COST;
-                        m_factory.makeBuildingOnWall(m_playerTile.x(), m_playerTile.y(), 0, f);
-                        m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "turret built");
+                        m_factory.makeCountdownText( tc.position.x(), tc.position.y(), "no space" );
                     }
                     else
                     {
-                        m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "not enough nodes");
+                        auto& rsc = component<ResourceStorageComponent>(e);
+                        static constexpr int COST = 3;
+                        if( rsc.industryCells >= COST )
+                        {
+                            rsc.industryCells -= COST;
+                            m_factory.makeBuildingOnWall(m_playerTile.x(), m_playerTile.y(), 0, f);
+                            m_factory.makeCountdownText( tc.position.x(), tc.position.y(), "turret built" );
+                        }
+                        else
+                        {
+                            m_factory.makeCountdownText( tc.position.x(), tc.position.y(), "not enough nodes" );
+                        }
                     }
                 }
             }

@@ -10,10 +10,24 @@ public:
     {
         SECS_UNUSED(e);
         SECS_UNUSED(delta);
+        computeTile( tlc, trc );
+    }
+
+    void onAdded( const secs::Entity& e )
+    {
+        auto& tlc = component<TileComponent>(e);
+        auto& tc = component<TransformComponent>(e);
+        computeTile(tlc, tc);
+    }
+
+private:
+    void computeTile( TileComponent& tlc, TransformComponent& trc )
+    {
         int tx, ty;
         tx = (trc.position.x() + 16) / 32;
         ty = (trc.position.y() + 16) / 32;
         tlc.previous = tlc.current;
         tlc.current.set( tx, ty );
     }
+
 };

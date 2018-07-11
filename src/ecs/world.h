@@ -50,5 +50,6 @@ private:
     DeathCountdownSystem            m_deathCountdownSystem;
     FloatingSystem                  m_floatingSystem;
     FadingSystem                    m_fadingSystem;
+    WallAwarePlacementSystem        m_wallAwarePlacementSystem;
 
 };

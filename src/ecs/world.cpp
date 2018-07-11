@@ -11,7 +11,8 @@ GameWorld::GameWorld(MapScene& map_scene)
       m_placeEnemyInMapSystem(map_scene.enemyVisibilityMap()),
       m_reinforcingSystem(map_scene, m_factory),
       m_poweringSystem(map_scene, m_factory),
-      m_playerInputSystem(map_scene, m_factory)
+      m_playerInputSystem(map_scene, m_factory),
+      m_wallAwarePlacementSystem(map_scene)
 {
 	m_world.pushSystem(&m_renderingSystem);
 	m_world.pushSystem(&m_facingRenderingSystem);
@@ -40,6 +41,7 @@ GameWorld::GameWorld(MapScene& map_scene)
     m_world.pushSystem(&m_deathCountdownSystem);
     m_world.pushSystem(&m_floatingSystem);
     m_world.pushSystem(&m_fadingSystem);
+    m_world.pushSystem(&m_wallAwarePlacementSystem);
 
     m_world.activateSystemGroup(SystemGroups::GuiStop);
     m_world.setSystemGroup(&m_playerInputSystem, SystemGroups::GuiStop);
