@@ -1,38 +1,52 @@
 # Phack Man
 
-
 # 1. Brief
 
 Tower defense roguelike with pacman design elements about a maintenance guy on a ship trying to clean up the lower cargo bays with the help of a gun, a few gadgets and some placeable machines.
 
-# 2. Summary
+## 2. Plot
 
-## 2.1. Plot
-The **INV4D-312** is a transport spaceship that was just intercepted by an alien race classified as the **Zenytp-3D3**. Take control of **Phack Man** in his mission to clear all the floors of the cargo bay from these little bastards.
+The **INV4D-312** is a transport spaceship carrying The Crucible, an unknown alien device. The spaceship was just intercepted by an alien race classified as the **Zenytp-3D3**. Take control of **Phack Man**, a janitor and the only survivor in the **INV4D-312** in his mission to clear all the floors of the cargo bay from these little bastards.
 
-## 2.2. Basic gameplay
+## 3. Objective
 
-Phack Man's gameplay resembles the good ol’ Pacman mechanics. The map is a generated maze and entities can move freely through it. The objective is to find the key node to open the stairs for the next floor and proceed to go to the next floor. There will be infinite floors.
+The player has to move The Crucible among floors to the last one to secure it. The Crucible always start with zero energy, so you have to fill using power nodes in order to be able to move it. Once The Crucible is filled, hordes of enemies will start to come from the spawners directly towards the player and The Crucible energy will start to deplete, and when the energy level reaches zero, the player loses. The player has to find where the gate to the next floor is. Once it's found, fill The Crucible with energy and start moving it to the gate to the next floor. The player speed will decrease when carrying The Crucible.
+
+## 4. Gameplay mechanics
+
+Phack Man's gameplay resembles in some ways to the good ol’ Pacman mechanics, but using a ship cargo bays playground where you can place gadgets at the walls and the floor to be able to transport . The map is a generated maze and entities can move freely through it. The objective is to find the key node to open the stairs for the next floor and proceed to go to the next floor. There will be infinite floors.
+
+### Spawners
+
+Each spawner has a fixed number of enemies and type of it assigned and will respawn them continually when they die, maybe could have a bar of spawns so when the bar is empty it can't spawn anymore until the bar is refilled in time again, or maybe we could just set a very high spawn rate, gameplay wise.
+
+### Infection system
 
 Floor and wall tiles can be infected, normal or secured. When an alien enemy steps over a tile, it gets automatically infected, unless the tile is secured. When a tile is infected, you can not use the floor or walls to place gadgets because of the infection. If there was a previously placed gadget, this will just be destroyed.
 
+### Lock&Stock
+
 Phack Man can shoot with his two miniguns Lock & Stock (L&S from now on), but only when the battery is charged. In order to charge the battery, the player needs to collect power nodes (like Pacman power pills). Battery charge will decrease over time even if the player is not using them. These guns have several parameters like rate, power or bullet speed, but can be also raycasted. TBD.
 
-There are a few nodes that can be found in the game:
+### Nodes
+
+There are nodes used as resources in the game. In each level there will be a fixed number of nodes that can be obtained, or maybe a probability, and when each enemy drop a type of node, the number of nodes spawned increases or the probability decreases. The types of nodes are the following:
 
 | Name | Usage | Obtainability |
 |:---:|:---:|:---:|
 | IndustryNode | **Build** constructions and place gadgets | Spread around the map |
-| ScienceNode | **Enhance** gadgets and constructions | Dropped by spawners |
+| ScienceNode | **Enhance** gadgets and constructions | Dropped by enemies |
 | PowerNode | **Recharge** L&S batteries | Rarely spread around the map |
-| CleanseNode | **Clean** infection | Dropped by enemies |
-| KeyNode | **Open** stairs to the next floor | One per floor |
 
-## 2.3. Gadgets
+### Gadgets
 
 The player will acquire construction nodes in the stage and can spend them in using gadgets. Some of them can be upgraded in the midstage so that parameters like power, rate, strike, time-to-live can change. Gadgets fall in these categories:
 
-### 2.3.1. Buildings
+* Buildings
+* Consumable
+* Drones (not clear if it'll be in)
+
+### Buildings
 
 You can place those and repair them with construction nodes.
 
@@ -40,10 +54,11 @@ You can place those and repair them with construction nodes.
 |:---:|:---:|:---:|
 | Laser | Countdown explosion and branches explosion like in bomberman | Power |
 | FixedTurret | Cheap but can shoot in one direction | Advance, SimultaneosulyPlaced |
-| MovableTurret | Deals damage to enemies passing over it | TimeToLive, SimultaneosulyPlaced |
+| OmniTurret | Not so cheap but can shoot at every direction | Advance, SimultaneosulyPlaced |
+| (?) MovableTurret | Deals damage to enemies passing over it | TimeToLive, SimultaneosulyPlaced |
 | SnailDevice | Slows nearby enemies | SlowPower |
 
-### 2.3.2. Consumable
+### Consumable
 
 like mines or bombs in a bomberman way
 
@@ -54,7 +69,7 @@ like mines or bombs in a bomberman way
 | Electric field | Deals damage to enemies passing over it | TimeToLive, SimultaneosulyPlaced |
 | Remote Bomb | Explodes on detonation, deals high damage in single block | Power |
 
-### 2.3.3. Drones
+### Drones (not clear if it'll be in)
 
 Follows player and provides enhancements. When the player is reached by an enemy, a drone explodes instead of dying the player. The enemy or enemy bullet would explode as well as the enemy. The number of drones is TBD, but the decision ranges from 1 to 3.
 
