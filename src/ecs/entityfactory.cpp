@@ -18,6 +18,9 @@ secs::Entity EntityFactory::makePlayer(float x, float y)
 	auto& animation_comp = addComponent<AnimationComponent>(player);
 	animation_comp.animation = Assets::instance->phackmanWalk;
 
+    auto& hc = addComponent<HealthComponent>(player);
+    hc.maxHealth = 10;
+
     addComponent<TileComponent>(player);
     addComponent<RenderFacingComponent>(player);
     addComponent<PlayerInputComponent>(player);
@@ -30,9 +33,9 @@ secs::Entity EntityFactory::makePlayer(float x, float y)
         RenderFacingComponent rf = m_world.component<RenderFacingComponent>(e);
         this->makeLSBullet(tc.position.x(), tc.position.y(), rf.facing);
     };
-    sc.rate = 0.2;
+    sc.rate = 0.2f;
 
-	AnimatorComponent& ac = addComponent<AnimatorComponent>(player);
+    auto& ac = addComponent<AnimatorComponent>(player);
 	ac.attack_animation = Assets::instance->phackmanAttack;
 	ac.stand_animation = Assets::instance->phackmanStand;
     ac.walk_animation = Assets::instance->phackmanWalk;
@@ -87,17 +90,40 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
 
 secs::Entity EntityFactory::makeSpawner(float x, float y)
 {
-    secs::Entity enemy = m_world.processor().addEntity();
+    secs::Entity spawner = m_world.processor().addEntity();
 
-    auto& transform_comp = addComponent<TransformComponent>(enemy);
+    auto& transform_comp = addComponent<TransformComponent>(spawner);
     transform_comp.position.set( x+2, y +2);
 
-    addComponent<RenderComponent>(enemy);
+    addComponent<RenderComponent>(spawner);
 
-    auto& animation_comp = addComponent<AnimationComponent>(enemy);
+    auto& animation_comp = addComponent<AnimationComponent>(spawner);
     animation_comp.animation = Assets::instance->spawnerStand;
 
-    return enemy;
+    auto& spawn = addComponent<SpawnComponent>(spawner);
+    spawn.maxNumEntities = 3;
+
+    addComponent<AlwaysShootComponent>(spawner);
+    addComponent<AgentInputComponent>(spawner);
+
+    auto& sc = addComponent<ShootComponent>(spawner);
+    sc.rate = 1.0f;
+    sc.shoot = [this, spawner](const secs::Entity& ent) {
+        auto& tc = m_world.component<TransformComponent>(ent);
+        auto& spawn = m_world.component<SpawnComponent>(ent);
+        if( spawn.currentEntities < spawn.maxNumEntities )
+        {
+            auto enemy = this->makeEnemy( tc.position.x() - 2, tc.position.y() - 2 );
+            spawn.currentEntities++;
+            auto& death = addComponent<OnDeathActionComponent>(enemy);
+            death.action = [this, spawner](const secs::Entity& entity) {
+                auto& spawn = m_world.component<SpawnComponent>(spawner);
+                spawn.currentEntities--;
+            };
+        }
+    };
+
+    return spawner;
 }
 
 secs::Entity EntityFactory::makeIndustryNode(float x, float y)
@@ -252,7 +278,7 @@ secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
     addComponent<ShootAtSightComponent>(e);
 
     auto& sc = addComponent<ShootComponent>(e);
-    sc.rate = 0.8;
+    sc.rate = 0.8f;
     sc.shoot = [this](const secs::Entity& ent) {
         TransformComponent tc = m_world.component<TransformComponent>(ent);
         ShootComponent scc = m_world.component<ShootComponent>(ent);

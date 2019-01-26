@@ -7,11 +7,6 @@
 class DieSystem : public secs::TypedEntitySystem<DieComponent>
 {
 public:
-    void onAdded(const secs::Entity &e)
-    {
-        processor()->removeEntity(e);
-    }
-
     void process(double delta, const secs::Entity &e, DieComponent &dc)
     {
         SECS_UNUSED(delta);
@@ -21,6 +16,18 @@ public:
             auto& odac = component<OnDeathActionComponent>(e);
             odac.action(e);
         }
+        if( hasComponent<PlayerInputComponent>(e) )
+        {
+            m_playerDead = true;
+        }
         processor()->removeEntity(e);
     }
+
+    bool isPlayerDead()
+    {
+        return m_playerDead;
+    }
+
+private:
+    bool m_playerDead = false;
 };

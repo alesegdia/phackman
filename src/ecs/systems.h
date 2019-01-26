@@ -1,6 +1,7 @@
 #pragma once
 
 #include "system/aiagentrandomwandersystem.h"
+#include "system/alwaysshootsystem.h"
 #include "system/animationsystem.h"
 #include "system/animatorsystem.h"
 #include "system/computetilesystem.h"
@@ -23,6 +24,7 @@
 #include "system/renderingsystem.h"
 #include "system/shootatsightsystem.h"
 #include "system/shootingsystem.h"
+#include "system/spawnsystem.h"
 #include "system/systemgroups.h"
 #include "system/textrenderingsystem.h"
 #include "system/triggersystem.h"

@@ -16,7 +16,7 @@ class PhackmanGame;
 class GameplayScreen : public IScreen {
 public:
 	GameplayScreen(PhackmanGame* g);
-	virtual ~GameplayScreen();
+    ~GameplayScreen() override = default;
 
 	// IScreen interface
 	void show() override;

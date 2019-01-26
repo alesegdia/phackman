@@ -51,5 +51,6 @@ private:
     FloatingSystem                  m_floatingSystem;
     FadingSystem                    m_fadingSystem;
     WallAwarePlacementSystem        m_wallAwarePlacementSystem;
+    AlwaysShootSystem               m_alwaysShootSystem;
 
 };

@@ -107,6 +107,11 @@ public:
             auto& hc = component<HealthComponent>(out2);
             hc.currentHealth--;
         }
+        else if( entitiesHaveComponents<PlayerInputComponent, EnemyComponent>(e1, e2, &out1, &out2) )
+        {
+            auto& hc = component<HealthComponent>(out1);
+            hc.currentHealth = 0;
+        }
     }
 
 private:

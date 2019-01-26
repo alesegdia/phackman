@@ -15,11 +15,6 @@ GameplayScreen::GameplayScreen( PhackmanGame* g )
 
 }
 
-GameplayScreen::~GameplayScreen()
-{
-
-}
-
 void GameplayScreen::show()
 {
     auto start_node = m_mapScene.navmap()->nodes()[0];
@@ -61,13 +56,24 @@ void GameplayScreen::show()
         gw.factory().makeIndustryNode((start_node->x()) * 32, (start_node->y()) * 16);
     }
 
+    auto nodes = m_mapScene.navmap()->nodes();
+    std::random_shuffle(nodes.begin(), nodes.end());
+    //std::sort(nodes.begin(), nodes.end(), [](const PathNode::SharedPtr& n1, const PathNode::SharedPtr& n2) {
+    //    return n1->neighboors().size() > n2->neighboors().size();
+    //});
+
+    for( int i = 0; i < nodes.size() / 5.0f; i++ )
+    {
+        gw.factory().makeSpawner(nodes[i]->x() * 16, nodes[i]->y() * 16);
+    }
+
 	for( int i = 0; i < 10; i++ )
     {
-        int idx = rand() % m_mapScene.navmap()->nodes().size();
+        auto idx = size_t(rand()) % m_mapScene.navmap()->nodes().size();
         auto n = m_mapScene.navmap()->nodes()[idx];
         if( false == one_pill_test )
         {
-            gw.factory().makeEnemy(n->x() * 16, n->y() * 16);
+            //gw.factory().makeEnemy(n->x() * 16, n->y() * 16);
         }
     }
 

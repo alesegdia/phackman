@@ -42,6 +42,7 @@ GameWorld::GameWorld(MapScene& map_scene)
     m_world.pushSystem(&m_floatingSystem);
     m_world.pushSystem(&m_fadingSystem);
     m_world.pushSystem(&m_wallAwarePlacementSystem);
+    m_world.pushSystem(&m_alwaysShootSystem);
 
     m_world.activateSystemGroup(SystemGroups::GuiStop);
     m_world.setSystemGroup(&m_playerInputSystem, SystemGroups::GuiStop);
