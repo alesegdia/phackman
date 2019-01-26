@@ -11,10 +11,10 @@
 
 class PhackmanGame;
 
-class GameplayScreen : public IScreen {
+class MenuScreen : public IScreen {
 public:
-	GameplayScreen(PhackmanGame* g);
-    ~GameplayScreen() override = default;
+    MenuScreen(PhackmanGame* g);
+    ~MenuScreen() override = default;
 
 	// IScreen interface
 	void show() override;
@@ -24,14 +24,6 @@ public:
 
 private:
 	PhackmanGame* m_game;
-
     Camera::SharedPtr m_cam;
-    Camera::SharedPtr m_guiCam;
-
-    std::shared_ptr<GameWorld> gw;
-
-    int m_scale = 2;
-
-    bool m_pause = true;
 
 };

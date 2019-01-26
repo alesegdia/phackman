@@ -7,5 +7,5 @@
 struct HadronCollisionComponent
 {
     Vec2f offset = Vec2f(0,0);
-    hadron::collision::Body* body = nullptr;
+    hadron::Body* body = nullptr;
 };

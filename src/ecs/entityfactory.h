@@ -10,7 +10,7 @@ public:
 
     EntityFactory( secs::Engine& world );
 
-    secs::Entity makePlayer( float x, float y );
+    secs::Entity makePlayer(float x, float y, OnDeathActionComponent::Action action);
 
     secs::Entity makeEnemy( float x, float y );
 

@@ -39,7 +39,7 @@ function(add_alleg_target EXEC-NAME SRCS)
         if(NOT MSVC)
                 target_include_directories(${EXEC-NAME} PUBLIC "${ALLEGRO_INCLUDE_DIR}")
                 set_target_properties(${EXEC-NAME} PROPERTIES
-                        COMPILE_FLAGS "-g -std=gnu++11  -Wall -Wextra"
+					    COMPILE_FLAGS "-g -std=gnu++14  -Wall -Wextra"
                         LINK_FLAGS "-g -ftest-coverage -fprofile-arcs"
 			)
                 target_link_libraries(${EXEC-NAME} ${ALLEGRO_LIBRARIES})
@@ -47,4 +47,7 @@ function(add_alleg_target EXEC-NAME SRCS)
 endfunction(add_alleg_target)
 
 add_alleg_target(phackman src/main.cpp)
+
+
+
 

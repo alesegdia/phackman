@@ -8,7 +8,7 @@
 
 class HadronCollisionSystem
         : public secs::TypedEntitySystem<HadronCollisionComponent, TransformComponent>,
-          public hadron::collision::ICollisionListener
+          public hadron::ICollisionListener
 {
 public:
 
@@ -34,7 +34,7 @@ public:
         SECS_UNUSED(delta);
         SECS_UNUSED(e);
         const auto& p = tc.position;
-        hcc.body->setPosition(hadron::math::Vec2(p.x() + hcc.offset.x(), p.y() + hcc.offset.y()));
+        hcc.body->setPosition(hadron::Vec2(p.x() + hcc.offset.x(), p.y() + hcc.offset.y()));
     }
 
     void render(const secs::Entity &e) override
@@ -72,14 +72,14 @@ public:
         printf("cleanup\n"); fflush(0);
     }
 
-    void onCollisionEnter(hadron::collision::Body &b1, hadron::collision::Body &b2)
+    void onCollisionEnter(hadron::Body &b1, hadron::Body &b2)
     {
         auto e1 = getEntityFromBody(b1);
         auto e2 = getEntityFromBody(b2);
         handleCollision( e1, e2 );
     }
 
-    void onCollisionExit(hadron::collision::Body &b1, hadron::collision::Body &b2)
+    void onCollisionExit(hadron::Body &b1, hadron::Body &b2)
     {
         SECS_UNUSED(b1);
         SECS_UNUSED(b2);
@@ -133,7 +133,7 @@ private:
         return check;
     }
 
-    secs::Entity getEntityFromBody( hadron::collision::Body& b )
+    secs::Entity getEntityFromBody( hadron::Body& b )
     {
         return *(static_cast<secs::Entity*>(b.userData()));
     }

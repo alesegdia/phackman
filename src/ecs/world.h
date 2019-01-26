@@ -4,11 +4,11 @@
 #include "systems.h"
 #include "entityfactory.h"
 
-class GameWorld
+class ECSWorld
 {
 public:
 
-    GameWorld(MapScene &map_scene);
+    ECSWorld(MapScene &map_scene);
 
     void step(double delta );
 

@@ -6,7 +6,7 @@ EntityFactory::EntityFactory(secs::Engine &world)
 
 }
 
-secs::Entity EntityFactory::makePlayer(float x, float y)
+secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent::Action action)
 {
 	secs::Entity player = m_world.processor().addEntity();
 
@@ -43,11 +43,14 @@ secs::Entity EntityFactory::makePlayer(float x, float y)
     ac.desinfect_stand_animation = Assets::instance->phackmanDesinfectStand;
 
     auto& hcc = addComponent<HadronCollisionComponent>(player);
-    hcc.body = new hadron::collision::Body(x, y, 12, 12);
+    hcc.body = new hadron::Body(x, y, 12, 12);
     hcc.offset.set(10, 10);
 
     auto& rsc = addComponent<ResourceStorageComponent>(player);
     rsc.reinforceCells = 10;
+
+    auto& odac = addComponent<OnDeathActionComponent>(player);
+    odac.action = action;
 
 	return player;
 }
@@ -79,7 +82,7 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
     ic.desinfectDuration = 0.8f;
 
     auto& hcc = addComponent<HadronCollisionComponent>(enemy);
-    hcc.body = new hadron::collision::Body(x, y, 14, 14);
+    hcc.body = new hadron::Body(x, y, 14, 14);
     hcc.offset.set(8,8);
 
     auto& hc = addComponent<HealthComponent>(enemy);
@@ -142,7 +145,7 @@ secs::Entity EntityFactory::makeIndustryNode(float x, float y)
     cc.type = CellType::IndustryCell;
 
     auto& hcc = addComponent<HadronCollisionComponent>(node);
-    hcc.body = new hadron::collision::Body(x, y, 8, 8);
+    hcc.body = new hadron::Body(x, y, 8, 8);
     hcc.offset.set(4,4);
 
     return node;
@@ -162,7 +165,7 @@ secs::Entity EntityFactory::makePowerNode(float x, float y)
     cc.type = CellType::PowerCell;
 
     auto& hcc = addComponent<HadronCollisionComponent>(node);
-    hcc.body = new hadron::collision::Body(x, y, 8, 8);
+    hcc.body = new hadron::Body(x, y, 8, 8);
     hcc.offset.set(4,4);
 
     return node;
@@ -213,7 +216,7 @@ secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr a
     animation_comp.animation = anim;
 
     auto& hcc = addComponent<HadronCollisionComponent>(bullet);
-    hcc.body = new hadron::collision::Body(x, y, 16, 16);
+    hcc.body = new hadron::Body(x, y, 16, 16);
     hcc.offset.set(8, 8);
 
     return bullet;

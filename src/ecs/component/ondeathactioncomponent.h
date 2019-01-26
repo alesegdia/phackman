@@ -1,8 +1,10 @@
 #pragma once
 
 #include <functional>
+#include <secs/secs.h>
 
 struct OnDeathActionComponent
 {
-    std::function<void(const secs::Entity& e)> action;
+    using Action = std::function<void(const secs::Entity& e)>;
+    Action action;
 };

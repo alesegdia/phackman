@@ -2,7 +2,7 @@
 
 #include "../ecs/system/systemgroups.h"
 
-GameWorld::GameWorld(MapScene& map_scene)
+ECSWorld::ECSWorld(MapScene& map_scene)
     : m_factory(m_world),
       m_navigationSystem(map_scene),
       m_infectionSystem(map_scene, m_factory),
@@ -48,22 +48,22 @@ GameWorld::GameWorld(MapScene& map_scene)
     m_world.setSystemGroup(&m_playerInputSystem, SystemGroups::GuiStop);
 }
 
-void GameWorld::step(double delta)
+void ECSWorld::step(double delta)
 {
 	m_world.step( delta );
 }
 
-void GameWorld::render()
+void ECSWorld::render()
 {
 	m_world.render();
 }
 
-EntityFactory& GameWorld::factory()
+EntityFactory& ECSWorld::factory()
 {
 	return m_factory;
 }
 
-secs::Engine &GameWorld::engine()
+secs::Engine &ECSWorld::engine()
 {
     return m_world;
 }

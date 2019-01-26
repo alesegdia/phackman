@@ -66,7 +66,7 @@ The player will acquire construction nodes in the stage and can spend them in us
 * Consumable
 * Drones (not clear if it'll be in)
 
-## Buildings
+### Buildings
 
 You can place those and repair them with construction nodes.
 
@@ -78,7 +78,7 @@ You can place those and repair them with construction nodes.
 | (?) MovableTurret | Deals damage to enemies passing over it | TimeToLive, SimultaneosulyPlaced |
 | SnailDevice | Slows nearby enemies | SlowPower |
 
-## Consumable
+### Consumable
 
 like mines or bombs in a bomberman way
 
