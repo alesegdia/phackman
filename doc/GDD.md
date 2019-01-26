@@ -4,25 +4,43 @@
 
 Tower defense roguelike with pacman design elements about a maintenance guy on a ship trying to clean up the lower cargo bays with the help of a gun, a few gadgets and some placeable machines.
 
-## 2. Plot
+## 2. Summary
 
 The **INV4D-312** is a transport spaceship carrying The Crucible, an unknown alien device. The spaceship was just intercepted by an alien race classified as the **Zenytp-3D3**. Take control of **Phack Man**, a janitor and the only survivor in the **INV4D-312** in his mission to clear all the floors of the cargo bay from these little bastards.
 
-## 3. Objective
+Phack Man's gameplay resembles in some ways to the good ol’ Pacman mechanics, but using cargo bays of a ship infected by aliens as the playground where you can place gadgets at the walls and the floor to be able to transport **The Crucible** through the cargo bays safely.
 
-The player has to move The Crucible among floors to the last one to secure it. The Crucible always start with zero energy, so you have to fill using power nodes in order to be able to move it. Once The Crucible is filled, hordes of enemies will start to come from the spawners directly towards the player and The Crucible energy will start to deplete, and when the energy level reaches zero, the player loses. The player has to find where the gate to the next floor is. Once it's found, fill The Crucible with energy and start moving it to the gate to the next floor. The player speed will decrease when carrying The Crucible.
+## 3. Game flow
+
+The player has to move an alien device, The Crucible, among floors to the last one to secure it. **The Crucible** always start with zero energy, so you have to fill using power nodes in order to be able to move it. Once **the crucible** is filled, hordes of enemies will start to come from the spawners directly towards the player and the energy will start to deplete over time, and when the energy level reaches zero, the player loses. The player has to find where the **gate** to the next floor is. Once it's found, fill **the crucible** with energy and start moving it to the gate to the next floor. The player speed will decrease when carrying The Crucible.
+
+Normally, the game flow for a level starts with the player near **the crucible** and with the nodes kept in the previous floor. Then the player will start to investigate the maze to find the gate to the next floor. The player will encounter enemies that will need to overcome by building turrets. Once the gate is found, the player ideally will build a secure path from **the crucible** to the gate. When the player is confident that the path is safe, then the player will power the crucible and carry it with **Lock&Stock**, and hence won't be able to use it during the transport. The crucible's energy will start to deplete and if the player reaches the gate with the crucible
 
 ## 4. Gameplay mechanics
 
-Phack Man's gameplay resembles in some ways to the good ol’ Pacman mechanics, but using a ship cargo bays playground where you can place gadgets at the walls and the floor to be able to transport . The map is a generated maze and entities can move freely through it. The objective is to find the key node to open the stairs for the next floor and proceed to go to the next floor. There will be infinite floors.
-
 ### Spawners
 
-Each spawner has a fixed number of enemies and type of it assigned and will respawn them continually when they die, maybe could have a bar of spawns so when the bar is empty it can't spawn anymore until the bar is refilled in time again, or maybe we could just set a very high spawn rate, gameplay wise.
+Each spawner has a fixed number of enemies and type of it assigned and will respawn them continually when they die. *TBD*: maybe could have a bar of spawns so when the bar is empty it can't spawn anymore until the bar is refilled in time again, or maybe we could just set a very high spawn rate, gameplay wise.
+
+At first some enemies will follow the players and others don't, depending on the kind of enemy, but when **The Crucible** is powered and the player starts to carry it to the gate, the spawners capacity and rate will increase enormously, and all the enemies will chase the player.
+
+Enemies could be spawned all at the start, and/or from spawning buildings. This way, the player might need to inhibit these spawners, via destroying them or via another gadget (the inhibitor).
 
 ### Infection system
 
-Floor and wall tiles can be infected, normal or secured. When an alien enemy steps over a tile, it gets automatically infected, unless the tile is secured. When a tile is infected, you can not use the floor or walls to place gadgets because of the infection. If there was a previously placed gadget, this will just be destroyed.
+Floor and wall tiles can be infected, normal or powered. When an alien enemy steps over a tile, it gets infected over time, unless the tile is secured. When a tile is infected, you can not use the floor or walls to place gadgets because of the infection. If there was a previously placed gadget when a normal tile turns to infected, the gadget will just be destroyed.
+
+### Enemies
+
+There will be different enemy behaviours defined, but this is still in development many of them can suffer changes or be removed.
+
+1. **Infected walker**. Wanders the maze randomly infecting everything at
+2. **Curious Chaser**. Wanders the maze randomly until the distance to the player is less than a threshold distance. Then it chases the player until the threshold distance is surpassed.
+3. **Speedy**. Wanders the maze chasing the player. Movement is quick from node to node, but there is a resting time in each node.
+4. **Insatiable Chaser**. Wanders the maze chasing the player independently from the distance to it.
+5. **Unpleasant Snitch**. Wanders the maze randomly and if it detects the player in its range of vision, chases it. Each snitch also notifies other snitches about the player position. This could be improved by notifying infected walkers too.
+
+Enemies can shoot, or might be buildings too, this is to be defined better.
 
 ### Lock&Stock
 
@@ -78,7 +96,7 @@ Follows player and provides enhancements. When the player is reached by an enemy
 | BarrierDrone | Deploys a barrier which explodes on enemy contact. | RegenTime, Capacity |
 | PulseDrone | Shoots pulse bullets to enemies in front | ShootBack, DualShoot |
 
-## 3. Interface
+## 5. Interface
 
 * The player will have an active gadget/building shown in the UI that can be changed by cycling.
 * The player control consists of the following input:
@@ -95,7 +113,7 @@ Follows player and provides enhancements. When the player is reached by an enemy
 
 When the player presses the 'Use gadget' button, time will stop and you'll be able to mount gadgets in nearby floor or wall tiles.
 
-## 4. Map
+## 6. Map
 
 The map is a generated maze with progressive size depending on the floor. We can think of the map like a node graph where nodes are placed at maze positions where the player can turn 90 degrees.
 
@@ -110,24 +128,6 @@ The map is a generated maze with progressive size depending on the floor. We can
 ```
 
 The walkable path will be 2 tiles width, instead of 1 like in Pac-Man. The walls of the map can have a minimum of 1 tile width. The generation will be defined later.
-
-## 5. Enemies
-
-There will be defined a few behaviors, but probably **only one will be implemented** (the easiest) for time economy reasons.
-
-1. **Boring Walker**. Wanders the maze randomly with no meaning of life.  
-2. **Curious Chaser**. Wanders the maze randomly until the distance to the player is less than a threshold distance. Then it chases the player until the threshold distance is surpassed.
-3. **Speedy**. Wanders the maze chasing the player. Movement is quick from node to node, but there is a resting time in each node.
-4. **Insatiable Chaser**. Wanders the maze chasing the player independently from the distance to it.
-5. **Unpleasant Snitch**. Wanders the maze randomly and if it detects the player in its range of vision, chases it. Each snitch also notifies other snitches about the player position. This could be improved by notifying boring walkers too.
-
-Enemies can shoot, or might be buildings too, this is to be defined better.
-
-#### Spawning
-
-Enemies could be spawned all at the start, and/or from spawning buildings. This way, the player might need to inhibit these spawners, via destroying them or via another gadget (the inhibitor).
-
-Spawners could spawn enemies near it or just anywhere, and is the player objective to inhibit all the spawners in order to get the key to travel to the next floor.
 
 ## A.1. Possible upgrades
 
