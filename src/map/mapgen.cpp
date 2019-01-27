@@ -59,9 +59,14 @@ aether::math::Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<aet
 		shape_index++;
 	}
 
-    aether::math::Matrix2Di::SharedPtr output = flip(*m_layoutMatrix);
-	output = add_integer(*output, shape_index-1);
-    output = concat_horizontal(*output, *m_layoutMatrix);
+    aether::math::Matrix2Di::SharedPtr output = m_layoutMatrix;
+    output = add_integer(*output, shape_index-1);
+
+    if(m_config.mirror)
+    {
+        output = flip(*output);
+        output = concat_horizontal(*output, *m_layoutMatrix);
+    }
 
     if( false == m_originalPacman )
     {
@@ -122,7 +127,10 @@ std::vector<std::shared_ptr<aether::math::Matrix2Di> > ShapeStorage::makeSample(
 	shapes.push_back(m_L2);
     shapes.push_back(m_L2);
     shapes.push_back(m_L2);
-	shapes.push_back(m_T);
+    shapes.push_back(m_T);
+    shapes.push_back(m_T);
+    shapes.push_back(m_L2);
+    shapes.push_back(m_T);
     shapes.push_back(m_T);
     return shapes;
 }

@@ -46,10 +46,12 @@ public:
             auto& agtstate_comp = component<AgentMapStateComponent>(e);
             auto& facing_comp = component<RenderFacingComponent>(e);
 
+            // get node at my position
             PathNode::SharedPtr my_node = Blackboard::instance.navigationMap->getNodeAt(
                         transform_comp.position.x(),
                         transform_comp.position.y() );
 
+            // if I'm in a node
             if( my_node == nullptr )
             {
                 Orientation requested_orientation = get_orientation( agtinput_comp.requestedFacing );

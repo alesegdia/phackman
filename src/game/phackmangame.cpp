@@ -4,8 +4,7 @@
 PhackmanGame::PhackmanGame(int sw, int sh)
     : aether::core::Application( sw, sh )
 {
-    this->setRenderFPS(64);
-    this->setUpdateFPS(64);
+
 }
 
 PhackmanGame::~PhackmanGame()

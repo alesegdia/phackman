@@ -25,7 +25,10 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
     addComponent<RenderFacingComponent>(player);
     addComponent<PlayerInputComponent>(player);
 
-	addComponent<AgentInputComponent>(player);
+    auto& aic = addComponent<AgentInputComponent>(player);
+    aic.lower_speed = 0.00008f;
+    aic.normal_speed = 0.00008f;
+
     addComponent<AgentMapStateComponent>(player);
     auto& sc = addComponent<ShootComponent>(player);
     sc.shoot = [this](const secs::Entity& e) {
@@ -33,7 +36,7 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
         RenderFacingComponent rf = m_world.component<RenderFacingComponent>(e);
         this->makeLSBullet(tc.position.x(), tc.position.y(), rf.facing);
     };
-    sc.rate = 0.2f;
+    sc.rate = 200;
 
     auto& ac = addComponent<AnimatorComponent>(player);
 	ac.attack_animation = Assets::instance->phackmanAttack;
@@ -71,8 +74,8 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
     addComponent<RenderFacingComponent>(enemy);
     addComponent<TileComponent>(enemy);
 
-    auto& ainput = addComponent<AgentInputComponent>(enemy);
-    ainput.speed = 20;
+    auto& aic = addComponent<AgentInputComponent>(enemy);
+    aic.speed = 0.00001f;
 
     addComponent<EnemyComponent>(enemy);
 
@@ -136,10 +139,8 @@ secs::Entity EntityFactory::makeIndustryNode(float x, float y)
     auto& transform_comp = addComponent<TransformComponent>(node);
     transform_comp.position.set( x, y );
 
-    addComponent<RenderComponent>(node);
-
-    auto& animation_comp = addComponent<AnimationComponent>(node);
-    animation_comp.animation = Assets::instance->industryNode;
+    auto& rc = addComponent<RenderComponent>(node);
+    rc.bitmap = Assets::instance->industryNode->getFrame(0).texture;
 
     auto& cc = addComponent<CellComponent>(node);
     cc.type = CellType::IndustryCell;
@@ -157,9 +158,8 @@ secs::Entity EntityFactory::makePowerNode(float x, float y)
 
     auto& transform_comp = addComponent<TransformComponent>(node);
     transform_comp.position.set( x, y );
-    addComponent<RenderComponent>(node);
-    auto& animation_comp = addComponent<AnimationComponent>(node);
-    animation_comp.animation = Assets::instance->powerNode;
+    auto& rc = addComponent<RenderComponent>(node);
+    rc.bitmap = Assets::instance->powerNode->getFrame(0).texture;
 
     auto& cc = addComponent<CellComponent>(node);
     cc.type = CellType::PowerCell;

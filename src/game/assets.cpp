@@ -17,38 +17,38 @@ Assets::Assets()
     buildingsBitmap.load("assets/turrets.png");
     buildingsSheet.reset(new aether::graphics::Spritesheet(4, 2, buildingsBitmap));
 
-    phackmanWalk.reset(new aether::graphics::Animation(1000));
+    phackmanWalk.reset(new aether::graphics::Animation(0.1e6));
 	phackmanWalk->addFrame(characterSheet->getFrame(0));
 	phackmanWalk->addFrame(characterSheet->getFrame(1));
 	phackmanWalk->addFrame(characterSheet->getFrame(2));
 	phackmanWalk->addFrame(characterSheet->getFrame(3));
 
-    phackmanStand.reset(new aether::graphics::Animation(1000));
+    phackmanStand.reset(new aether::graphics::Animation(10e6));
     phackmanStand->addFrame(characterSheet->getFrame(1));
 
-    industryNode.reset(new aether::graphics::Animation(1000));
+    industryNode.reset(new aether::graphics::Animation(10e6));
     industryNode->addFrame(maptilesSheet->getFrame(30));
 
-    powerNode.reset(new aether::graphics::Animation(1000));
+    powerNode.reset(new aether::graphics::Animation(10e6));
     powerNode->addFrame(maptilesSheet->getFrame(31));
 
-    lsBullet.reset(new aether::graphics::Animation(1000));
+    lsBullet.reset(new aether::graphics::Animation(10e6));
     lsBullet->addFrame(characterSheet->getFrame(11));
 
-    turretStand.reset(new aether::graphics::Animation(1000));
+    turretStand.reset(new aether::graphics::Animation(10e6));
     turretStand->addFrame(buildingsSheet->getFrame(0));
 
-    turretBullet.reset(new aether::graphics::Animation(1000));
+    turretBullet.reset(new aether::graphics::Animation(10e6));
     turretBullet->addFrame(buildingsSheet->getFrame(1));
 
-    phackmanAttack.reset(new aether::graphics::Animation(700));
+    phackmanAttack.reset(new aether::graphics::Animation(7e6));
     phackmanAttack->addFrame(characterSheet->getFrame(8));
 	phackmanAttack->addFrame(characterSheet->getFrame(9));
 
-    slimeWalk.reset(new aether::graphics::Animation(1000));
+    slimeWalk.reset(new aether::graphics::Animation(1e6));
     slimeWalk->addFrame(characterSheet->getFrame(10));
 
-    spawnerStand.reset(new aether::graphics::Animation(500));
+    spawnerStand.reset(new aether::graphics::Animation(5e5));
     spawnerStand->addFrame(enemySheet->getFrame(0));
     spawnerStand->addFrame(enemySheet->getFrame(0));
     spawnerStand->addFrame(enemySheet->getFrame(0));
@@ -73,13 +73,13 @@ Assets::Assets()
     spawnerStand->addFrame(enemySheet->getFrame(2));
     spawnerStand->addFrame(enemySheet->getFrame(2));
 
-    phackmanDesinfectWalk.reset(new aether::graphics::Animation(200));
+    phackmanDesinfectWalk.reset(new aether::graphics::Animation(2e5));
     phackmanDesinfectWalk->addFrame(characterSheet->getFrame(12));
     phackmanDesinfectWalk->addFrame(characterSheet->getFrame(13));
     phackmanDesinfectWalk->addFrame(characterSheet->getFrame(14));
     phackmanDesinfectWalk->addFrame(characterSheet->getFrame(13));
 
-    phackmanDesinfectStand.reset(new aether::graphics::Animation(100));
+    phackmanDesinfectStand.reset(new aether::graphics::Animation(1e5));
     phackmanDesinfectStand->addFrame(characterSheet->getFrame(13));
 
     guiFont = al_load_ttf_font("assets/bitcell.ttf", 16, 0);

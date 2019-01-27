@@ -27,6 +27,7 @@ public:
         std::vector<aether::math::Matrix2Di::SharedPtr> shapes;
 		int canvasWidth = 0 ;
 		int canvasHeight = 0 ;
+        bool mirror = false;
 	};
 
 	LayoutBuilder( Config cfg = Config() /* cfg = {} */ );

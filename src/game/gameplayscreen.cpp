@@ -49,7 +49,7 @@ void GameplayScreen::update(uint64_t delta)
 
     if( false == m_pause )
     {
-        gw->step(delta);
+        gw->step(double(delta));
 
         if( gw->isGameOver() )
         {
@@ -63,13 +63,16 @@ void GameplayScreen::update(uint64_t delta)
 void GameplayScreen::render()
 {
     auto new_pos = gw->playerPos();
-    new_pos.x(-floor(new_pos.x()) * m_scale + 1024/2 - 16);
-    new_pos.y(-floor(new_pos.y()) * m_scale + 768/2 - 16);
+    auto x = new_pos.x();
+    auto y = new_pos.y();
+    new_pos.x(-x * m_scale + 1024/2.f - 16.f);
+    new_pos.y(-y * m_scale + 768/2.f - 16.f);
 
 	m_cam->position(new_pos.x(), new_pos.y());
     m_cam->scale(m_scale, m_scale);
     m_cam->bind();
 
+    aether::graphics::clear(0,0,0);
     gw->render();
 
     m_guiCam->scale(m_scale, m_scale);
