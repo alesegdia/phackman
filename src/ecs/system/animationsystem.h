@@ -13,6 +13,6 @@ public:
         SECS_UNUSED(e);
         anim_comp.animationData.timer += 1.0/8.0;
 		anim_comp.animation->updateData( anim_comp.animationData );
-		render_comp.bitmap = anim_comp.animationData.currentFrame;
+        render_comp.bitmap = anim_comp.animationData.currentFrame->texture;
 	}
 };

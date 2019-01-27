@@ -1,9 +1,9 @@
 #pragma once
 
-#include <alligator/graphics/animation.h>
+#include <aether/aether.h>
 
 struct AnimationComponent
 {
-	Animation::SharedPtr animation = nullptr;
-	AnimationData animationData;
+    aether::graphics::Animation::SharedPtr animation = nullptr;
+    aether::graphics::AnimationData animationData;
 };

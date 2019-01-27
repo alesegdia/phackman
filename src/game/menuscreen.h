@@ -1,8 +1,6 @@
 #pragma once
 
-#include <alligator/game/iscreen.h>
-#include <alligator/util/matrix.h>
-#include <alligator/camera/camera.h>
+#include <aether/aether.h>
 #include <secs/secs.h>
 
 #include "../core/gameworld.h"
@@ -11,14 +9,14 @@
 
 class PhackmanGame;
 
-class MenuScreen : public IScreen {
+class MenuScreen : public aether::core::IScreen {
 public:
     MenuScreen(PhackmanGame* g);
     ~MenuScreen() override = default;
 
 	// IScreen interface
 	void show() override;
-	void update(double delta) override;
+    void update(uint64_t delta) override;
 	void render() override;
 	void hide() override;
 

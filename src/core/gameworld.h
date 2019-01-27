@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../ecs/world.h"
+#include "../map/mapscene.h"
 
 class GameWorld
 {
@@ -11,7 +12,7 @@ public:
 
     void render();
 
-    const Vec2f& playerPos();
+    const aether::math::Vec2f& playerPos();
 
     const ResourceStorageComponent& playerResourceStorageComponent();
 

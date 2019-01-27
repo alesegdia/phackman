@@ -2,10 +2,10 @@
 
 #include <hadron/hadron.h>
 
-#include <alligator/alligator.h>
+#include <aether/aether.h>
 
 struct HadronCollisionComponent
 {
-    Vec2f offset = Vec2f(0,0);
+    aether::math::Vec2f offset = aether::math::Vec2f(0,0);
     hadron::Body* body = nullptr;
 };

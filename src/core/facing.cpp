@@ -32,7 +32,7 @@ Orientation get_orientation(Facing dir)
 }
 
 
-void advanceFromFacing(Vec2i& pos, Facing direction)
+void advanceFromFacing(aether::math::Vec2i& pos, Facing direction)
 {
     switch( direction )
     {

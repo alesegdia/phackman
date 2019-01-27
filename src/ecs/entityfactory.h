@@ -1,6 +1,7 @@
 #pragma once
 
 #include <secs/secs.h>
+#include <aether/aether.h>
 #include "components.h"
 #include "../game/assets.h"
 
@@ -32,7 +33,7 @@ public:
 
 private:
 
-    secs::Entity makeBullet(float x, float y, Animation::SharedPtr anim , Facing direction, float speed);
+    secs::Entity makeBullet(float x, float y, aether::graphics::Animation::SharedPtr anim , Facing direction, float speed);
 
 
 	template <typename ComponentType>

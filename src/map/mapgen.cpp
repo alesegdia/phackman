@@ -12,17 +12,17 @@ LayoutBuilder::LayoutBuilder(Config cfg)
 
 }
 
-Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::SharedPtr> &shapes)
+aether::math::Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<aether::math::Matrix2Di::SharedPtr> &shapes)
 {
-	m_layoutMatrix.reset(new Matrix2Di( 7, 9, 0 ));
+    m_layoutMatrix.reset(new aether::math::Matrix2Di( 7, 9, 0 ));
 
 	int shape_index = 2;
-	for( Matrix2Di::SharedPtr shape : shapes )
+    for( aether::math::Matrix2Di::SharedPtr shape : shapes )
 	{
 		int selected_col = -1;
 		int row;
 
-		Matrix2Di::SharedPtr the_shape;
+        aether::math::Matrix2Di::SharedPtr the_shape;
 
 		int r = rng() % 4;
 		the_shape = rotate(*shape, r);
@@ -59,7 +59,7 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 		shape_index++;
 	}
 
-	Matrix2Di::SharedPtr output = flip(*m_layoutMatrix);
+    aether::math::Matrix2Di::SharedPtr output = flip(*m_layoutMatrix);
 	output = add_integer(*output, shape_index-1);
     output = concat_horizontal(*output, *m_layoutMatrix);
 
@@ -77,7 +77,7 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
     output = convolute3x3(*output, shrink_pieces_convolutor);
     output = tint(*output, 1);
 
-    Matrix2Di::SharedPtr real_output(new Matrix2Di(output->cols()-2, output->rows()-2, 0));
+    aether::math::Matrix2Di::SharedPtr real_output(new aether::math::Matrix2Di(output->cols()-2, output->rows()-2, 0));
     plot(*output, *real_output, -1, -1, true, 1);
 
     return real_output;
@@ -86,37 +86,37 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 
 ShapeStorage::ShapeStorage()
 {
-	m_L1.reset(new Matrix2Di(2, 3,
+    m_L1.reset(new aether::math::Matrix2Di(2, 3,
 	{ 1, 0,
 	  1, 0,
 	  1, 1 }));
 
-	m_L2.reset(new Matrix2Di(2, 2,
+    m_L2.reset(new aether::math::Matrix2Di(2, 2,
 	{ 1, 0,
 	  1, 1 }));
 
-	m_I1.reset(new Matrix2Di(1, 3,
+    m_I1.reset(new aether::math::Matrix2Di(1, 3,
 	{ 1,
 	  1,
 	  1 }));
 
-	m_I2.reset(new Matrix2Di(1, 2,
+    m_I2.reset(new aether::math::Matrix2Di(1, 2,
 	{ 1,
 	  1, }));
 
-	m_T.reset(new Matrix2Di(3, 2,
+    m_T.reset(new aether::math::Matrix2Di(3, 2,
 	{ 1, 1, 1,
 	  0, 1, 0 }));
 
-	m_Plus.reset(new Matrix2Di(3, 3,
+    m_Plus.reset(new aether::math::Matrix2Di(3, 3,
 	{ 0, 1, 0,
 	  1, 1, 1,
 	  0, 1, 0 }));
 }
 
-std::vector<std::shared_ptr<Matrix2Di> > ShapeStorage::makeSample()
+std::vector<std::shared_ptr<aether::math::Matrix2Di> > ShapeStorage::makeSample()
 {
-	std::vector<Matrix2Di::SharedPtr> shapes;
+    std::vector<aether::math::Matrix2Di::SharedPtr> shapes;
     shapes.push_back(m_L1);
     shapes.push_back(m_L1);
 	shapes.push_back(m_L2);

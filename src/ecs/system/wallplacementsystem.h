@@ -1,9 +1,6 @@
 #pragma once
 
-#include <alligator/input/input.h>
 #include <secs/secs.h>
-
-#include <allegro5/allegro_primitives.h>
 
 #include "../components.h"
 #include "systemgroups.h"
@@ -32,10 +29,10 @@ public:
         SECS_UNUSED(tc);
 
         bool u, d, l, r;
-        u = Input::IsKeyJustPressed(ALLEGRO_KEY_UP);
-        d = Input::IsKeyJustPressed(ALLEGRO_KEY_DOWN);
-        l = Input::IsKeyJustPressed(ALLEGRO_KEY_LEFT);
-        r = Input::IsKeyJustPressed(ALLEGRO_KEY_RIGHT);
+        u = aether::core::is_key_just_pressed(aether::core::KeyCode::Up);
+        d = aether::core::is_key_just_pressed(aether::core::KeyCode::Down);
+        l = aether::core::is_key_just_pressed(aether::core::KeyCode::Left);
+        r = aether::core::is_key_just_pressed(aether::core::KeyCode::Right);
 
 
         if( u|l|d|r )
@@ -106,9 +103,9 @@ private:
 
     void computePossiblePlaceWalls(TransformComponent& tc)
     {
-        m_playerTile = Vec2i( int(tc.position.x()+16), int(tc.position.y() + 16) );
+        m_playerTile = aether::math::Vec2i( int(tc.position.x()+16), int(tc.position.y() + 16) );
         m_playerPos = tc.position;
-        m_playerTile /= 32;
+        m_playerTile = m_playerTile / 32;
 
         printf("TILE: %d, %d\n", m_playerTile.x(), m_playerTile.y()); fflush(0);
         printf("POS: %f, %f\n", m_playerPos.x(), m_playerPos.y()); fflush(0);
@@ -129,8 +126,8 @@ private:
     MapScene& m_mapScene;
     EntityFactory& m_factory;
 
-    Vec2i m_playerTile;
-    Vec2f m_playerPos;
+    aether::math::Vec2i m_playerTile;
+    aether::math::Vec2f m_playerPos;
     int m_up, m_down, m_left, m_right;
 
 };

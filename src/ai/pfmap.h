@@ -4,7 +4,7 @@
 #include <memory>
 #include <cmath>
 
-#include <alligator/util/matrix.h>
+#include <aether/aether.h>
 #include "../core/facing.h"
 #include "../map/maputil.h"
 
@@ -56,7 +56,7 @@ private:
 	{
 	public:
 		std::vector<PathNode::SharedPtr> nodes;
-		Matrix2D<PathNode::SharedPtr>::SharedPtr navigationMap;
+        aether::math::Matrix2D<PathNode::SharedPtr>::SharedPtr navigationMap;
 
 		ConvolutorCollector( int w, int h );
 
@@ -70,19 +70,19 @@ private:
 public:
 	typedef std::shared_ptr<NavigationMap> SharedPtr;
 
-	NavigationMap( Matrix2Di::SharedPtr input );
+    NavigationMap( aether::math::Matrix2Di::SharedPtr input );
 
 	PathNode::SharedPtr getNodeAt( float x, float y );
 	bool canMove( float x, float y, Facing dir );
 	const std::vector<PathNode::SharedPtr>& nodes();
-    Matrix2D<PathNode::SharedPtr>::SharedPtr nodesMatrix()
+    aether::math::Matrix2D<PathNode::SharedPtr>::SharedPtr nodesMatrix()
     {
         return m_collector.navigationMap;
     }
 
 private:
 	ConvolutorCollector m_collector;
-	Matrix2Di::SharedPtr m_map;
+    aether::math::Matrix2Di::SharedPtr m_map;
 
 	void connectNodes();
 	void searchNeighboor( PathNode::SharedPtr node, Facing direction );

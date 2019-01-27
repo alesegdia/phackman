@@ -2,7 +2,7 @@
 #include "assets.h"
 
 PhackmanGame::PhackmanGame(int sw, int sh)
-	: Game( sw, sh )
+    : aether::core::Application( sw, sh )
 {
     this->setRenderFPS(64);
     this->setUpdateFPS(64);
@@ -13,7 +13,7 @@ PhackmanGame::~PhackmanGame()
 
 }
 
-int PhackmanGame::create(int argc, char **argv)
+int PhackmanGame::ready(int argc, char **argv)
 {
     (void)argc;
     (void)argv;
@@ -21,7 +21,7 @@ int PhackmanGame::create(int argc, char **argv)
 
 	m_gameplayScreen.reset(new GameplayScreen(this));
 
-	setScreen(m_gameplayScreen);
+    setScreen(m_gameplayScreen.get());
 
 	return 0;
 }

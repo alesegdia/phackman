@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include <alligator/util/matrix.h>
+#include <aether/aether.h>
 
 
 /**
@@ -24,14 +24,14 @@ public:
 	{
         Config() {}
 		// probability to carve each shape
-		std::vector<Matrix2Di::SharedPtr> shapes;
+        std::vector<aether::math::Matrix2Di::SharedPtr> shapes;
 		int canvasWidth = 0 ;
 		int canvasHeight = 0 ;
 	};
 
 	LayoutBuilder( Config cfg = Config() /* cfg = {} */ );
 
-	Matrix2Di::SharedPtr generate( const std::vector<Matrix2Di::SharedPtr>& shapes );
+    aether::math::Matrix2Di::SharedPtr generate( const std::vector<aether::math::Matrix2Di::SharedPtr>& shapes );
 
 private:
 
@@ -45,7 +45,7 @@ private:
 
 	std::mt19937 rng;
 	Config m_config;
-	Matrix2Di::SharedPtr m_layoutMatrix;
+    aether::math::Matrix2Di::SharedPtr m_layoutMatrix;
 
     bool m_originalPacman = false;
 
@@ -55,17 +55,17 @@ class ShapeStorage
 {
 public:
 	ShapeStorage();
-	std::vector<std::shared_ptr<Matrix2Di>> makeSample();
+    std::vector<std::shared_ptr<aether::math::Matrix2Di>> makeSample();
 
 private:
-	std::shared_ptr<Matrix2Di> m_L1;
-	std::shared_ptr<Matrix2Di> m_L2;
-	std::shared_ptr<Matrix2Di> m_I1;
-	std::shared_ptr<Matrix2Di> m_I2;
-	std::shared_ptr<Matrix2Di> m_I3;
-	std::shared_ptr<Matrix2Di> m_I4;
-	std::shared_ptr<Matrix2Di> m_T;
-	std::shared_ptr<Matrix2Di> m_Plus;
+    std::shared_ptr<aether::math::Matrix2Di> m_L1;
+    std::shared_ptr<aether::math::Matrix2Di> m_L2;
+    std::shared_ptr<aether::math::Matrix2Di> m_I1;
+    std::shared_ptr<aether::math::Matrix2Di> m_I2;
+    std::shared_ptr<aether::math::Matrix2Di> m_I3;
+    std::shared_ptr<aether::math::Matrix2Di> m_I4;
+    std::shared_ptr<aether::math::Matrix2Di> m_T;
+    std::shared_ptr<aether::math::Matrix2Di> m_Plus;
 
 };
 

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <allegro5/allegro5.h>
-#include <allegro5/allegro_primitives.h>
-
-#include <alligator/util/math.h>
+#include <aether/aether.h>
 
 #include "../map/mapgen.h"
 #include "../map/placementmap.h"
@@ -73,12 +70,12 @@ public:
         return m_navmap;
     }
 
-    Matrix2Di::SharedPtr nodesMap()
+    aether::math::Matrix2Di::SharedPtr nodesMap()
     {
         return m_nodesMap;
     }
 
-    Matrix2Di::SharedPtr enemyVisibilityMap()
+    aether::math::Matrix2Di::SharedPtr enemyVisibilityMap()
     {
         return m_enemyVisibilityMap;
     }
@@ -109,8 +106,8 @@ public:
                     frame += 60;
                 }
 
-                ALLEGRO_BITMAP* bm = Assets::instance->maptilesSheet->getFrame(frame);
-                al_draw_bitmap(bm, x1, y1, 0);
+                auto bm = Assets::instance->maptilesSheet->getFrame(frame);
+                bm->draw(x1, y1);
             }
         }
         al_hold_bitmap_drawing(false);
@@ -206,15 +203,15 @@ public:
 
 
 private:
-    Matrix2Di::SharedPtr m_map;
-    Matrix2Di::SharedPtr m_renderMap;
-    Matrix2Di::SharedPtr m_infectionMap;
+    aether::math::Matrix2Di::SharedPtr m_map;
+    aether::math::Matrix2Di::SharedPtr m_renderMap;
+    aether::math::Matrix2Di::SharedPtr m_infectionMap;
     std::shared_ptr<NavigationMap> m_navmap;
     PlacementMap m_placementMap;
 
-    Matrix2Di::SharedPtr m_nodesMap;
-    Matrix2Di::SharedPtr m_solidnessMap;
-    Matrix2Di::SharedPtr m_enemyVisibilityMap;
+    aether::math::Matrix2Di::SharedPtr m_nodesMap;
+    aether::math::Matrix2Di::SharedPtr m_solidnessMap;
+    aether::math::Matrix2Di::SharedPtr m_enemyVisibilityMap;
 
 };
 

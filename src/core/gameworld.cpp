@@ -54,7 +54,7 @@ void GameWorld::render()
     m_ecsWorld.render();
 }
 
-const Vec2f &GameWorld::playerPos()
+const aether::math::Vec2f &GameWorld::playerPos()
 {
 
     return m_ecsWorld.engine().component<TransformComponent>(m_playerEntity).position;

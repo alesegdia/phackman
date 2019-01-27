@@ -75,7 +75,7 @@ public:
 
             PathNode::SharedPtr facing_neighboor = nullptr;
             auto pp = transform_comp.position;
-            Vec2i p(pp.x() / 32.f, pp.y() / 32.f);
+            aether::math::Vec2i p(pp.x() / 32.f, pp.y() / 32.f);
             if( agtstate_comp.lastNode == nullptr )
             {
                 agtstate_comp.lastNode = scanForNode(p, reverseFacing(facing_comp.facing));
@@ -100,8 +100,8 @@ public:
                 const float speed = agtinput_comp.speed;
                 float displacement = float(delta * speed);
 
-                const Vec2f np = Vec2f(facing_neighboor->x() * 16, facing_neighboor->y() * 16);
-                const Vec2f p = transform_comp.position;
+                const aether::math::Vec2f np = aether::math::Vec2f(facing_neighboor->x() * 16, facing_neighboor->y() * 16);
+                const aether::math::Vec2f p = transform_comp.position;
 
                 float neighboor_dist = abs((np.x() - p.x()) + (np.y() - p.y()));
                 displacement = displacement < neighboor_dist ? displacement : neighboor_dist;
@@ -134,7 +134,7 @@ public:
 
 private:
 
-    PathNode::SharedPtr scanForNode( Vec2i p, Facing direction )
+    PathNode::SharedPtr scanForNode( aether::math::Vec2i p, Facing direction )
     {
         int tile = 0;
         PathNode::SharedPtr n = nullptr;

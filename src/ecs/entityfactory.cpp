@@ -191,7 +191,7 @@ secs::Entity EntityFactory::makeCountdownText(float x, float y, const char *text
     return t;
 }
 
-secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr anim, Facing direction, float speed )
+secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Animation::SharedPtr anim, Facing direction, float speed )
 {
     secs::Entity bullet = m_world.processor().addEntity();
 
@@ -199,7 +199,7 @@ secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr a
     transform_comp.position.set( x, y );
 
     auto& rc = addComponent<RenderComponent>(bullet);
-    rc.bitmap = anim->getFrame(0);
+    rc.bitmap = anim->getFrame(0).texture;
 
     auto& rf = addComponent<RenderFacingComponent>(bullet);
     rf.facing = direction;

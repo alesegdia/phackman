@@ -1,7 +1,6 @@
 #pragma once
 
 #include <secs/secs.h>
-#include <alligator/input/input.h>
 #include "../components.h"
 #include "../../map/mapscene.h"
 #include "../entityfactory.h"

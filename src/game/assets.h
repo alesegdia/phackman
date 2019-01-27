@@ -1,12 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <allegro5/allegro.h>
-
-#include <alligator/graphics/spritesheet.h>
-#include <alligator/graphics/animation.h>
-
-#include <allegro5/allegro_ttf.h>
+#include <aether/aether.h>
 
 class Assets
 {
@@ -20,33 +15,33 @@ public:
 	Assets();
 	~Assets();
 
-    ALLEGRO_BITMAP* characterBitmap;
-    ALLEGRO_BITMAP* enemyBitmap;
-    ALLEGRO_BITMAP* maptilesBitmap;
-    ALLEGRO_BITMAP* buildingsBitmap;
+    aether::graphics::Texture characterBitmap;
+    aether::graphics::Texture enemyBitmap;
+    aether::graphics::Texture maptilesBitmap;
+    aether::graphics::Texture buildingsBitmap;
 
-    std::shared_ptr<Spritesheet> characterSheet;
-    std::shared_ptr<Spritesheet> enemySheet;
-    std::shared_ptr<Spritesheet> buildingsSheet;
-    std::shared_ptr<Spritesheet> maptilesSheet;
+    std::shared_ptr<aether::graphics::Spritesheet> characterSheet;
+    std::shared_ptr<aether::graphics::Spritesheet> enemySheet;
+    std::shared_ptr<aether::graphics::Spritesheet> buildingsSheet;
+    std::shared_ptr<aether::graphics::Spritesheet> maptilesSheet;
 
-    std::shared_ptr<Animation> industryNode;
-    std::shared_ptr<Animation> powerNode;
+    std::shared_ptr<aether::graphics::Animation> industryNode;
+    std::shared_ptr<aether::graphics::Animation> powerNode;
 
-    std::shared_ptr<Animation> lsBullet;
-    std::shared_ptr<Animation> turretBullet;
+    std::shared_ptr<aether::graphics::Animation> lsBullet;
+    std::shared_ptr<aether::graphics::Animation> turretBullet;
 
-    std::shared_ptr<Animation> phackmanWalk;
-    std::shared_ptr<Animation> phackmanStand;
-	std::shared_ptr<Animation> phackmanAttack;
+    std::shared_ptr<aether::graphics::Animation> phackmanWalk;
+    std::shared_ptr<aether::graphics::Animation> phackmanStand;
+    std::shared_ptr<aether::graphics::Animation> phackmanAttack;
 
-    std::shared_ptr<Animation> phackmanDesinfectStand;
-    std::shared_ptr<Animation> phackmanDesinfectWalk;
+    std::shared_ptr<aether::graphics::Animation> phackmanDesinfectStand;
+    std::shared_ptr<aether::graphics::Animation> phackmanDesinfectWalk;
 
-    std::shared_ptr<Animation> slimeWalk;
+    std::shared_ptr<aether::graphics::Animation> slimeWalk;
 
-    std::shared_ptr<Animation> spawnerStand;
-    std::shared_ptr<Animation> turretStand;
+    std::shared_ptr<aether::graphics::Animation> spawnerStand;
+    std::shared_ptr<aether::graphics::Animation> turretStand;
 
     ALLEGRO_FONT* guiFont;
 

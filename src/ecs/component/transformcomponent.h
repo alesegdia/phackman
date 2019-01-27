@@ -1,9 +1,9 @@
 #pragma once
 
-#include <alligator/util/math.h>
+#include <aether/aether.h>
 
 struct TransformComponent
 {
-	Vec2f position;
+    aether::math::Vec2f position;
 	float angle;
 };
