@@ -17,9 +17,15 @@ public:
 
     bool isGameOver();
 
+    Vec2f mapSize()
+    {
+        return m_mapScene.renderMapSize();
+    }
+
 private:
     MapScene m_mapScene;
     ECSWorld m_ecsWorld;
+    Vec2i m_realMapSize;
     secs::Entity m_playerEntity;
     bool m_gameOver = false;
 

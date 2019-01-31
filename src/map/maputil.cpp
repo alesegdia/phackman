@@ -539,3 +539,55 @@ int place_collectible_nodes(int d00, int d10, int d20, int d01, int d11, int d21
 
     return 0;
 }
+
+Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h)
+{
+    Matrix2Di::SharedPtr output = std::make_shared<Matrix2Di>(w, h);
+    for( int i = x; i < x + w; i++ )
+    {
+        for( int j = y; j < y + h; j++ )
+        {
+            output->set(i, j, input.get(i, j));
+        }
+    }
+    return output;
+}
+
+Matrix2Di::SharedPtr reduce(const Matrix2Di& input, int zeroItem)
+{
+    Matrix2Di::SharedPtr output;
+    int subColMin, subColMax;
+    subColMin = 0;
+    subColMax = input.cols();
+    for( int i = 0; i < input.cols(); i++ )
+    {
+        int currentMin = -1;
+        int currentMax = -1;
+        for( int j = 0; j < input.rows(); j++ )
+        {
+            auto topRowItem = input.get(i, j);
+            auto botRowItem = input.get(i, input.rows() - j);
+            if( topRowItem != zeroItem )
+            {
+                currentMin = j;
+            }
+            if( botRowItem != zeroItem )
+            {
+                currentMax = j;
+            }
+        }
+        if( currentMin == -1 )
+        {
+            subColMin = i;
+        }
+        if( currentMax == -1 )
+        {
+            subColMax = input.cols() - i;
+        }
+    }
+
+	//output = std::make_shared<Matrix2Di>(subColMax - subColMin + 1, input.rows());
+	//return cut(*output, subColMin, 0, subColMax, input.rows());
+	return output;
+}
+

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <limits>
 #include <functional>
@@ -145,3 +145,7 @@ int place_collectible_nodes 	( int d00, int d10, int d20,
  * @return the matrix with non-zero values replaced
  */
 Matrix2Di::SharedPtr tint( const Matrix2Di& matrix, int brush );
+
+Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h);
+
+Matrix2Di::SharedPtr reduce(const Matrix2Di& input, int zeroItem=0);

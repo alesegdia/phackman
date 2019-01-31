@@ -30,6 +30,8 @@ public:
 
     secs::Entity makeCountdownText( float x, float y, const char* text );
 
+    secs::Entity makeCrucible( float x, float y );
+
 private:
 
     secs::Entity makeBullet(float x, float y, Animation::SharedPtr anim , Facing direction, float speed);

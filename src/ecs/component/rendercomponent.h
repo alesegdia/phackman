@@ -5,4 +5,5 @@
 struct RenderComponent
 {
 	ALLEGRO_BITMAP* bitmap;
+    float offset = 0;
 };

@@ -11,6 +11,8 @@ GameWorld::GameWorld()
         gameOver = true;
     });
 
+    m_ecsWorld.factory().makeCrucible((start_node->x()) * 16, (start_node->y()) * 16);
+
     auto nm = m_mapScene.nodesMap();
     for( int i = 0; i < nm->cols(); i++ )
     {
@@ -37,7 +39,7 @@ GameWorld::GameWorld()
     auto nodes = m_mapScene.navmap()->nodes();
     std::random_shuffle(nodes.begin(), nodes.end());
 
-    for( int i = 0; i < nodes.size() / 5.0f; i++ )
+    for( int i = 0; i < nodes.size() / 10.0f; i++ )
     {
         m_ecsWorld.factory().makeSpawner(nodes[i]->x() * 16, nodes[i]->y() * 16);
     }

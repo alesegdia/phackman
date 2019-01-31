@@ -65,6 +65,15 @@ void GameplayScreen::update(double delta)
 void GameplayScreen::render()
 {
     auto new_pos = gw->playerPos();
+
+
+    std::cout << new_pos.x() << "," << new_pos.y() << std::endl;
+
+    new_pos.x(std::max(new_pos.x(), 1024.f/4.f));
+    new_pos.x(std::min(new_pos.x(), gw->mapSize().x() * 16 - 1024));
+
+    //new_pos.y(std::max(new_pos.y(), 768.f/2.f));
+
     new_pos.x(-floor(new_pos.x()) * m_scale + 1024/2 - 16);
     new_pos.y(-floor(new_pos.y()) * m_scale + 768/2 - 16);
 
