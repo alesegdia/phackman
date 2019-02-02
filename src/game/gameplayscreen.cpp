@@ -7,6 +7,8 @@
 #include "phackmangame.h"
 #include "assets.h"
 #include <alligator/util/matrix.h>
+#include "../constants.h"
+
 //#include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen( PhackmanGame* g )
@@ -67,15 +69,20 @@ void GameplayScreen::render()
     auto new_pos = gw->playerPos();
 
 
-    std::cout << new_pos.x() << "," << new_pos.y() << std::endl;
+    //std::cout << new_pos.x() << "," << new_pos.y() << std::endl;
 
-    new_pos.x(std::max(new_pos.x(), 1024.f/4.f));
-    new_pos.x(std::min(new_pos.x(), gw->mapSize().x() * 16 - 1024));
+    float xmin = Constants::WindowWidth/4.f;
+    float xmax = gw->mapSize().x() * 16 - Constants::WindowWidth;
+    //new_pos.x(std::max(std::min(new_pos.x(), xmax), xmin));
+
+    float ymin = Constants::WindowHeight/4.f;
+    float ymax = gw->mapSize().y() * 16 - Constants::WindowHeight;
+    //new_pos.y(std::max(std::min(new_pos.y(), ymax), ymin));
 
     //new_pos.y(std::max(new_pos.y(), 768.f/2.f));
 
-    new_pos.x(-floor(new_pos.x()) * m_scale + 1024/2 - 16);
-    new_pos.y(-floor(new_pos.y()) * m_scale + 768/2 - 16);
+    new_pos.x(-floor(new_pos.x()) * m_scale + Constants::WindowWidth/2 - 16);
+    new_pos.y(-floor(new_pos.y()) * m_scale + Constants::WindowHeight/2 - 16);
 
 	m_cam->position(new_pos.x(), new_pos.y());
     m_cam->scale(m_scale, m_scale);

@@ -543,11 +543,12 @@ int place_collectible_nodes(int d00, int d10, int d20, int d01, int d11, int d21
 Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h)
 {
     Matrix2Di::SharedPtr output = std::make_shared<Matrix2Di>(w, h);
-    for( int i = x; i < x + w; i++ )
+	for( int i = 0; i < w; i++ )
     {
-        for( int j = y; j < y + h; j++ )
+		for( int j = 0; j < h; j++ )
         {
-            output->set(i, j, input.get(i, j));
+			int cell = input.get(x+i, y+j);
+			output->set(i, j, cell);
         }
     }
     return output;
@@ -556,38 +557,60 @@ Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h)
 Matrix2Di::SharedPtr reduce(const Matrix2Di& input, int zeroItem)
 {
     Matrix2Di::SharedPtr output;
-    int subColMin, subColMax;
-    subColMin = 0;
-    subColMax = input.cols();
-    for( int i = 0; i < input.cols(); i++ )
-    {
-        int currentMin = -1;
-        int currentMax = -1;
-        for( int j = 0; j < input.rows(); j++ )
+	int left, right, top, down;
+	left = top = 0;
+	right = input.cols();
+	down = input.rows();
+	bool leftStop, rightStop;
+	leftStop = rightStop = false;
+	for( int col = 0; col < input.cols(); col++ )
+	{
+		bool leftHits, rightHits;
+		rightHits = leftHits = false;
+
+		int rightCol = input.cols() - col - 1;
+
+		// check if left or right cols hit
+		for( int row = 0; row < input.rows(); row++ )
         {
-            auto topRowItem = input.get(i, j);
-            auto botRowItem = input.get(i, input.rows() - j);
-            if( topRowItem != zeroItem )
-            {
-                currentMin = j;
-            }
-            if( botRowItem != zeroItem )
-            {
-                currentMax = j;
-            }
+			auto leftItem = input.get(col, row);
+			auto rightItem = input.get(rightCol, row);
+			if( leftItem != zeroItem )
+			{
+				leftHits = true;
+			}
+			if( rightItem != zeroItem )
+			{
+				rightHits = true;
+			}
         }
-        if( currentMin == -1 )
-        {
-            subColMin = i;
-        }
-        if( currentMax == -1 )
-        {
-            subColMax = input.cols() - i;
-        }
+
+
+
+		if( leftHits )
+		{
+			leftStop = true;
+		}
+		else if( !leftStop )
+		{
+			left = col;
+		}
+
+		if( rightHits )
+		{
+			rightStop = true;
+		}
+		else if( !rightStop )
+		{
+			right = input.cols() - col;
+		}
     }
 
-	//output = std::make_shared<Matrix2Di>(subColMax - subColMin + 1, input.rows());
-	//return cut(*output, subColMin, 0, subColMax, input.rows());
+
+	output = std::make_shared<Matrix2Di>(right - left, down - top);
+	output = cut(*output, left, top, right, down);
+	output->debugPrint();
+
 	return output;
 }
 

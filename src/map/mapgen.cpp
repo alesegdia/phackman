@@ -67,12 +67,11 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
         shape_index++;
     }
 
-    auto ret = reduce(*m_layoutMatrix);
-    ret->debugPrint();
-    std::cout << std::endl;
-    m_layoutMatrix->debugPrint();
+	m_layoutMatrix->debugPrint();
+	m_layoutMatrix = reduce(*m_layoutMatrix);
+	m_layoutMatrix->debugPrint();
 
-    Matrix2Di::SharedPtr output = m_layoutMatrix; // habia un flip(*m_layoutMatrix)
+	Matrix2Di::SharedPtr output = m_layoutMatrix; // habia un flip(*m_layoutMatrix)
     output = add_integer(*output, shape_index-1);
     //output = concat_horizontal(*output, *m_layoutMatrix);
 
@@ -92,8 +91,6 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
 
     Matrix2Di::SharedPtr real_output(new Matrix2Di(output->cols()-2, output->rows()-2, 0));
     plot(*output, *real_output, -1, -1, true, 1);
-
-    reduce(*real_output);
 
     return real_output;
 }
@@ -134,15 +131,16 @@ std::vector<std::shared_ptr<Matrix2Di> > ShapeStorage::makeSample()
     std::vector<Matrix2Di::SharedPtr> shapes;
     shapes.push_back(m_L1);
     shapes.push_back(m_L1);
-    shapes.push_back(m_L1);
-    shapes.push_back(m_L1);
+	shapes.push_back(m_L1);
     shapes.push_back(m_L2);
     shapes.push_back(m_L2);
     shapes.push_back(m_L2);
     shapes.push_back(m_T);
-    shapes.push_back(m_L2);
-    shapes.push_back(m_T);
-    shapes.push_back(m_T);
+	shapes.push_back(m_L2);
+	shapes.push_back(m_T);
+	shapes.push_back(m_T);
+	shapes.push_back(m_T);
+	shapes.push_back(m_T);
     shapes.push_back(m_T);
     return shapes;
 }

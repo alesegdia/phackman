@@ -146,6 +146,6 @@ int place_collectible_nodes 	( int d00, int d10, int d20,
  */
 Matrix2Di::SharedPtr tint( const Matrix2Di& matrix, int brush );
 
-Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h);
+Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x1, int y1, int x2, int y2);
 
 Matrix2Di::SharedPtr reduce(const Matrix2Di& input, int zeroItem=0);
