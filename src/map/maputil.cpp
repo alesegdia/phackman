@@ -543,6 +543,7 @@ int place_collectible_nodes(int d00, int d10, int d20, int d01, int d11, int d21
 Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h)
 {
     Matrix2Di::SharedPtr output = std::make_shared<Matrix2Di>(w, h);
+    input.debugPrint();
 	for( int i = 0; i < w; i++ )
     {
 		for( int j = 0; j < h; j++ )
@@ -554,63 +555,105 @@ Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h)
     return output;
 }
 
-Matrix2Di::SharedPtr reduce(const Matrix2Di& input, int zeroItem)
+Matrix2Di::SharedPtr trim(const Matrix2Di& input, int zeroItem)
 {
     Matrix2Di::SharedPtr output;
-	int left, right, top, down;
+    int left, right, top, bot;
 	left = top = 0;
 	right = input.cols();
-	down = input.rows();
-	bool leftStop, rightStop;
-	leftStop = rightStop = false;
-	for( int col = 0; col < input.cols(); col++ )
-	{
-		bool leftHits, rightHits;
-		rightHits = leftHits = false;
+    bot = input.rows();
+    bool leftStop, rightStop, topStop, botStop;
+    leftStop = rightStop = topStop = botStop = false;
+    for( int col = 0; col < input.cols(); col++ )
+    {
+        bool leftHits, rightHits;
+        rightHits = leftHits = false;
 
-		int rightCol = input.cols() - col - 1;
+        int rightCol = input.cols() - col - 1;
 
-		// check if left or right cols hit
-		for( int row = 0; row < input.rows(); row++ )
+        for( int row = 0; row < input.rows(); row++ )
         {
-			auto leftItem = input.get(col, row);
-			auto rightItem = input.get(rightCol, row);
-			if( leftItem != zeroItem )
-			{
-				leftHits = true;
-			}
-			if( rightItem != zeroItem )
-			{
-				rightHits = true;
-			}
+            auto leftItem = input.get(col, row);
+            auto rightItem = input.get(rightCol, row);
+            if( leftItem != zeroItem )
+            {
+                leftHits = true;
+            }
+            if( rightItem != zeroItem )
+            {
+                rightHits = true;
+            }
         }
 
+        if( leftHits )
+        {
+            leftStop = true;
+        }
+        else if( !leftStop )
+        {
+            left = col;
+        }
 
-
-		if( leftHits )
-		{
-			leftStop = true;
-		}
-		else if( !leftStop )
-		{
-			left = col;
-		}
-
-		if( rightHits )
-		{
-			rightStop = true;
-		}
-		else if( !rightStop )
-		{
-			right = input.cols() - col;
-		}
+        if( rightHits )
+        {
+            rightStop = true;
+        }
+        else if( !rightStop )
+        {
+            right = input.cols() - col - 1;
+        }
     }
 
+    for( int row = 0; row < input.rows(); row++ )
+    {
+        bool topHits, botHits;
+        topHits = botHits = false;
 
-	output = std::make_shared<Matrix2Di>(right - left, down - top);
-	output = cut(*output, left, top, right, down);
+        int botRow = input.rows() - row - 1;
+
+        for( int col = 0; col < input.cols(); col++ )
+        {
+            auto topItem = input.get(col, row);
+            auto botItem = input.get(col, botRow);
+            if( topItem != zeroItem )
+            {
+                topHits = true;
+            }
+            if( botItem != zeroItem )
+            {
+                botHits = true;
+            }
+        }
+
+        if( topHits )
+        {
+            topStop = true;
+        }
+        else if( !topStop )
+        {
+            top = row;
+        }
+
+        if( botHits )
+        {
+            botStop = true;
+        }
+        else if( !botStop )
+        {
+            bot = input.rows() - row - 1;
+        }
+    }
+
+    int w = right - left;
+    int h = bot - top;
+    output = std::make_shared<Matrix2Di>(right - left, bot - top);
+    output = cut(input, left, top, w, h);
 	output->debugPrint();
 
 	return output;
 }
+
+
+
+
 

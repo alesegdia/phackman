@@ -72,17 +72,15 @@ void GameplayScreen::render()
     //std::cout << new_pos.x() << "," << new_pos.y() << std::endl;
 
     float xmin = Constants::WindowWidth/4.f;
-    float xmax = gw->mapSize().x() * 16 - Constants::WindowWidth;
-    //new_pos.x(std::max(std::min(new_pos.x(), xmax), xmin));
+    float xmax = gw->mapSize().x() * 16 - Constants::WindowWidth/4.f;
+    new_pos.x(std::max(std::min(new_pos.x(), xmax), xmin));
 
     float ymin = Constants::WindowHeight/4.f;
-    float ymax = gw->mapSize().y() * 16 - Constants::WindowHeight;
-    //new_pos.y(std::max(std::min(new_pos.y(), ymax), ymin));
+    float ymax = gw->mapSize().y() * 16 - Constants::WindowHeight/4.f;
+    new_pos.y(std::max(std::min(new_pos.y(), ymax), ymin));
 
-    //new_pos.y(std::max(new_pos.y(), 768.f/2.f));
-
-    new_pos.x(-floor(new_pos.x()) * m_scale + Constants::WindowWidth/2 - 16);
-    new_pos.y(-floor(new_pos.y()) * m_scale + Constants::WindowHeight/2 - 16);
+    new_pos.x(-floor(new_pos.x()) * m_scale + Constants::WindowWidth/2);
+    new_pos.y(-floor(new_pos.y()) * m_scale + Constants::WindowHeight/2);
 
 	m_cam->position(new_pos.x(), new_pos.y());
     m_cam->scale(m_scale, m_scale);

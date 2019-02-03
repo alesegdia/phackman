@@ -148,4 +148,4 @@ Matrix2Di::SharedPtr tint( const Matrix2Di& matrix, int brush );
 
 Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x1, int y1, int x2, int y2);
 
-Matrix2Di::SharedPtr reduce(const Matrix2Di& input, int zeroItem=0);
+Matrix2Di::SharedPtr trim(const Matrix2Di& input, int zeroItem=0);

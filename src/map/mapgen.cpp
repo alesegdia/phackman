@@ -68,7 +68,7 @@ Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::Shared
     }
 
 	m_layoutMatrix->debugPrint();
-	m_layoutMatrix = reduce(*m_layoutMatrix);
+    m_layoutMatrix = trim(*m_layoutMatrix);
 	m_layoutMatrix->debugPrint();
 
 	Matrix2Di::SharedPtr output = m_layoutMatrix; // habia un flip(*m_layoutMatrix)
