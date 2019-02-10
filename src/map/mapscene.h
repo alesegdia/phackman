@@ -147,6 +147,11 @@ public:
         }
     }
 
+    Vec2f renderMapSize()
+    {
+        return Vec2f(m_renderMap->cols(), m_renderMap->rows());
+    }
+
     void debugRender()
     {
         for( int r = 0; r < m_map->rows(); r++ )

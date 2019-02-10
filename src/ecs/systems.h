@@ -29,6 +29,7 @@
 #include "system/textrenderingsystem.h"
 #include "system/triggersystem.h"
 #include "system/unpoweredgraphicoverridingsystemsystem.h"
+#include "system/visibilitysystem.h"
 #include "system/wallawareplacementsystem.h"
 #include "system/wallplacementsystem.h"
 

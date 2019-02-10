@@ -5,6 +5,12 @@
 #include "gameplayscreen.h"
 #include "phackmangame.h"
 #include "assets.h"
+<<<<<<< HEAD
+=======
+#include <alligator/util/matrix.h>
+#include "../constants.h"
+
+>>>>>>> master
 //#include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen( PhackmanGame* g )
@@ -55,18 +61,37 @@ void GameplayScreen::update(uint64_t delta)
         {
             gw = std::make_shared<GameWorld>();
             gw->step(0);
-            m_pause = true;
         }
+    }
+
+    if( Input::IsKeyJustPressed(ALLEGRO_KEY_R) )
+    {
+        gw = std::make_shared<GameWorld>();
+        gw->step(0);
     }
 }
 
 void GameplayScreen::render()
 {
     auto new_pos = gw->playerPos();
+<<<<<<< HEAD
     auto x = new_pos.x();
     auto y = new_pos.y();
     new_pos.x(-x * m_scale + 1024/2.f - 16.f);
     new_pos.y(-y * m_scale + 768/2.f - 16.f);
+=======
+
+    float xmin = Constants::WindowWidth/4.f;
+    float xmax = gw->mapSize().x() * 16 - Constants::WindowWidth/4.f;
+    new_pos.x(std::max(std::min(new_pos.x(), xmax), xmin));
+
+    float ymin = Constants::WindowHeight/4.f;
+    float ymax = gw->mapSize().y() * 16 - Constants::WindowHeight/4.f;
+    new_pos.y(std::max(std::min(new_pos.y(), ymax), ymin));
+
+    new_pos.x(-floor(new_pos.x()) * m_scale + Constants::WindowWidth/2);
+    new_pos.y(-floor(new_pos.y()) * m_scale + Constants::WindowHeight/2);
+>>>>>>> master
 
 	m_cam->position(new_pos.x(), new_pos.y());
     m_cam->scale(m_scale, m_scale);
@@ -79,16 +104,22 @@ void GameplayScreen::render()
     m_guiCam->position(0, 0);
     m_guiCam->bind();
 
+<<<<<<< HEAD
     Assets::instance->maptilesSheet->getFrame(26)->draw(0, 0);
     Assets::instance->maptilesSheet->getFrame(27)->draw(0,16);
     Assets::instance->maptilesSheet->getFrame(28)->draw(0,32);
+=======
+    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(28), 0,  0, 0);
+    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(27), 0, 16, 0);
+    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(26), 0, 32, 0);
+>>>>>>> master
 
     const auto& rsc = gw->playerResourceStorageComponent();
     char rc[4]; char ic[4]; char pc[4];
     sprintf(rc, "%d", rsc.reinforceCells);
     sprintf(ic, "%d", rsc.industryCells);
     sprintf(pc, "%d", rsc.powerCells);
-    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 0, 0, rc);
+    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18,  0, 0, rc);
     al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 16, 0, ic);
     al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 32, 0, pc);
 }

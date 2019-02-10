@@ -66,7 +66,8 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
     auto& transform_comp = addComponent<TransformComponent>(enemy);
     transform_comp.position.set( x, y );
 
-    addComponent<RenderComponent>(enemy);
+    auto& rc = addComponent<RenderComponent>(enemy);
+    rc.offset = 0;
 
     auto& animation_comp = addComponent<AnimationComponent>(enemy);
     animation_comp.animation = Assets::instance->slimeWalk;
@@ -293,5 +294,19 @@ secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
 
 
 	return e;
+}
+
+
+secs::Entity EntityFactory::makeCrucible( float x, float y )
+{
+    secs::Entity crucible = m_world.processor().addEntity();
+
+    auto& tc = addComponent<TransformComponent>(crucible);
+    tc.position.set( x, y );
+
+    auto& rc = addComponent<RenderComponent>(crucible);
+    rc.bitmap = Assets::instance->buildingsSheet->getFrame(1, 1);
+
+    return crucible;
 }
 

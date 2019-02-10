@@ -4,28 +4,28 @@
 #include <cassert>
 
 #include "mapgen.h"
-#include "maputil.h"
 
 LayoutBuilder::LayoutBuilder(Config cfg)
-	: rng(123), m_config(cfg)
+    : rng(123), m_config(cfg)
 {
 
 }
 
 aether::math::Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<aether::math::Matrix2Di::SharedPtr> &shapes)
 {
-    m_layoutMatrix.reset(new aether::math::Matrix2Di( 7, 9, 0 ));
+    rng.seed(time(NULL));
+    m_layoutMatrix.reset(new aether::math::Matrix2Di( 20, 10, 0 ));
 
-	int shape_index = 2;
+    int shape_index = 2;
     for( aether::math::Matrix2Di::SharedPtr shape : shapes )
-	{
-		int selected_col = -1;
-		int row;
+    {
+        int selected_col = -1;
+        int row;
 
         aether::math::Matrix2Di::SharedPtr the_shape;
 
-		int r = rng() % 4;
-		the_shape = rotate(*shape, r);
+        int r = rng() % 4;
+        the_shape = rotate(*shape, r);
 
         int f = rng() % 2;
         if( f == 1 )
@@ -92,47 +92,89 @@ aether::math::Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<aet
 ShapeStorage::ShapeStorage()
 {
     m_L1.reset(new aether::math::Matrix2Di(2, 3,
-	{ 1, 0,
-	  1, 0,
-	  1, 1 }));
+    { 1, 0,
+      1, 0,
+      1, 1 }));
 
     m_L2.reset(new aether::math::Matrix2Di(2, 2,
-	{ 1, 0,
-	  1, 1 }));
+    { 1, 0,
+      1, 1 }));
 
     m_I1.reset(new aether::math::Matrix2Di(1, 3,
-	{ 1,
-	  1,
-	  1 }));
+    { 1,
+      1,
+      1 }));
 
     m_I2.reset(new aether::math::Matrix2Di(1, 2,
-	{ 1,
-	  1, }));
+    { 1,
+      1, }));
 
     m_T.reset(new aether::math::Matrix2Di(3, 2,
-	{ 1, 1, 1,
-	  0, 1, 0 }));
+    { 1, 1, 1,
+      0, 1, 0 }));
 
     m_Plus.reset(new aether::math::Matrix2Di(3, 3,
-	{ 0, 1, 0,
-	  1, 1, 1,
-	  0, 1, 0 }));
+    { 0, 1, 0,
+      1, 1, 1,
+      0, 1, 0 }));
 }
 
 std::vector<std::shared_ptr<aether::math::Matrix2Di> > ShapeStorage::makeSample()
 {
-    std::vector<aether::math::Matrix2Di::SharedPtr> shapes;
+    std::vector<Matrix2Di::SharedPtr> shapes;
     shapes.push_back(m_L1);
     shapes.push_back(m_L1);
+	shapes.push_back(m_L1);
+    shapes.push_back(m_L2);
+    shapes.push_back(m_L2);
+    shapes.push_back(m_L2);
+    shapes.push_back(m_T);
 	shapes.push_back(m_L2);
-    shapes.push_back(m_L2);
-    shapes.push_back(m_L2);
-    shapes.push_back(m_T);
-    shapes.push_back(m_T);
-    shapes.push_back(m_L2);
-    shapes.push_back(m_T);
+	shapes.push_back(m_T);
+	shapes.push_back(m_T);
+	shapes.push_back(m_T);
+	shapes.push_back(m_T);
     shapes.push_back(m_T);
     return shapes;
 }
 
 
+
+CompactSolver::Solution CompactSolver::solve(CompactSolver::Solution inputShapes)
+{
+    bool lastMoved = false;
+    while(lastMoved)
+    {
+        Solution processedShapes;
+        shuffle(inputShapes);
+        const auto& candidate = inputShapes.begin();
+    }
+    Solution outputShapes;
+    return outputShapes;
+}
+
+void CompactSolver::shuffle(CompactSolver::Solution &v)
+{
+    std::random_shuffle(v.begin(), v.end());
+}
+
+Matrix2Di CompactSolver::buildSolution(const CompactSolver::Solution &solution)
+{
+    Matrix2Di map(20, 20);
+    for(auto& shape : solution)
+    {
+        plotShape(map, shape);
+
+    }
+    return map;
+}
+
+void CompactSolver::plotShape(Matrix2Di &map, const ShapeInstance &shape)
+{
+    plot(*shape.shape, map, shape.pos.x(), shape.pos.y(), true, 1);
+}
+
+bool CompactSolver::collideMove(const Matrix2Di &playground, const ShapeInstance &instance)
+{
+    return collide(playground, *instance.shape, instance.pos.x(), instance.pos.y());
+}

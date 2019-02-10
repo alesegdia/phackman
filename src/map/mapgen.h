@@ -6,6 +6,16 @@
 
 #include <aether/aether.h>
 
+#include "maputil.h"
+#include "../ai/pfmap.h"
+
+using Shape = Matrix2Di::SharedPtr;
+
+struct ShapeInstance
+{
+    Vec2i pos;
+    Shape shape;
+};
 
 /**
  * @brief Generates a matrix representing a set of connected polygons made of 1x1 rectangles.
@@ -69,4 +79,33 @@ private:
     std::shared_ptr<aether::math::Matrix2Di> m_Plus;
 
 };
+
+
+class CompactSolver
+{
+public:
+    using Solution = std::vector<ShapeInstance>;
+    Solution solve(Solution inputShapes);
+
+private:
+    void shuffle(Solution& v);
+
+    aether::math::Matrix2Di buildSolution(const Solution& solution);
+
+    void plotShape(aether::math::Matrix2Di& map, const ShapeInstance& shape);
+
+    bool collideMove(const aether::math::Matrix2Di& playground, const ShapeInstance& instance);
+};
+
+
+class SpawnerSelector
+{
+public:
+    SpawnerSelector(NavigationMap::SharedPtr navigationMap, Matrix2Di::SharedPtr spawnerMap)
+    {
+
+    }
+
+};
+
 

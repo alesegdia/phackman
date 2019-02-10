@@ -14,9 +14,9 @@ Phack Man's gameplay resembles in some ways to the good ol’ Pacman mechanics, 
 
 # 3. Game flow
 
-The player has to move an alien device, The Crucible, among floors to the last one to secure it. **The Crucible** always start with zero energy, so you have to fill using power nodes in order to be able to move it. Once **the crucible** is filled, hordes of enemies will start to come from the spawners directly towards the player and the energy will start to deplete over time, and when the energy level reaches zero, the player loses. The player has to find where the **gate** to the next floor is. Once it's found, fill **the crucible** with energy and start moving it to the gate to the next floor. The player speed will decrease when carrying The Crucible.
+The player has to move an alien device, The Crucible, among floors to the last one to secure it. **The Crucible**. The player has to find the **gate** to the next floor and power it up. Once powered, now the player will be able to carry **The Crucible**. At that point, hordes of enemies will start to come from the spawners directly towards the player. Once the player reaches the **gate**, the level is cleared. The player speed will decrease when carrying The Crucible.
 
-Normally, the game flow for a level starts with the player near **the crucible** and with the nodes kept in the previous floor. Then the player will start to investigate the maze to find the gate to the next floor. The player will encounter enemies that will need to overcome by building turrets. Once the gate is found, the player ideally will build a secure path from **the crucible** to the gate. When the player is confident that the path is safe, then the player will power the crucible and carry it with **Lock&Stock**, and hence won't be able to use it during the transport. The crucible's energy will start to deplete and if the player reaches the gate with the crucible
+Strategy wise, the game flow for a level starts with the player near **the crucible** and with the nodes kept in the previous floor. Then the player will start to investigate the maze to find the gate to the next floor. The player will encounter enemies that will need to overcome by building turrets. Once the gate is found, the player ideally will build a secure path from **the crucible** to the gate. When the player has powered up the exit and is confident that the path is safe, then the player will carry **the crucible**.
 
 # 4. Gameplay mechanics
 
@@ -77,6 +77,7 @@ You can place those and repair them with construction nodes.
 | OmniTurret | Not so cheap but can shoot at every direction | Advance, SimultaneosulyPlaced |
 | (?) MovableTurret | Deals damage to enemies passing over it | TimeToLive, SimultaneosulyPlaced |
 | SnailDevice | Slows nearby enemies | SlowPower |
+| IndustryEnhancer | Increases points of industry given by industry nodes | NodeValue |
 
 ### Consumable
 
