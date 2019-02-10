@@ -14,7 +14,7 @@ if(NOT MSVC)
     endif(NOT ALLEGRO_FOUND)
 endif()
 
-file(GLOB_RECURSE PHACKMAN_SOURCES src/**/*.cpp src/**/*.h src/*.h src/*.cpp)
+file(GLOB_RECURSE PHACKMAN_SOURCES src/**/*.cpp src/**/*.h src/**/*.hpp src/*.h src/*.cpp)
 file(GLOB_RECURSE SECS_SOURCES module/secs/src/lib/**/*.h module/secs/src/lib/**/*.cpp)
 file(GLOB_RECURSE HADRON_SOURCES module/hadron/src/lib/**/*.h module/hadron/src/lib/**/*.cpp)
 
