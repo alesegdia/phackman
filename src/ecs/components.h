@@ -11,6 +11,7 @@
 #include "component/collisioncomponent.h"
 #include "component/colortintcomponent.h"
 #include "component/cooldowncomponent.h"
+#include "component/cruciblecomponent.h"
 #include "component/deathtimercomponent.h"
 #include "component/diecomponent.h"
 #include "component/dieonstopcomponent.h"
@@ -36,6 +37,7 @@
 #include "component/tilecomponent.h"
 #include "component/transformcomponent.h"
 #include "component/triggercomponent.h"
+#include "component/visibilitycomponent.h"
 #include "component/wallawareplacedcomponent.h"
 #include "component/wallplacementcomponent.h"
 
