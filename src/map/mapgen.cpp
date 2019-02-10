@@ -13,6 +13,7 @@ LayoutBuilder::LayoutBuilder(Config cfg)
 
 Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<Matrix2Di::SharedPtr> &shapes)
 {
+    rng.seed(time(NULL));
     m_layoutMatrix.reset(new Matrix2Di( 20, 10, 0 ));
 
     int shape_index = 2;

@@ -8,6 +8,7 @@
 #include <alligator/util/math.h>
 
 #include "maputil.h"
+#include "../ai/pfmap.h"
 
 using Shape = Matrix2Di::SharedPtr;
 
@@ -95,4 +96,16 @@ private:
 
     bool collideMove(const Matrix2Di& playground, const ShapeInstance& instance);
 };
+
+
+class SpawnerSelector
+{
+public:
+    SpawnerSelector(NavigationMap::SharedPtr navigationMap, Matrix2Di::SharedPtr spawnerMap)
+    {
+
+    }
+
+};
+
 

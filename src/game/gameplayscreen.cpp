@@ -59,17 +59,19 @@ void GameplayScreen::update(double delta)
         {
             gw = std::make_shared<GameWorld>();
             gw->step(0);
-            m_pause = true;
         }
+    }
+
+    if( Input::IsKeyJustPressed(ALLEGRO_KEY_R) )
+    {
+        gw = std::make_shared<GameWorld>();
+        gw->step(0);
     }
 }
 
 void GameplayScreen::render()
 {
     auto new_pos = gw->playerPos();
-
-
-    //std::cout << new_pos.x() << "," << new_pos.y() << std::endl;
 
     float xmin = Constants::WindowWidth/4.f;
     float xmax = gw->mapSize().x() * 16 - Constants::WindowWidth/4.f;
@@ -95,16 +97,16 @@ void GameplayScreen::render()
     m_guiCam->position(0, 0);
     m_guiCam->bind();
 
-    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(26), 0,  0, 0);
+    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(28), 0,  0, 0);
     al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(27), 0, 16, 0);
-    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(28), 0, 32, 0);
+    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(26), 0, 32, 0);
 
     const auto& rsc = gw->playerResourceStorageComponent();
     char rc[4]; char ic[4]; char pc[4];
     sprintf(rc, "%d", rsc.reinforceCells);
     sprintf(ic, "%d", rsc.industryCells);
     sprintf(pc, "%d", rsc.powerCells);
-    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 0, 0, rc);
+    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18,  0, 0, rc);
     al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 16, 0, ic);
     al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 32, 0, pc);
 }
