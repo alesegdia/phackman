@@ -36,7 +36,7 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
         RenderFacingComponent rf = m_world.component<RenderFacingComponent>(e);
         this->makeLSBullet(tc.position.x(), tc.position.y(), rf.facing);
     };
-    sc.rate = 200;
+    sc.rate = 0.1e6;
 
     auto& ac = addComponent<AnimatorComponent>(player);
 	ac.attack_animation = Assets::instance->phackmanAttack;
@@ -83,7 +83,7 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
     addComponent<AgentMapStateComponent>(enemy);
     addComponent<AIAgentRandomWanderComponent>(enemy);
     auto& ic = addComponent<InfectComponent>(enemy);
-    ic.desinfectDuration = 0.8f;
+    ic.desinfectDuration = 1e6;
 
     auto& hcc = addComponent<HadronCollisionComponent>(enemy);
     hcc.body = new hadron::Body(x, y, 14, 14);
@@ -114,7 +114,7 @@ secs::Entity EntityFactory::makeSpawner(float x, float y)
     addComponent<AgentInputComponent>(spawner);
 
     auto& sc = addComponent<ShootComponent>(spawner);
-    sc.rate = 1.0f;
+    sc.rate = 3e6;
     sc.shoot = [this, spawner](const secs::Entity& ent) {
         auto& tc = m_world.component<TransformComponent>(ent);
         auto& spawn = m_world.component<SpawnComponent>(ent);
@@ -183,10 +183,10 @@ secs::Entity EntityFactory::makeCountdownText(float x, float y, const char *text
     auto& fc = addComponent<FloatingComponent>(t);
     auto& ctc = addComponent<ColorTintComponent>(t);
     ctc.color = al_map_rgba(255, 255, 255, 255);
-    fc.speed = 0.1;
-    fac.rate = 0.01;
+    fc.speed = 0.07f;
+    fac.rate = 0.05f;
     transform.position.set(x + 16, y-20);
-    death.ttl = 2;
+    death.ttl = 2e6;
     textcomp.text = text;
 
     return t;
@@ -206,7 +206,7 @@ secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Anim
     rf.facing = direction;
 
     auto& ainput = addComponent<AgentInputComponent>(bullet);
-    ainput.speed = speed;
+    ainput.speed = 0.0001f;
     ainput.inputRequested = true;
     ainput.requestedFacing = direction;
 
@@ -225,7 +225,7 @@ secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Anim
 
 secs::Entity EntityFactory::makeLSBullet(float x, float y, Facing direction)
 {
-    secs::Entity b = makeBullet(x, y, Assets::instance->lsBullet, direction, 175);
+    secs::Entity b = makeBullet(x, y, Assets::instance->lsBullet, direction, 1);
     addComponent<PlayerBulletComponent>(b);
     return b;
 }

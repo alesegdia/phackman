@@ -5,4 +5,5 @@
 struct RenderComponent
 {
 	const aether::graphics::TextureRegion* bitmap;
+    float offset;
 };

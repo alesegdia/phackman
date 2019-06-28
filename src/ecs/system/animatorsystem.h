@@ -17,29 +17,36 @@ public:
         SECS_UNUSED(delta);
         SECS_UNUSED(e);
 
-        if (antr_comp.stand_animation != nullptr)
+        aether::graphics::Animation::SharedPtr newAnim = nullptr;
+
+        newAnim = antr_comp.stand_animation;
+
+        if( agtinput_comp.inputRequested )
 		{
-			anim_comp.animation = antr_comp.stand_animation;
+            newAnim = antr_comp.walk_animation;
 		}
 
-		if( agtinput_comp.inputRequested && antr_comp.walk_animation != nullptr )
+        if( agtinput_comp.requestedAttack )
 		{
-			anim_comp.animation = antr_comp.walk_animation;
+            newAnim = antr_comp.attack_animation;
 		}
 
-		if( agtinput_comp.requestedAttack && antr_comp.attack_animation != nullptr )
-		{
-			anim_comp.animation = antr_comp.attack_animation;
-		}
-
-        if( agtinput_comp.inputRequested && agtinput_comp.requestedDesinfect && antr_comp.desinfect_walk_animation )
+        if( agtinput_comp.inputRequested && agtinput_comp.requestedDesinfect )
         {
-            anim_comp.animation = antr_comp.desinfect_walk_animation;
+            newAnim = antr_comp.desinfect_walk_animation;
         }
 
-        if( false == agtinput_comp.inputRequested && agtinput_comp.requestedDesinfect && antr_comp.desinfect_stand_animation )
+        if( false == agtinput_comp.inputRequested && agtinput_comp.requestedDesinfect )
         {
-            anim_comp.animation = antr_comp.desinfect_stand_animation;
+            newAnim = antr_comp.desinfect_stand_animation;
         }
+
+        if( newAnim != nullptr && newAnim != anim_comp.animation )
+        {
+            anim_comp.animation = newAnim;
+            anim_comp.animation->reset(anim_comp.animationData);
+        }
+
 	}
+
 };

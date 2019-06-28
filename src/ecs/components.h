@@ -37,7 +37,6 @@
 #include "component/tilecomponent.h"
 #include "component/transformcomponent.h"
 #include "component/triggercomponent.h"
-#include "component/visibilitycomponent.h"
 #include "component/wallawareplacedcomponent.h"
 #include "component/wallplacementcomponent.h"
 

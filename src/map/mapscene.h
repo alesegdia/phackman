@@ -147,9 +147,9 @@ public:
         }
     }
 
-    Vec2f renderMapSize()
+    aether::math::Vec2f renderMapSize()
     {
-        return Vec2f(m_renderMap->cols(), m_renderMap->rows());
+        return aether::math::Vec2f(m_renderMap->cols(), m_renderMap->rows());
     }
 
     void debugRender()

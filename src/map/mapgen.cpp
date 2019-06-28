@@ -121,7 +121,7 @@ ShapeStorage::ShapeStorage()
 
 std::vector<std::shared_ptr<aether::math::Matrix2Di> > ShapeStorage::makeSample()
 {
-    std::vector<Matrix2Di::SharedPtr> shapes;
+    std::vector<aether::math::Matrix2Di::SharedPtr> shapes;
     shapes.push_back(m_L1);
     shapes.push_back(m_L1);
 	shapes.push_back(m_L1);
@@ -158,9 +158,9 @@ void CompactSolver::shuffle(CompactSolver::Solution &v)
     std::random_shuffle(v.begin(), v.end());
 }
 
-Matrix2Di CompactSolver::buildSolution(const CompactSolver::Solution &solution)
+aether::math::Matrix2Di CompactSolver::buildSolution(const CompactSolver::Solution &solution)
 {
-    Matrix2Di map(20, 20);
+    aether::math::Matrix2Di map(20, 20);
     for(auto& shape : solution)
     {
         plotShape(map, shape);
@@ -169,12 +169,12 @@ Matrix2Di CompactSolver::buildSolution(const CompactSolver::Solution &solution)
     return map;
 }
 
-void CompactSolver::plotShape(Matrix2Di &map, const ShapeInstance &shape)
+void CompactSolver::plotShape(aether::math::Matrix2Di &map, const ShapeInstance &shape)
 {
     plot(*shape.shape, map, shape.pos.x(), shape.pos.y(), true, 1);
 }
 
-bool CompactSolver::collideMove(const Matrix2Di &playground, const ShapeInstance &instance)
+bool CompactSolver::collideMove(const aether::math::Matrix2Di &playground, const ShapeInstance &instance)
 {
     return collide(playground, *instance.shape, instance.pos.x(), instance.pos.y());
 }

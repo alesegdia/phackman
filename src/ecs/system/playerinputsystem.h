@@ -37,7 +37,7 @@ public:
         d = aether::core::is_key_down( aether::core::KeyCode::Down );
         r = aether::core::is_key_down( aether::core::KeyCode::Right );
         l = aether::core::is_key_down( aether::core::KeyCode::Left );
-        space = aether::core::is_key_down(aether::core::KeyCode::Enter);
+        space = aether::core::is_key_down(aether::core::KeyCode::Space);
         agtinput_comp.requestedDesinfect = aether::core::is_key_down(aether::core::KeyCode::C);
         agtinput_comp.requestedReinforce = aether::core::is_key_just_pressed(aether::core::KeyCode::C);
 

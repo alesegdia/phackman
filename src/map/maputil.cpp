@@ -540,10 +540,10 @@ int place_collectible_nodes(int d00, int d10, int d20, int d01, int d11, int d21
     return 0;
 }
 
-Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h)
+aether::math::Matrix2Di::SharedPtr cut(const aether::math::Matrix2Di& input, int x, int y, int w, int h)
 {
-    Matrix2Di::SharedPtr output = std::make_shared<Matrix2Di>(w, h);
-    input.debugPrint();
+    aether::math::Matrix2Di::SharedPtr output = std::make_shared<aether::math::Matrix2Di>(w, h);
+    //input.debugPrint();
 	for( int i = 0; i < w; i++ )
     {
 		for( int j = 0; j < h; j++ )
@@ -555,9 +555,9 @@ Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h)
     return output;
 }
 
-Matrix2Di::SharedPtr trim(const Matrix2Di& input, int zeroItem)
+aether::math::Matrix2Di::SharedPtr trim(const aether::math::Matrix2Di& input, int zeroItem)
 {
-    Matrix2Di::SharedPtr output;
+    aether::math::Matrix2Di::SharedPtr output;
     int left, right, top, bot;
 	left = top = 0;
 	right = input.cols();
@@ -646,7 +646,7 @@ Matrix2Di::SharedPtr trim(const Matrix2Di& input, int zeroItem)
 
     int w = right - left;
     int h = bot - top;
-    output = std::make_shared<Matrix2Di>(right - left, bot - top);
+    output = std::make_shared<aether::math::Matrix2Di>(right - left, bot - top);
     output = cut(input, left, top, w, h);
 	output->debugPrint();
 

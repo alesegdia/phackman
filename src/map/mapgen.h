@@ -9,11 +9,11 @@
 #include "maputil.h"
 #include "../ai/pfmap.h"
 
-using Shape = Matrix2Di::SharedPtr;
+using Shape = aether::math::Matrix2Di::SharedPtr;
 
 struct ShapeInstance
 {
-    Vec2i pos;
+    aether::math::Vec2i pos;
     Shape shape;
 };
 
@@ -101,7 +101,7 @@ private:
 class SpawnerSelector
 {
 public:
-    SpawnerSelector(NavigationMap::SharedPtr navigationMap, Matrix2Di::SharedPtr spawnerMap)
+    SpawnerSelector(NavigationMap::SharedPtr navigationMap, aether::math::Matrix2Di::SharedPtr spawnerMap)
     {
 
     }

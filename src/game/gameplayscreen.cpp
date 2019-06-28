@@ -5,12 +5,8 @@
 #include "gameplayscreen.h"
 #include "phackmangame.h"
 #include "assets.h"
-<<<<<<< HEAD
-=======
-#include <alligator/util/matrix.h>
 #include "../constants.h"
 
->>>>>>> master
 //#include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen( PhackmanGame* g )
@@ -64,7 +60,7 @@ void GameplayScreen::update(uint64_t delta)
         }
     }
 
-    if( Input::IsKeyJustPressed(ALLEGRO_KEY_R) )
+    if( aether::core::is_key_just_pressed(aether::core::KeyCode::R) )
     {
         gw = std::make_shared<GameWorld>();
         gw->step(0);
@@ -74,12 +70,6 @@ void GameplayScreen::update(uint64_t delta)
 void GameplayScreen::render()
 {
     auto new_pos = gw->playerPos();
-<<<<<<< HEAD
-    auto x = new_pos.x();
-    auto y = new_pos.y();
-    new_pos.x(-x * m_scale + 1024/2.f - 16.f);
-    new_pos.y(-y * m_scale + 768/2.f - 16.f);
-=======
 
     float xmin = Constants::WindowWidth/4.f;
     float xmax = gw->mapSize().x() * 16 - Constants::WindowWidth/4.f;
@@ -91,7 +81,6 @@ void GameplayScreen::render()
 
     new_pos.x(-floor(new_pos.x()) * m_scale + Constants::WindowWidth/2);
     new_pos.y(-floor(new_pos.y()) * m_scale + Constants::WindowHeight/2);
->>>>>>> master
 
 	m_cam->position(new_pos.x(), new_pos.y());
     m_cam->scale(m_scale, m_scale);
@@ -104,15 +93,9 @@ void GameplayScreen::render()
     m_guiCam->position(0, 0);
     m_guiCam->bind();
 
-<<<<<<< HEAD
     Assets::instance->maptilesSheet->getFrame(26)->draw(0, 0);
     Assets::instance->maptilesSheet->getFrame(27)->draw(0,16);
     Assets::instance->maptilesSheet->getFrame(28)->draw(0,32);
-=======
-    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(28), 0,  0, 0);
-    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(27), 0, 16, 0);
-    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(26), 0, 32, 0);
->>>>>>> master
 
     const auto& rsc = gw->playerResourceStorageComponent();
     char rc[4]; char ic[4]; char pc[4];
