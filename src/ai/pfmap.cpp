@@ -1,6 +1,5 @@
 #include "pfmap.h"
 
-#include <alligator/util/math.h>
 
 PathNode::PathNode(int x, int y)
 	: m_x(x), m_y(y)
@@ -63,7 +62,7 @@ const std::vector<PathNode::SharedPtr> &NavigationMap::nodes()
 	return m_collector.nodes;
 }
 
-NavigationMap::NavigationMap(Matrix2Di::SharedPtr input)
+NavigationMap::NavigationMap(aether::math::Matrix2Di::SharedPtr input)
 	: m_collector(input->cols(), input->rows()), m_map(input)
 {
 	// extract navigation data
@@ -224,7 +223,7 @@ void NavigationMap::searchNeighboor(PathNode::SharedPtr node, Facing direction)
 
 NavigationMap::ConvolutorCollector::ConvolutorCollector(int w, int h)
 {
-	navigationMap.reset(new Matrix2D<PathNode::SharedPtr>(w, h, nullptr));
+    navigationMap.reset(new aether::math::Matrix2D<PathNode::SharedPtr>(w, h, nullptr));
 }
 
 int NavigationMap::ConvolutorCollector::operator ()(int d00, int d10, int d20, int d30, int d01, int d11, int d21, int d31, int d02, int d12, int d22, int d32, int d03, int d13, int d23, int d33, int x, int y)

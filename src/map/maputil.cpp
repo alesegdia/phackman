@@ -3,7 +3,7 @@
 
 #include "maputil.h"
 
-void plot(const Matrix2Di& src, Matrix2Di& target, int ox, int oy, bool nonzero, int brush)
+void plot(const aether::math::Matrix2Di& src, aether::math::Matrix2Di& target, int ox, int oy, bool nonzero, int brush)
 {
 	for( int y = 0; y < src.rows(); y++ )
 	{
@@ -28,7 +28,7 @@ void plot(const Matrix2Di& src, Matrix2Di& target, int ox, int oy, bool nonzero,
 	}
 }
 
-bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy )
+bool collide( const aether::math::Matrix2Di& fixed, const aether::math::Matrix2Di& moved, int offx, int offy )
 {
 	if( fixed.cols() < moved.cols() + offx )
 	{
@@ -55,12 +55,12 @@ bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy
 	return false;
 }
 
-Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
+aether::math::Matrix2Di::SharedPtr rotate( const aether::math::Matrix2Di& matrix_in, int angle )
 {
-	Matrix2Di::SharedPtr matrix_out;
+    aether::math::Matrix2Di::SharedPtr matrix_out;
 	if( angle == 0 )
 	{
-		matrix_out.reset(new Matrix2Di(matrix_in));
+        matrix_out.reset(new aether::math::Matrix2Di(matrix_in));
 	}
 	else if( angle >= 1 && angle <= 3 )
 	{
@@ -75,7 +75,7 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
 			cols = matrix_in.cols();
 			rows = matrix_in.rows();
 		}
-		matrix_out.reset(new Matrix2Di(cols, rows, 0));
+        matrix_out.reset(new aether::math::Matrix2Di(cols, rows, 0));
 
 		for( int row_in = 0; row_in < matrix_in.rows(); row_in++ )
 		{
@@ -110,10 +110,10 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle )
 }
 
 
-Matrix2Di::SharedPtr scale(const Matrix2Di &input, int factor)
+aether::math::Matrix2Di::SharedPtr scale(const aether::math::Matrix2Di &input, int factor)
 {
-    Matrix2Di::SharedPtr output;
-    output.reset(new Matrix2Di(input.cols() * factor, input.rows() * factor));
+    aether::math::Matrix2Di::SharedPtr output;
+    output.reset(new aether::math::Matrix2Di(input.cols() * factor, input.rows() * factor));
 
     for( int row_in = 0; row_in < input.rows(); row_in++ )
     {
@@ -133,10 +133,10 @@ Matrix2Di::SharedPtr scale(const Matrix2Di &input, int factor)
     return output;
 }
 
-Matrix2Di::SharedPtr scale_down(const Matrix2Di &input, int factor)
+aether::math::Matrix2Di::SharedPtr scale_down(const aether::math::Matrix2Di &input, int factor)
 {
-    Matrix2Di::SharedPtr output;
-    output.reset(new Matrix2Di(input.cols() / factor, input.rows() / factor));
+    aether::math::Matrix2Di::SharedPtr output;
+    output.reset(new aether::math::Matrix2Di(input.cols() / factor, input.rows() / factor));
 
     for( int row_in = 0; row_in < input.rows(); row_in += factor )
     {
@@ -150,18 +150,18 @@ Matrix2Di::SharedPtr scale_down(const Matrix2Di &input, int factor)
     return output;
 }
 
-Matrix2Di::SharedPtr add_border( const Matrix2Di& input, int border_size )
+aether::math::Matrix2Di::SharedPtr add_border( const aether::math::Matrix2Di& input, int border_size )
 {
-    Matrix2Di::SharedPtr output;
-    output.reset(new Matrix2Di(input.cols() + border_size * 2, input.rows() + border_size * 2, 0));
+    aether::math::Matrix2Di::SharedPtr output;
+    output.reset(new aether::math::Matrix2Di(input.cols() + border_size * 2, input.rows() + border_size * 2, 0));
     plot(input, *output, border_size, border_size);
     return output;
 }
 
 
-Matrix2Di::SharedPtr add_integer(const Matrix2Di &input, int n, bool nonzero)
+aether::math::Matrix2Di::SharedPtr add_integer(const aether::math::Matrix2Di &input, int n, bool nonzero)
 {
-	Matrix2Di::SharedPtr output(new Matrix2Di(input));
+    aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(input));
 
 	for( int i = 0; i < input.cols(); i++ )
 	{
@@ -178,9 +178,9 @@ Matrix2Di::SharedPtr add_integer(const Matrix2Di &input, int n, bool nonzero)
 }
 
 
-Matrix2Di::SharedPtr flip(const Matrix2Di &input, bool horizontal)
+aether::math::Matrix2Di::SharedPtr flip(const aether::math::Matrix2Di &input, bool horizontal)
 {
-	Matrix2Di::SharedPtr output(new Matrix2Di(input.cols(), input.rows(), 0));
+    aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(input.cols(), input.rows(), 0));
 
 	for( int i = 0; i < input.cols(); i++ )
 	{
@@ -205,19 +205,19 @@ Matrix2Di::SharedPtr flip(const Matrix2Di &input, bool horizontal)
 }
 
 
-Matrix2Di::SharedPtr concat_horizontal(const Matrix2Di &A, const Matrix2Di &B)
+aether::math::Matrix2Di::SharedPtr concat_horizontal(const aether::math::Matrix2Di &A, const aether::math::Matrix2Di &B)
 {
 	assert( A.rows() == B.rows() );
-	Matrix2Di::SharedPtr output( new Matrix2Di(A.cols() + B.cols(), A.rows() ));
+    aether::math::Matrix2Di::SharedPtr output( new aether::math::Matrix2Di(A.cols() + B.cols(), A.rows() ));
 	plot(A, *output, 0, 0, false);
 	plot(B, *output, A.cols(), 0, false);
 	return output;
 }
 
 
-Matrix2Di::SharedPtr convolute3x3(const Matrix2Di &matrix, convolutor3x3 conv)
+aether::math::Matrix2Di::SharedPtr convolute3x3(const aether::math::Matrix2Di &matrix, convolutor3x3 conv)
 {
-	Matrix2Di::SharedPtr output(new Matrix2Di(matrix));
+    aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(matrix));
 
 	for( int r = 0; r < matrix.rows() - 2; r++ )
 	{
@@ -234,9 +234,9 @@ Matrix2Di::SharedPtr convolute3x3(const Matrix2Di &matrix, convolutor3x3 conv)
 }
 
 
-Matrix2Di::SharedPtr convolute4x4(const Matrix2Di &matrix, Convolutor4x4* conv)
+aether::math::Matrix2Di::SharedPtr convolute4x4(const aether::math::Matrix2Di &matrix, Convolutor4x4* conv)
 {
-	Matrix2Di::SharedPtr output(new Matrix2Di(matrix));
+    aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(matrix));
 
 	for( int r = 0; r < matrix.rows() - 3; r++ )
 	{
@@ -287,9 +287,9 @@ int shrink_pieces_convolutor(int d00, int d10, int d20, int d01, int d11, int d2
 }
 
 
-Matrix2Di::SharedPtr tint(const Matrix2Di &matrix, int brush)
+aether::math::Matrix2Di::SharedPtr tint(const aether::math::Matrix2Di &matrix, int brush)
 {
-	Matrix2Di::SharedPtr output(new Matrix2Di(matrix));
+    aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(matrix));
 	for( int r = 0; r < matrix.rows(); r++ )
 	{
 		for( int c = 0; c < matrix.cols(); c++ )
@@ -540,10 +540,10 @@ int place_collectible_nodes(int d00, int d10, int d20, int d01, int d11, int d21
     return 0;
 }
 
-Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h)
+aether::math::Matrix2Di::SharedPtr cut(const aether::math::Matrix2Di& input, int x, int y, int w, int h)
 {
-    Matrix2Di::SharedPtr output = std::make_shared<Matrix2Di>(w, h);
-    input.debugPrint();
+    aether::math::Matrix2Di::SharedPtr output = std::make_shared<aether::math::Matrix2Di>(w, h);
+    //input.debugPrint();
 	for( int i = 0; i < w; i++ )
     {
 		for( int j = 0; j < h; j++ )
@@ -555,9 +555,9 @@ Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x, int y, int w, int h)
     return output;
 }
 
-Matrix2Di::SharedPtr trim(const Matrix2Di& input, int zeroItem)
+aether::math::Matrix2Di::SharedPtr trim(const aether::math::Matrix2Di& input, int zeroItem)
 {
-    Matrix2Di::SharedPtr output;
+    aether::math::Matrix2Di::SharedPtr output;
     int left, right, top, bot;
 	left = top = 0;
 	right = input.cols();
@@ -646,7 +646,7 @@ Matrix2Di::SharedPtr trim(const Matrix2Di& input, int zeroItem)
 
     int w = right - left;
     int h = bot - top;
-    output = std::make_shared<Matrix2Di>(right - left, bot - top);
+    output = std::make_shared<aether::math::Matrix2Di>(right - left, bot - top);
     output = cut(input, left, top, w, h);
 	output->debugPrint();
 

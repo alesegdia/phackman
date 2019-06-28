@@ -3,11 +3,12 @@
 #include "../components.h"
 
 #include <secs/secs.h>
+#include <aether/aether.h>
 
 class MapAwarenessSystem : public secs::TypedEntitySystem<TileComponent, MapAwarenessComponent>
 {
 public:
-    MapAwarenessSystem(Matrix2Di::SharedPtr sensing_matrix)
+    MapAwarenessSystem(aether::math::Matrix2Di::SharedPtr sensing_matrix)
         : m_sensingMatrix(sensing_matrix)
     {
 
@@ -34,7 +35,7 @@ private:
         mac.setDirectionSensor(0, direction, scan_result );
     }
 
-    bool scan(Vec2i pos, Facing direction)
+    bool scan(aether::math::Vec2i pos, Facing direction)
     {
         int tile = 0;
         bool did_sense = false;
@@ -47,6 +48,6 @@ private:
         return did_sense;
     }
 
-    Matrix2Di::SharedPtr m_sensingMatrix;
+    aether::math::Matrix2Di::SharedPtr m_sensingMatrix;
 
 };

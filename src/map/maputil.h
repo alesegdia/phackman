@@ -3,7 +3,7 @@
 #include <limits>
 #include <functional>
 
-#include <alligator/util/matrix.h>
+#include <aether/aether.h>
 
 /**
  * @brief copies one matrix into another matrix using an offset for the destination
@@ -15,7 +15,7 @@
  * @param nonzero set to true if only want to plot nonzero cells
  * @param brush the number to replace, std::numeric_limits<int>::min() for exact copy
  */
-void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, bool nonzero = true, int brush = std::numeric_limits<int>::min() );
+void plot( const aether::math::Matrix2Di& src, aether::math::Matrix2Di& target, int ox, int oy, bool nonzero = true, int brush = std::numeric_limits<int>::min() );
 
 
 /**
@@ -24,7 +24,7 @@ void plot( const Matrix2Di& src, Matrix2Di& target, int ox, int oy, bool nonzero
  * @param angle index representing the angle (0: 0º, 1: 90º, 2: 180º, 3: 270º)
  * @return a rotated matrix
  */
-Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle );
+aether::math::Matrix2Di::SharedPtr rotate( const aether::math::Matrix2Di& matrix_in, int angle );
 
 
 /**
@@ -35,7 +35,7 @@ Matrix2Di::SharedPtr rotate( const Matrix2Di& matrix_in, int angle );
  * @param offy offset y coordinate
  * @return
  */
-bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy );
+bool collide( const aether::math::Matrix2Di& fixed, const aether::math::Matrix2Di& moved, int offx, int offy );
 
 
 /**
@@ -44,7 +44,7 @@ bool collide( const Matrix2Di& fixed, const Matrix2Di& moved, int offx, int offy
  * @param factor the factor to use on matrix scaling
  * @return the scaled matrix
  */
-Matrix2Di::SharedPtr scale( const Matrix2Di& input, int factor );
+aether::math::Matrix2Di::SharedPtr scale( const aether::math::Matrix2Di& input, int factor );
 
 /**
  * @brief scales a matrix
@@ -52,7 +52,7 @@ Matrix2Di::SharedPtr scale( const Matrix2Di& input, int factor );
  * @param factor the factor to use on matrix scaling
  * @return the scaled matrix
  */
-Matrix2Di::SharedPtr scale_down( const Matrix2Di& input, int factor );
+aether::math::Matrix2Di::SharedPtr scale_down( const aether::math::Matrix2Di& input, int factor );
 
 /**
  * @brief adds a border of 0 to a matrix
@@ -60,9 +60,9 @@ Matrix2Di::SharedPtr scale_down( const Matrix2Di& input, int factor );
  * @param border_size the size of the border
  * @return the matrix with the border added
  */
-Matrix2Di::SharedPtr add_border( const Matrix2Di& input, int border_size );
+aether::math::Matrix2Di::SharedPtr add_border( const aether::math::Matrix2Di& input, int border_size );
 
-Matrix2Di::SharedPtr fill_borders( const Matrix2Di& input, int fill_value );
+aether::math::Matrix2Di::SharedPtr fill_borders( const aether::math::Matrix2Di& input, int fill_value );
 
 /**
  * @brief adds an integer to every nonzero cell
@@ -71,7 +71,7 @@ Matrix2Di::SharedPtr fill_borders( const Matrix2Di& input, int fill_value );
  * @param nonzero true if only act on nonzero cells
  * @return the processed matrix
  */
-Matrix2Di::SharedPtr add_integer( const Matrix2Di& input, int n, bool nonzero = true );
+aether::math::Matrix2Di::SharedPtr add_integer( const aether::math::Matrix2Di& input, int n, bool nonzero = true );
 
 
 /**
@@ -80,7 +80,7 @@ Matrix2Di::SharedPtr add_integer( const Matrix2Di& input, int n, bool nonzero = 
  * @param horizontal set to true if want a horizontal flip, false if want a vertical flip
  * @return the input matrix flipped
  */
-Matrix2Di::SharedPtr flip( const Matrix2Di& input, bool horizontal = true );
+aether::math::Matrix2Di::SharedPtr flip( const aether::math::Matrix2Di& input, bool horizontal = true );
 
 
 /**
@@ -89,7 +89,7 @@ Matrix2Di::SharedPtr flip( const Matrix2Di& input, bool horizontal = true );
  * @param B a matrix
  * @return the concatenated matrix
  */
-Matrix2Di::SharedPtr concat_horizontal( const Matrix2Di& A, const Matrix2Di& B );
+aether::math::Matrix2Di::SharedPtr concat_horizontal( const aether::math::Matrix2Di& A, const aether::math::Matrix2Di& B );
 
 
 /**
@@ -117,9 +117,9 @@ public:
  * @param c the convolutor to use
  * @return
  */
-Matrix2Di::SharedPtr convolute3x3( const Matrix2Di& matrix, convolutor3x3 conv );
+aether::math::Matrix2Di::SharedPtr convolute3x3( const aether::math::Matrix2Di& matrix, convolutor3x3 conv );
 
-Matrix2Di::SharedPtr convolute4x4(const Matrix2Di& matrix, Convolutor4x4 *conv );
+aether::math::Matrix2Di::SharedPtr convolute4x4(const aether::math::Matrix2Di& matrix, Convolutor4x4 *conv );
 
 /**
  * @brief fills all the zeros with 1 leaving a border of 1 between the one-filled area
@@ -144,8 +144,8 @@ int place_collectible_nodes 	( int d00, int d10, int d20,
  * @param brush the value to replace to
  * @return the matrix with non-zero values replaced
  */
-Matrix2Di::SharedPtr tint( const Matrix2Di& matrix, int brush );
+aether::math::Matrix2Di::SharedPtr tint( const aether::math::Matrix2Di& matrix, int brush );
 
-Matrix2Di::SharedPtr cut(const Matrix2Di& input, int x1, int y1, int x2, int y2);
+aether::math::Matrix2Di::SharedPtr cut(const aether::math::Matrix2Di& input, int x1, int y1, int x2, int y2);
 
-Matrix2Di::SharedPtr trim(const Matrix2Di& input, int zeroItem=0);
+aether::math::Matrix2Di::SharedPtr trim(const aether::math::Matrix2Di& input, int zeroItem=0);

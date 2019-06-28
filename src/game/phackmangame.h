@@ -4,18 +4,18 @@
 #include <allegro5/allegro.h>
 #include <memory>
 
-#include <alligator/game/game.h>
+#include <aether/aether.h>
 
 #include "gameplayscreen.h"
 
-class PhackmanGame : public Game {
+class PhackmanGame : public aether::core::Application {
 
 public:
 
 	PhackmanGame ( int sw, int sh );
-	virtual ~PhackmanGame();
+    virtual ~PhackmanGame() override;
 
-	int create( int argc, char** argv ) override ;
+    int ready( int argc, char** argv ) override ;
 	void dispose() override ;
 
 	// all screens

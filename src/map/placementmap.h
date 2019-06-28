@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alligator/util/matrix.h>
+#include <aether/aether.h>
 
 #include "../core/facing.h"
 
@@ -10,7 +10,7 @@ public:
 
     void reset( int w, int h )
     {
-        m_matrix.reset(new Matrix2D<uint8_t>(w, h));
+        m_matrix.reset(new aether::math::Matrix2D<uint8_t>(w, h));
     }
 
     bool isUsed( int x, int y, Facing facing )
@@ -32,6 +32,6 @@ public:
 
 private:
 
-    Matrix2D<uint8_t>::SharedPtr m_matrix;
+	aether::math::Matrix2D<uint8_t>::SharedPtr m_matrix;
 
 };

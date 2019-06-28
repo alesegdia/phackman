@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../ecs/world.h"
+#include "../map/mapscene.h"
 
 class GameWorld
 {
@@ -11,13 +12,13 @@ public:
 
     void render();
 
-    const Vec2f& playerPos();
+    const aether::math::Vec2f& playerPos();
 
     const ResourceStorageComponent& playerResourceStorageComponent();
 
     bool isGameOver();
 
-    Vec2f mapSize()
+    aether::math::Vec2f mapSize()
     {
         return m_mapScene.renderMapSize();
     }
@@ -25,7 +26,7 @@ public:
 private:
     MapScene m_mapScene;
     ECSWorld m_ecsWorld;
-    Vec2i m_realMapSize;
+    aether::math::Vec2i m_realMapSize;
     secs::Entity m_playerEntity;
     bool m_gameOver = false;
 

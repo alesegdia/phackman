@@ -1,7 +1,7 @@
 #pragma once
 
 #include <secs/secs.h>
-#include <alligator/input/input.h>
+#include <aether/aether.h>
 #include "../components.h"
 #include "../../map/mapscene.h"
 
@@ -10,7 +10,7 @@ class PlaceInMapSystem : public secs::TypedEntitySystem<TileComponent>
 {
 public:
 
-    PlaceInMapSystem( Matrix2Di::SharedPtr output_matrix, int brush )
+    PlaceInMapSystem( aether::math::Matrix2Di::SharedPtr output_matrix, int brush )
         : m_outputMatrix(output_matrix),
           m_brush(brush)
     {
@@ -31,13 +31,13 @@ public:
         }
     }
 
-    void postUpdate(double delta)
+    void postUpdate(double delta) override
     {
         SECS_UNUSED(delta);
         // m_outputMatrix->debugPrint();
     }
 
-    void onRemoved(const secs::Entity& e)
+    void onRemoved(const secs::Entity& e) override
     {
         auto& tlc = component<TileComponent>(e);
         m_outputMatrix->set(tlc.previous.x(), tlc.previous.y(), 0);
@@ -46,7 +46,7 @@ public:
 
 
 private:
-    Matrix2Di::SharedPtr m_outputMatrix;
+    aether::math::Matrix2Di::SharedPtr m_outputMatrix;
     int m_brush;
 
 };
@@ -58,7 +58,7 @@ public:
 
     static constexpr int BRUSH = 2;
 
-    PlaceEnemyInMapSystem( Matrix2Di::SharedPtr output_matrix )
+    PlaceEnemyInMapSystem( aether::math::Matrix2Di::SharedPtr output_matrix )
         : PlaceInMapSystem( output_matrix, BRUSH )
     {
         addNeededComponents<EnemyComponent>();

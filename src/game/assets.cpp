@@ -1,54 +1,62 @@
 #include "assets.h"
 #include <iostream>
 
+namespace {
+    constexpr uint64_t STATIC_DURATION = 5e6;
+    constexpr uint64_t PHACKMAN_WALK_DURATION = 0.1e6;
+    constexpr uint64_t PHACKMAN_ATTACK_DURATION = 0.1e6;
+}
+
 Assets* Assets::instance = nullptr;
 
 Assets::Assets()
 {
-	characterBitmap = al_load_bitmap("assets/phakman-sheet.png");
-    characterSheet.reset(new Spritesheet(3, 5, characterBitmap));
+    // SPRITESHEETS
+    characterBitmap.load("assets/phakman-sheet.png");
+    characterSheet.reset(new aether::graphics::Spritesheet(3, 5, characterBitmap));
 
-    maptilesBitmap = al_load_bitmap("assets/maptiles.png");
-    maptilesSheet.reset(new Spritesheet(6, 15, maptilesBitmap));
+    maptilesBitmap.load("assets/maptiles.png");
+    maptilesSheet.reset(new aether::graphics::Spritesheet(6, 15, maptilesBitmap));
 
-    enemyBitmap = al_load_bitmap("assets/enemysheet.png");
-    enemySheet.reset(new Spritesheet(4, 2, enemyBitmap));
+    enemyBitmap.load("assets/enemysheet.png");
+    enemySheet.reset(new aether::graphics::Spritesheet(4, 2, enemyBitmap));
 
-    buildingsBitmap = al_load_bitmap("assets/turrets.png");
-    buildingsSheet.reset(new Spritesheet(4, 2, buildingsBitmap));
+    buildingsBitmap.load("assets/turrets.png");
+    buildingsSheet.reset(new aether::graphics::Spritesheet(4, 2, buildingsBitmap));
 
-    phackmanWalk.reset(new Animation(1.f, 4));
+    // ANIMATIONS
+    phackmanWalk.reset(new aether::graphics::Animation(PHACKMAN_WALK_DURATION));
 	phackmanWalk->addFrame(characterSheet->getFrame(0));
 	phackmanWalk->addFrame(characterSheet->getFrame(1));
 	phackmanWalk->addFrame(characterSheet->getFrame(2));
 	phackmanWalk->addFrame(characterSheet->getFrame(3));
 
-    phackmanStand.reset(new Animation(1.f, 1));
+    phackmanStand.reset(new aether::graphics::Animation(STATIC_DURATION));
     phackmanStand->addFrame(characterSheet->getFrame(1));
 
-    industryNode.reset(new Animation(1.f, 1));
+    industryNode.reset(new aether::graphics::Animation(STATIC_DURATION));
     industryNode->addFrame(maptilesSheet->getFrame(30));
 
-    powerNode.reset(new Animation(1.f, 1));
+    powerNode.reset(new aether::graphics::Animation(STATIC_DURATION));
     powerNode->addFrame(maptilesSheet->getFrame(31));
 
-    lsBullet.reset(new Animation(1.f, 1));
+    lsBullet.reset(new aether::graphics::Animation(STATIC_DURATION));
     lsBullet->addFrame(characterSheet->getFrame(11));
 
-    turretStand.reset(new Animation(1.f, 1));
+    turretStand.reset(new aether::graphics::Animation(STATIC_DURATION));
     turretStand->addFrame(buildingsSheet->getFrame(0));
 
-    turretBullet.reset(new Animation(1.f, 1));
+    turretBullet.reset(new aether::graphics::Animation(STATIC_DURATION));
     turretBullet->addFrame(buildingsSheet->getFrame(1));
 
-    phackmanAttack.reset(new Animation(.7f, 2));
+    phackmanAttack.reset(new aether::graphics::Animation(PHACKMAN_ATTACK_DURATION));
+    phackmanAttack->addFrame(characterSheet->getFrame(9));
     phackmanAttack->addFrame(characterSheet->getFrame(8));
-	phackmanAttack->addFrame(characterSheet->getFrame(9));
 
-    slimeWalk.reset(new Animation(1.f, 1));
+    slimeWalk.reset(new aether::graphics::Animation(STATIC_DURATION));
     slimeWalk->addFrame(characterSheet->getFrame(10));
 
-    spawnerStand.reset(new Animation(0.5f, 23));
+    spawnerStand.reset(new aether::graphics::Animation(0.25e6));
     spawnerStand->addFrame(enemySheet->getFrame(0));
     spawnerStand->addFrame(enemySheet->getFrame(0));
     spawnerStand->addFrame(enemySheet->getFrame(0));
@@ -73,13 +81,13 @@ Assets::Assets()
     spawnerStand->addFrame(enemySheet->getFrame(2));
     spawnerStand->addFrame(enemySheet->getFrame(2));
 
-    phackmanDesinfectWalk.reset(new Animation(2.f, 4));
+    phackmanDesinfectWalk.reset(new aether::graphics::Animation(PHACKMAN_WALK_DURATION));
     phackmanDesinfectWalk->addFrame(characterSheet->getFrame(12));
     phackmanDesinfectWalk->addFrame(characterSheet->getFrame(13));
     phackmanDesinfectWalk->addFrame(characterSheet->getFrame(14));
     phackmanDesinfectWalk->addFrame(characterSheet->getFrame(13));
 
-    phackmanDesinfectStand.reset(new Animation(1.f, 1));
+    phackmanDesinfectStand.reset(new aether::graphics::Animation(STATIC_DURATION));
     phackmanDesinfectStand->addFrame(characterSheet->getFrame(13));
 
     guiFont = al_load_ttf_font("assets/bitcell.ttf", 16, 0);
@@ -87,10 +95,10 @@ Assets::Assets()
 
 Assets::~Assets()
 {
-	al_destroy_bitmap(characterBitmap);
-    al_destroy_bitmap(enemyBitmap);
-    al_destroy_bitmap(maptilesBitmap);
-    al_destroy_bitmap(buildingsBitmap);
+    characterBitmap.destroy();
+    enemyBitmap.destroy();
+    maptilesBitmap.destroy();
+    buildingsBitmap.destroy();
     al_destroy_font(guiFont);
 }
 

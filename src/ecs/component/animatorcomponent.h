@@ -1,12 +1,12 @@
 #pragma once
 
-#include <alligator/graphics/animation.h>
+#include <aether/aether.h>
 
 struct AnimatorComponent
 {
-	Animation::SharedPtr stand_animation = nullptr;
-	Animation::SharedPtr walk_animation = nullptr;
-    Animation::SharedPtr attack_animation = nullptr;
-    Animation::SharedPtr desinfect_walk_animation = nullptr;
-    Animation::SharedPtr desinfect_stand_animation = nullptr;
+    aether::graphics::Animation::SharedPtr stand_animation = nullptr;
+    aether::graphics::Animation::SharedPtr walk_animation = nullptr;
+    aether::graphics::Animation::SharedPtr attack_animation = nullptr;
+    aether::graphics::Animation::SharedPtr desinfect_walk_animation = nullptr;
+    aether::graphics::Animation::SharedPtr desinfect_stand_animation = nullptr;
 };

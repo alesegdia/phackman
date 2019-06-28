@@ -1,9 +1,9 @@
 #pragma once
 
-#include <alligator/util/math.h>
+#include <aether/aether.h>
 
 struct TileComponent
 {
-    Vec2i current = Vec2i(0, 0);
-    Vec2i previous = Vec2i(0, 0);
+    aether::math::Vec2i current = aether::math::Vec2i(0, 0);
+    aether::math::Vec2i previous = aether::math::Vec2i(0, 0);
 };

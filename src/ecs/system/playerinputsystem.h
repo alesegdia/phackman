@@ -1,7 +1,7 @@
 #pragma once
 
 #include <secs/secs.h>
-#include <alligator/input/input.h>
+#include <aether/aether.h>
 #include "../components.h"
 
 #include "../../map/mapscene.h"
@@ -33,13 +33,13 @@ public:
         auto& agtinput_comp = component<AgentInputComponent>(e);
 
         bool u, d, r, l, space;
-		u = Input::IsKeyDown( ALLEGRO_KEY_UP );
-		d = Input::IsKeyDown( ALLEGRO_KEY_DOWN );
-		r = Input::IsKeyDown( ALLEGRO_KEY_RIGHT );
-		l = Input::IsKeyDown(ALLEGRO_KEY_LEFT);
-		space = Input::IsKeyDown(ALLEGRO_KEY_SPACE);
-        agtinput_comp.requestedDesinfect = Input::IsKeyDown(ALLEGRO_KEY_C);
-        agtinput_comp.requestedReinforce = Input::IsKeyJustPressed(ALLEGRO_KEY_C);
+        u = aether::core::is_key_down( aether::core::KeyCode::Up );
+        d = aether::core::is_key_down( aether::core::KeyCode::Down );
+        r = aether::core::is_key_down( aether::core::KeyCode::Right );
+        l = aether::core::is_key_down( aether::core::KeyCode::Left );
+        space = aether::core::is_key_down(aether::core::KeyCode::Space);
+        agtinput_comp.requestedDesinfect = aether::core::is_key_down(aether::core::KeyCode::C);
+        agtinput_comp.requestedReinforce = aether::core::is_key_just_pressed(aether::core::KeyCode::C);
 
         if( agtinput_comp.requestedDesinfect )
         {
@@ -82,7 +82,7 @@ public:
         auto& tlc = component<TileComponent>(e);
         auto& tc = component<TransformComponent>(e);
 
-        if( Input::IsKeyJustPressed( ALLEGRO_KEY_W ) )
+        if( aether::core::is_key_just_pressed( aether::core::KeyCode::W ) )
         {
             if( m_mapScene.isReinforced(tlc.current.x(), tlc.current.y()) )
             {

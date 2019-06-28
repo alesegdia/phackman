@@ -1,9 +1,9 @@
 #pragma once
 
-#include <allegro5/allegro.h>
+#include <aether/aether.h>
 
 struct PowerConsumerComponent
 {
     bool powered = true;
-    ALLEGRO_BITMAP* unpowered_asset = nullptr;
+	const aether::graphics::TextureRegion* unpowered_asset = nullptr;
 };

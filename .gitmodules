@@ -7,3 +7,6 @@
 [submodule "module/hadron"]
 	path = module/hadron
 	url = git@github.com:alesegdia/hadron.git
+[submodule "module/aether"]
+	path = module/aether
+	url = git@github.com:alesegdia/aether.git

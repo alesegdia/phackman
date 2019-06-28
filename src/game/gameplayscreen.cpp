@@ -1,18 +1,16 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
-#include <alligator/input/input.h>
 #include <iostream>
 
 #include "gameplayscreen.h"
 #include "phackmangame.h"
 #include "assets.h"
-#include <alligator/util/matrix.h>
 #include "../constants.h"
 
 //#include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen( PhackmanGame* g )
-    : m_game(g), m_cam(new Camera()), m_guiCam(new Camera())
+    : m_game(g), m_cam(new aether::graphics::Camera()), m_guiCam(new aether::graphics::Camera())
 {
 
 }
@@ -23,37 +21,37 @@ void GameplayScreen::show()
     gw->step(0);
 }
 
-void GameplayScreen::update(double delta)
+void GameplayScreen::update(uint64_t delta)
 {
 	//m_player->update(delta);
-	if( Input::IsKeyDown(ALLEGRO_KEY_ESCAPE) )
+    if( aether::core::is_key_down(aether::core::KeyCode::Escape) )
 	{
 		m_game->close();
 	}
 
-    if( Input::IsKeyDown(ALLEGRO_KEY_1) )
+    if( aether::core::is_key_down(aether::core::KeyCode::K1) )
     {
         m_scale = 1;
     }
 
-    if( Input::IsKeyDown(ALLEGRO_KEY_2) )
+    if( aether::core::is_key_down(aether::core::KeyCode::K2) )
     {
         m_scale = 2;
     }
 
-    if( Input::IsKeyDown(ALLEGRO_KEY_3) )
+    if( aether::core::is_key_down(aether::core::KeyCode::K3) )
     {
         m_scale = 3;
     }
 
-    if( Input::IsKeyJustPressed(ALLEGRO_KEY_P) )
+    if( aether::core::is_key_just_pressed(aether::core::KeyCode::P) )
     {
         m_pause = ! m_pause;
     }
 
     if( false == m_pause )
     {
-        gw->step(delta);
+        gw->step(double(delta));
 
         if( gw->isGameOver() )
         {
@@ -62,7 +60,7 @@ void GameplayScreen::update(double delta)
         }
     }
 
-    if( Input::IsKeyJustPressed(ALLEGRO_KEY_R) )
+    if( aether::core::is_key_just_pressed(aether::core::KeyCode::R) )
     {
         gw = std::make_shared<GameWorld>();
         gw->step(0);
@@ -88,18 +86,16 @@ void GameplayScreen::render()
     m_cam->scale(m_scale, m_scale);
     m_cam->bind();
 
-	al_clear_to_color(al_map_rgb(20,20,20));
-	al_set_target_bitmap(al_get_backbuffer(m_game->display()));
-
+    aether::graphics::clear(0,0,0);
     gw->render();
 
     m_guiCam->scale(m_scale, m_scale);
     m_guiCam->position(0, 0);
     m_guiCam->bind();
 
-    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(28), 0,  0, 0);
-    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(27), 0, 16, 0);
-    al_draw_bitmap(Assets::instance->maptilesSheet->getFrame(26), 0, 32, 0);
+    Assets::instance->maptilesSheet->getFrame(26)->draw(0, 0);
+    Assets::instance->maptilesSheet->getFrame(27)->draw(0,16);
+    Assets::instance->maptilesSheet->getFrame(28)->draw(0,32);
 
     const auto& rsc = gw->playerResourceStorageComponent();
     char rc[4]; char ic[4]; char pc[4];

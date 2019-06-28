@@ -1,9 +1,9 @@
 #pragma once
 
-#include <allegro5/allegro5.h>
+#include <aether/aether.h>
 
 struct RenderComponent
 {
-	ALLEGRO_BITMAP* bitmap;
-    float offset = 0;
+	const aether::graphics::TextureRegion* bitmap;
+    float offset;
 };

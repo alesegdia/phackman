@@ -25,7 +25,10 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
     addComponent<RenderFacingComponent>(player);
     addComponent<PlayerInputComponent>(player);
 
-	addComponent<AgentInputComponent>(player);
+    auto& aic = addComponent<AgentInputComponent>(player);
+    aic.lower_speed = 0.00008f;
+    aic.normal_speed = 0.00008f;
+
     addComponent<AgentMapStateComponent>(player);
     auto& sc = addComponent<ShootComponent>(player);
     sc.shoot = [this](const secs::Entity& e) {
@@ -33,7 +36,7 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
         RenderFacingComponent rf = m_world.component<RenderFacingComponent>(e);
         this->makeLSBullet(tc.position.x(), tc.position.y(), rf.facing);
     };
-    sc.rate = 0.2f;
+    sc.rate = 0.1e6;
 
     auto& ac = addComponent<AnimatorComponent>(player);
 	ac.attack_animation = Assets::instance->phackmanAttack;
@@ -72,15 +75,15 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
     addComponent<RenderFacingComponent>(enemy);
     addComponent<TileComponent>(enemy);
 
-    auto& ainput = addComponent<AgentInputComponent>(enemy);
-    ainput.speed = 20;
+    auto& aic = addComponent<AgentInputComponent>(enemy);
+    aic.speed = 0.00001f;
 
     addComponent<EnemyComponent>(enemy);
 
     addComponent<AgentMapStateComponent>(enemy);
     addComponent<AIAgentRandomWanderComponent>(enemy);
     auto& ic = addComponent<InfectComponent>(enemy);
-    ic.desinfectDuration = 0.8f;
+    ic.desinfectDuration = 1e6;
 
     auto& hcc = addComponent<HadronCollisionComponent>(enemy);
     hcc.body = new hadron::Body(x, y, 14, 14);
@@ -111,7 +114,7 @@ secs::Entity EntityFactory::makeSpawner(float x, float y)
     addComponent<AgentInputComponent>(spawner);
 
     auto& sc = addComponent<ShootComponent>(spawner);
-    sc.rate = 1.0f;
+    sc.rate = 3e6;
     sc.shoot = [this, spawner](const secs::Entity& ent) {
         auto& tc = m_world.component<TransformComponent>(ent);
         auto& spawn = m_world.component<SpawnComponent>(ent);
@@ -137,10 +140,8 @@ secs::Entity EntityFactory::makeIndustryNode(float x, float y)
     auto& transform_comp = addComponent<TransformComponent>(node);
     transform_comp.position.set( x, y );
 
-    addComponent<RenderComponent>(node);
-
-    auto& animation_comp = addComponent<AnimationComponent>(node);
-    animation_comp.animation = Assets::instance->industryNode;
+    auto& rc = addComponent<RenderComponent>(node);
+    rc.bitmap = Assets::instance->industryNode->getFrame(0).texture;
 
     auto& cc = addComponent<CellComponent>(node);
     cc.type = CellType::IndustryCell;
@@ -158,9 +159,8 @@ secs::Entity EntityFactory::makePowerNode(float x, float y)
 
     auto& transform_comp = addComponent<TransformComponent>(node);
     transform_comp.position.set( x, y );
-    addComponent<RenderComponent>(node);
-    auto& animation_comp = addComponent<AnimationComponent>(node);
-    animation_comp.animation = Assets::instance->powerNode;
+    auto& rc = addComponent<RenderComponent>(node);
+    rc.bitmap = Assets::instance->powerNode->getFrame(0).texture;
 
     auto& cc = addComponent<CellComponent>(node);
     cc.type = CellType::PowerCell;
@@ -183,16 +183,16 @@ secs::Entity EntityFactory::makeCountdownText(float x, float y, const char *text
     auto& fc = addComponent<FloatingComponent>(t);
     auto& ctc = addComponent<ColorTintComponent>(t);
     ctc.color = al_map_rgba(255, 255, 255, 255);
-    fc.speed = 0.1;
-    fac.rate = 0.01;
+    fc.speed = 0.07f;
+    fac.rate = 0.05f;
     transform.position.set(x + 16, y-20);
-    death.ttl = 2;
+    death.ttl = 2e6;
     textcomp.text = text;
 
     return t;
 }
 
-secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr anim, Facing direction, float speed )
+secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Animation::SharedPtr anim, Facing direction, float speed )
 {
     secs::Entity bullet = m_world.processor().addEntity();
 
@@ -200,13 +200,13 @@ secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr a
     transform_comp.position.set( x, y );
 
     auto& rc = addComponent<RenderComponent>(bullet);
-    rc.bitmap = anim->getFrame(0);
+    rc.bitmap = anim->getFrame(0).texture;
 
     auto& rf = addComponent<RenderFacingComponent>(bullet);
     rf.facing = direction;
 
     auto& ainput = addComponent<AgentInputComponent>(bullet);
-    ainput.speed = speed;
+    ainput.speed = 0.0001f;
     ainput.inputRequested = true;
     ainput.requestedFacing = direction;
 
@@ -225,7 +225,7 @@ secs::Entity EntityFactory::makeBullet( float x, float y, Animation::SharedPtr a
 
 secs::Entity EntityFactory::makeLSBullet(float x, float y, Facing direction)
 {
-    secs::Entity b = makeBullet(x, y, Assets::instance->lsBullet, direction, 175);
+    secs::Entity b = makeBullet(x, y, Assets::instance->lsBullet, direction, 1);
     addComponent<PlayerBulletComponent>(b);
     return b;
 }

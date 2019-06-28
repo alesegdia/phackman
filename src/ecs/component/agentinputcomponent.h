@@ -6,9 +6,9 @@ struct AgentInputComponent
 {
 	Facing requestedFacing;
 	bool inputRequested = true;
-    int speed = 100;
-    int lower_speed = 20;
-    int normal_speed = 100;
+    float speed = 0;
+    float lower_speed = 20;
+    float normal_speed = 100;
     bool requestedAttack = false;
     bool requestedDesinfect = false;
     bool requestedReinforce = false;

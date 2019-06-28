@@ -1,7 +1,7 @@
 #pragma once
 
 #include <secs/secs.h>
-#include <alligator/input/input.h>
+#include <aether/aether.h>
 #include "../components.h"
 #include "../../map/mapscene.h"
 #include "../entityfactory.h"
@@ -87,7 +87,7 @@ public:
                 static constexpr float BORDER   = 4;
                 static constexpr float BARSIZE  = 32 - BORDER * 2;
                 static constexpr float BARHEIGHT = 3;
-                auto tp = Vec2i(x * 32, y * 32);
+                auto tp = aether::math::Vec2i(x * 32, y * 32);
                 float xx = infect.desinfectTimer * BARSIZE / infect.desinfectDuration;
                 float x0, y0, x1, y1;
                 x0 = tp.x() + BORDER;
