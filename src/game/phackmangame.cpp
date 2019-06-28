@@ -20,7 +20,7 @@ int PhackmanGame::ready(int argc, char **argv)
 
 	m_gameplayScreen.reset(new GameplayScreen(this));
 
-    setScreen(m_gameplayScreen.get());
+    setScreen(m_gameplayScreen);
 
 	return 0;
 }

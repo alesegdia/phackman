@@ -8,7 +8,7 @@
 //#include "../debug/mapsoliddebug.h"
 
 MenuScreen::MenuScreen( PhackmanGame* g )
-    : m_game(g), m_cam(new Camera())
+    : m_game(g), m_cam(new aether::graphics::Camera())
 {
 
 }

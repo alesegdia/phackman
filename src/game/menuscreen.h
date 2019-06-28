@@ -22,6 +22,6 @@ public:
 
 private:
 	PhackmanGame* m_game;
-    Camera::SharedPtr m_cam;
+    aether::graphics::Camera::SharedPtr m_cam;
 
 };

@@ -23,8 +23,8 @@ public:
 private:
 	PhackmanGame* m_game;
 
-    Camera::SharedPtr m_cam;
-    Camera::SharedPtr m_guiCam;
+    aether::graphics::Camera::SharedPtr m_cam;
+    aether::graphics::Camera::SharedPtr m_guiCam;
 
     std::shared_ptr<GameWorld> gw;
 

@@ -10,7 +10,7 @@
 //#include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen( PhackmanGame* g )
-    : m_game(g), m_cam(new Camera()), m_guiCam(new Camera())
+    : m_game(g), m_cam(new aether::graphics::Camera()), m_guiCam(new aether::graphics::Camera())
 {
 
 }
