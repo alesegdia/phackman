@@ -18,14 +18,14 @@ public:
         auto& render_comp = component<RenderComponent>(e);
         auto& transform_comp = component<TransformComponent>(e);
 
-        assert(render_comp.bitmap != nullptr);
+        assert(render_comp.bitmap.valid());
 
         auto bitmap = render_comp.bitmap;
 
-        float cx = static_cast<float>(bitmap->clip().w()) / 2.f;
-        float cy = static_cast<float>(bitmap->clip().h()) / 2.f;
+        float cx = static_cast<float>(bitmap.clip().w()) / 2.f;
+        float cy = static_cast<float>(bitmap.clip().h()) / 2.f;
 
-        bitmap->draw(
+        bitmap.draw(
                     transform_comp.position.x() + cx,
                     transform_comp.position.y() + cy,
                     cx, cy,

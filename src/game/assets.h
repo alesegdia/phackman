@@ -43,7 +43,7 @@ public:
     std::shared_ptr<aether::graphics::Animation> spawnerStand;
     std::shared_ptr<aether::graphics::Animation> turretStand;
 
-    ALLEGRO_FONT* guiFont;
+    aether::graphics::Font guiFont;
 
 
 };

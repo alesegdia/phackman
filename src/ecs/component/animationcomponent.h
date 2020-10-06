@@ -4,6 +4,6 @@
 
 struct AnimationComponent
 {
-    aether::graphics::Animation::SharedPtr animation = nullptr;
+    std::shared_ptr<aether::graphics::Animation> animation;
     aether::graphics::AnimationData animationData;
 };

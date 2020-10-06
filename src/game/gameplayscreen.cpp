@@ -102,9 +102,9 @@ void GameplayScreen::render()
     sprintf(rc, "%d", rsc.reinforceCells);
     sprintf(ic, "%d", rsc.industryCells);
     sprintf(pc, "%d", rsc.powerCells);
-    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18,  0, 0, rc);
-    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 16, 0, ic);
-    al_draw_text(Assets::instance->guiFont, al_map_rgb(255,255,255), 18, 32, 0, pc);
+    Assets::instance->guiFont.print(rc, 18,  0, aether::graphics::Color(1.0f, 1.0f, 1.0f));
+    Assets::instance->guiFont.print(ic, 18, 16, aether::graphics::Color(1.0f, 1.0f, 1.0f));
+    Assets::instance->guiFont.print(pc, 18, 32, aether::graphics::Color(1.0f, 1.0f, 1.0f));
 }
 
 void GameplayScreen::hide()

@@ -43,14 +43,17 @@ public:
 
         if( agtinput_comp.requestedDesinfect )
         {
-            auto& ic = processor()->addComponent<InfectComponent>(e);
+            auto& ic = processor()->component<InfectComponent>(e);
             ic.desinfect = true;
             agtinput_comp.speed = agtinput_comp.lower_speed;
         }
         else
         {
-            processor()->removeComponent<InfectComponent>(e);
-            agtinput_comp.speed = agtinput_comp.normal_speed;
+            if (hasComponent<InfectComponent>(e))
+            {
+                processor()->removeComponent<InfectComponent>(e);
+                agtinput_comp.speed = agtinput_comp.normal_speed;
+            }
         }
 
         if( agtinput_comp.requestedReinforce )

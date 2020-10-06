@@ -305,7 +305,7 @@ secs::Entity EntityFactory::makeCrucible( float x, float y )
     tc.position.set( x, y );
 
     auto& rc = addComponent<RenderComponent>(crucible);
-    rc.bitmap = Assets::instance->buildingsSheet->getFrame(1, 1);
+    rc.bitmap = *Assets::instance->buildingsSheet->getFrame(1, 1);
 
     return crucible;
 }

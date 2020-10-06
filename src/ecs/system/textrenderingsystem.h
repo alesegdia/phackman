@@ -30,9 +30,7 @@ public:
             auto& ctt = component<ColorTintComponent>(e);
             c = ctt.color;
         }
-        al_draw_text(font, c,
-                     transformcomponent.position.x(), transformcomponent.position.y(),
-                     ALLEGRO_ALIGN_CENTRE, textcomponent.text.c_str());
+        font.print(textcomponent.text.c_str(), transformcomponent.position.x(), transformcomponent.position.y(), 100, 100, aether::graphics::Color(c.r, c.g, c.b, c.a), true);
     }
 
 };	

@@ -13,7 +13,7 @@ public:
         auto graphic = powerconsumercomponent.unpowered_asset;
         if( graphic != nullptr && false == powerconsumercomponent.powered )
         {
-            rendercomponent.bitmap = powerconsumercomponent.unpowered_asset;
+            rendercomponent.bitmap = *powerconsumercomponent.unpowered_asset;
         }
 	}
 };	
