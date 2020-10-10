@@ -43,17 +43,20 @@ public:
 
         if( agtinput_comp.requestedDesinfect )
         {
+            if (!hasComponent<InfectComponent>(e))
+            {
+                auto& leic = processor()->addComponent<InfectComponent>(e);
+                leic.desinfectDuration = 1e6;
+                leic.desinfectTimer = 1e6;
+            }
             auto& ic = processor()->component<InfectComponent>(e);
             ic.desinfect = true;
             agtinput_comp.speed = agtinput_comp.lower_speed;
         }
-        else
+        else if(hasComponent<InfectComponent>(e))
         {
-            if (hasComponent<InfectComponent>(e))
-            {
-                processor()->removeComponent<InfectComponent>(e);
-                agtinput_comp.speed = agtinput_comp.normal_speed;
-            }
+            processor()->removeComponent<InfectComponent>(e);
+            agtinput_comp.speed = agtinput_comp.normal_speed;
         }
 
         if( agtinput_comp.requestedReinforce )
@@ -85,7 +88,7 @@ public:
         auto& tlc = component<TileComponent>(e);
         auto& tc = component<TransformComponent>(e);
 
-        if( aether::core::is_key_just_pressed( aether::core::KeyCode::W ) )
+        if( aether::core::is_key_just_pressed( aether::core::KeyCode::V ) )
         {
             if( m_mapScene.isReinforced(tlc.current.x(), tlc.current.y()) )
             {

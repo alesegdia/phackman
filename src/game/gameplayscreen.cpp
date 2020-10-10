@@ -105,6 +105,15 @@ void GameplayScreen::render()
     Assets::instance->guiFont.print(rc, 18,  0, aether::graphics::Color(1.0f, 1.0f, 1.0f));
     Assets::instance->guiFont.print(ic, 18, 16, aether::graphics::Color(1.0f, 1.0f, 1.0f));
     Assets::instance->guiFont.print(pc, 18, 32, aether::graphics::Color(1.0f, 1.0f, 1.0f));
+
+    if (m_pause)
+    {
+        aether::graphics::draw_filled_rectangle(0, 0, 1000, 1000, aether::graphics::Color(0.0f, 0.0f, 0.0f, 0.5f));
+        Assets::instance->guiFont.print("GAME PAUSED\n<P> = pause/unpause\n<ARROWS> = move phackman\n<SPACE> = shoot\n<C> = desinfect/reinforce\n<V> = build turret",
+            Constants::WindowWidth / (m_scale * 2), Constants::WindowHeight / (m_scale * 2) - 10 * m_scale,
+            300.0f, 15.0f,
+            aether::graphics::Color(1.0f, 1.0f, 1.0f, 1.0f), false);
+    }
 }
 
 void GameplayScreen::hide()

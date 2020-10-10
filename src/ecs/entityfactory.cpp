@@ -26,8 +26,9 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
     addComponent<PlayerInputComponent>(player);
 
     auto& aic = addComponent<AgentInputComponent>(player);
-    aic.lower_speed = 0.00008f;
+    aic.lower_speed = 0.00004f;
     aic.normal_speed = 0.00008f;
+    aic.speed = 0.00008f;
 
     addComponent<AgentMapStateComponent>(player);
     auto& sc = addComponent<ShootComponent>(player);
@@ -206,7 +207,7 @@ secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Anim
     rf.facing = direction;
 
     auto& ainput = addComponent<AgentInputComponent>(bullet);
-    ainput.speed = 0.0001f;
+    ainput.speed = speed;
     ainput.inputRequested = true;
     ainput.requestedFacing = direction;
 
@@ -225,14 +226,14 @@ secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Anim
 
 secs::Entity EntityFactory::makeLSBullet(float x, float y, Facing direction)
 {
-    secs::Entity b = makeBullet(x, y, Assets::instance->lsBullet, direction, 1);
+    secs::Entity b = makeBullet(x, y, Assets::instance->lsBullet, direction, 0.0002f);
     addComponent<PlayerBulletComponent>(b);
     return b;
 }
 
 secs::Entity EntityFactory::makeTurretBullet(float x, float y, Facing direction)
 {
-    secs::Entity b = makeBullet(x, y, Assets::instance->turretBullet, direction, 250);
+    secs::Entity b = makeBullet(x, y, Assets::instance->turretBullet, direction, 0.0003f);
     addComponent<PlayerBulletComponent>(b);
     return b;
 }
@@ -282,7 +283,7 @@ secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
     addComponent<ShootAtSightComponent>(e);
 
     auto& sc = addComponent<ShootComponent>(e);
-    sc.rate = 0.8f;
+    sc.rate = 2e5;
     sc.shoot = [this](const secs::Entity& ent) {
         TransformComponent tc = m_world.component<TransformComponent>(ent);
         ShootComponent scc = m_world.component<ShootComponent>(ent);

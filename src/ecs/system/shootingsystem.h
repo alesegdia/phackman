@@ -17,7 +17,10 @@ public:
         }
         if( aic.requestedAttack && sc.nextShotAvailable <= 0 && sc.force_disable == false )
         {
-            processor()->addComponent<TriggerComponent>(e);
+            if (!hasComponent<TriggerComponent>(e))
+            {
+                processor()->addComponent<TriggerComponent>(e);
+            }
             sc.nextShotAvailable = sc.rate;
         }
     }

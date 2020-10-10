@@ -119,7 +119,7 @@ private:
 
     void debugDrawRect(int x, int y)
     {
-        al_draw_filled_rectangle(x * 32, y * 32, (x+1) * 32, (y+1) * 32, al_map_rgb(255, 0, 0));
+        aether::graphics::draw_filled_rectangle(x * 32, y * 32, (x+1) * 32, (y+1) * 32, aether::graphics::Color(1.0f, 0.0f, 0.0f));
     }
 
     secs::Engine& m_world;
