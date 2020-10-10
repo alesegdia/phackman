@@ -183,9 +183,9 @@ secs::Entity EntityFactory::makeCountdownText(float x, float y, const char *text
     auto& fac = addComponent<FadeComponent>(t);
     auto& fc = addComponent<FloatingComponent>(t);
     auto& ctc = addComponent<ColorTintComponent>(t);
-    ctc.color = al_map_rgba(255, 255, 255, 255);
+    ctc.color = aether::graphics::Color(1.0f, 1.0f, 1.0f, 1.0f);
     fc.speed = 0.07f;
-    fac.rate = 0.05f;
+    fac.rate = 0.008f;
     transform.position.set(x + 16, y-20);
     death.ttl = 2e6;
     textcomp.text = text;

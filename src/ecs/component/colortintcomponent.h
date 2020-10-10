@@ -4,5 +4,5 @@
 
 struct ColorTintComponent
 {
-    ALLEGRO_COLOR color;
+    aether::graphics::Color color;
 };

@@ -2,6 +2,6 @@
 
 struct FadeComponent
 {
-    float rate = 0.01f;
+    float rate = 0.0001f;
     float currentAlpha = 1;
 };

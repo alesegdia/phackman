@@ -24,7 +24,7 @@ public:
         auto& textcomponent = component<TextComponent>(e);
         auto font = Assets::instance->guiFont;
 
-        ALLEGRO_COLOR c = al_map_rgba(255, 255, 255, 255);
+        aether::graphics::Color c(1.0f, 1.0f, 1.0f, 1.0f);
         if( hasComponent<ColorTintComponent>(e) )
         {
             auto& ctt = component<ColorTintComponent>(e);
