@@ -13,7 +13,7 @@ solution "phackman"
 	
 	aetherBuild()
 
-	aetherProject("phackman-game")
+	aetherGameLib("phackman-game")
 		debugdir ("..")
 		targetdir ("../build")
 		files {
@@ -21,3 +21,20 @@ solution "phackman"
 			"../src/**.h"
 		}
 
+	aetherProject("phackman-game-bin")
+		debugdir ("..")
+		targetdir ("../build")
+		files {
+			"../src/**.cpp",
+			"../src/**.h",
+			path.join(AETHER_DIR, "src/main/main.cpp")
+		}
+
+project ("aether-loader")
+	kind "ConsoleApp"
+	language "C++"
+	configurations { "debug", "release" }
+	platforms { "x32", "x64" }
+	debugdir ("..")
+	targetdir ("../build")
+	files("../gameloadsrc/main.cpp")

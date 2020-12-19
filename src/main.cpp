@@ -1,8 +1,10 @@
-#include "game/phackmangame.h"
-#include "constants.h"
+#include "../src/game/phackmangame.h"
+#include "../src/constants.h"
 
-int main(int argc, char** argv) {
-    PhackmanGame tsr(Constants::WindowWidth, Constants::WindowHeight);
-	tsr.exec(argc, argv);
-	return 0;
+#include <aether/api/aetherapi.h>
+
+aether::core::ApplicationBase* aether_create_app(int width, int height)
+{
+	return new PhackmanGame(width, height);
 }
+
