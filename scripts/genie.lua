@@ -30,11 +30,11 @@ solution "phackman"
 			path.join(AETHER_DIR, "src/main/main.cpp")
 		}
 
-project ("aether-loader")
-	kind "ConsoleApp"
-	language "C++"
-	configurations { "debug", "release" }
-	platforms { "x32", "x64" }
-	debugdir ("..")
-	targetdir ("../build")
-	files("../gameloadsrc/main.cpp")
+	project ("aether-loader")
+		kind "ConsoleApp"
+		language "C++"
+		configurations { "debug", "release" }
+		platforms { "x32", "x64" }
+		debugdir ("..")
+		targetdir ("../build")
+		files("../gameloadsrc/main.cpp")

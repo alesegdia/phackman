@@ -3,14 +3,13 @@
 #include <iostream>
 
 #include "gameplayscreen.h"
-#include "phackmangame.h"
 #include "assets.h"
 #include "../constants.h"
 
 //#include "../debug/mapsoliddebug.h"
 
-GameplayScreen::GameplayScreen( PhackmanGame* g )
-    : m_game(g), m_cam(new aether::graphics::Camera()), m_guiCam(new aether::graphics::Camera())
+GameplayScreen::GameplayScreen()
+    : m_cam(new aether::graphics::Camera()), m_guiCam(new aether::graphics::Camera())
 {
 
 }
@@ -26,7 +25,7 @@ void GameplayScreen::update(uint64_t delta)
 	//m_player->update(delta);
     if( aether::core::is_key_down(aether::core::KeyCode::Escape) )
 	{
-		m_game->close();
+		//m_game->close();
 	}
 
     if( aether::core::is_key_down(aether::core::KeyCode::K1) )

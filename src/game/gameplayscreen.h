@@ -7,11 +7,10 @@
 
 #include <allegro5/allegro_ttf.h>
 
-class PhackmanGame;
 
 class GameplayScreen : public aether::core::IScreen {
 public:
-	GameplayScreen(PhackmanGame* g);
+	GameplayScreen();
     ~GameplayScreen() override = default;
 
 	// IScreen interface
@@ -21,7 +20,6 @@ public:
 	void hide() override;
 
 private:
-	PhackmanGame* m_game;
 
     aether::graphics::Camera::SharedPtr m_cam;
     aether::graphics::Camera::SharedPtr m_guiCam;
