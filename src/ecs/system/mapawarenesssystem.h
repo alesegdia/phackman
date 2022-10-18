@@ -42,7 +42,7 @@ private:
         while( tile != 1 && did_sense == false )
         {
             advanceFromFacing(pos, direction);
-            tile = m_sensingMatrix->get( pos.x(), pos.y() );
+            tile = m_sensingMatrix->GetCell( pos.GetX(), pos.GetY() );
             did_sense = tile == 2;
         }
         return did_sense;

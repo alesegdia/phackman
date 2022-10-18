@@ -11,15 +11,15 @@ public:
     void process( double delta, const secs::Entity &e, HealthComponent& hc ) override
     {
         SECS_UNUSED(delta);
-        if( hc.currentHealth <= 0 && !hasComponent<DieComponent>(e))
+        if( hc.currentHealth <= 0 && !HasComponent<DieComponent>(e))
         {
-            addComponent<DieComponent>(e);
+            AddComponent<DieComponent>(e);
         }
     }
 
-    void onAdded(const secs::Entity& e) override
+    void OnEntityAdded(const secs::Entity& e) override
     {
-        auto& hc = component<HealthComponent>(e);
+        auto& hc = GetComponent<HealthComponent>(e);
         hc.currentHealth = hc.maxHealth;
     }
 

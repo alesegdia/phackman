@@ -1,8 +1,10 @@
 #include "gameworld.h"
+#include <algorithm>
 
 GameWorld::GameWorld()
     : m_ecsWorld(m_mapScene)
 {
+    rng.seed(time(NULL) + 0xFACEFEED);
     auto start_node = m_mapScene.navmap()->nodes()[0];
 
     m_playerEntity = m_ecsWorld.factory().makePlayer(
@@ -14,13 +16,13 @@ GameWorld::GameWorld()
     m_ecsWorld.factory().makeCrucible((start_node->x()) * 16, (start_node->y()) * 16);
 
     auto nm = m_mapScene.nodesMap();
-    for( int i = 0; i < nm->cols(); i++ )
+    for( int i = 0; i < nm->GetColsNumber(); i++ )
     {
-        for( int j = 0; j < nm->rows(); j++ )
+        for( int j = 0; j < nm->GetRowsNumber(); j++ )
         {
-            if( i != 0 && j != 0 && i != nm->cols() -1 && j != nm->rows() - 1)
+            if( i != 0 && j != 0 && i != nm->GetColsNumber() -1 && j != nm->GetRowsNumber() - 1)
             {
-                auto cell = nm->get(i, j);
+                auto cell = nm->GetCell(i, j);
                 int cx, cy;
                 cx = i * 32 + 8;
                 cy = j * 32 + 8;
@@ -37,7 +39,7 @@ GameWorld::GameWorld()
     }
 
     auto nodes = m_mapScene.navmap()->nodes();
-    std::random_shuffle(nodes.begin(), nodes.end());
+    std::shuffle(nodes.begin(), nodes.end(), rng);
 
     for( int i = 0; i < nodes.size() / 10.0f; i++ )
     {
@@ -50,21 +52,21 @@ void GameWorld::step(double delta)
     m_ecsWorld.step( delta );
 }
 
-void GameWorld::render()
+void GameWorld::Render()
 {
-    m_mapScene.render();
-    m_ecsWorld.render();
+    m_mapScene.Render();
+    m_ecsWorld.Render();
 }
 
 const aether::math::Vec2f &GameWorld::playerPos()
 {
 
-    return m_ecsWorld.engine().component<TransformComponent>(m_playerEntity).position;
+    return m_ecsWorld.engine().GetComponent<TransformComponent>(m_playerEntity).position;
 }
 
 const ResourceStorageComponent &GameWorld::playerResourceStorageComponent()
 {
-    return m_ecsWorld.engine().component<ResourceStorageComponent>(m_playerEntity);
+    return m_ecsWorld.engine().GetComponent<ResourceStorageComponent>(m_playerEntity);
 }
 
 bool GameWorld::isGameOver()

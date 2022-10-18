@@ -21,8 +21,8 @@ public:
         SECS_UNUSED(e);
         powerconsumercomponent.powered =
                 m_mapScene.isReinforced(
-                    tilecomponent.current.x(),
-                    tilecomponent.current.y());
+                    tilecomponent.current.GetX(),
+                    tilecomponent.current.GetY());
 	}
 
 private:

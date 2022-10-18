@@ -11,16 +11,16 @@ public:
     {
         SECS_UNUSED(delta);
         SECS_UNUSED(dc);
-        if( hasComponent<OnDeathActionComponent>(e) )
+        if( HasComponent<OnDeathActionComponent>(e) )
         {
-            auto& odac = component<OnDeathActionComponent>(e);
+            auto& odac = GetComponent<OnDeathActionComponent>(e);
             odac.action(e);
         }
-        if( hasComponent<PlayerInputComponent>(e) )
+        if( HasComponent<PlayerInputComponent>(e) )
         {
             m_playerDead = true;
         }
-        processor()->removeEntity(e);
+        GetEntityProcessor()->RemoveEntity(e);
     }
 
     bool isPlayerDead()

@@ -26,22 +26,22 @@ public:
         // an option is to clean all the map at the preProcess()
         if( tlc.current != tlc.previous )
         {
-            m_outputMatrix->set(tlc.previous.x(), tlc.previous.y(), 0);
-            m_outputMatrix->set(tlc.current.x(), tlc.current.y(), m_brush);
+            m_outputMatrix->SetCell(tlc.previous.GetX(), tlc.previous.GetY(), 0);
+            m_outputMatrix->SetCell(tlc.current.GetX(), tlc.current.GetY(), m_brush);
         }
     }
 
-    void postUpdate(double delta) override
+    void PostUpdate(double delta) override
     {
         SECS_UNUSED(delta);
-        // m_outputMatrix->debugPrint();
+        // m_outputMatrix->DebugPrint();
     }
 
-    void onRemoved(const secs::Entity& e) override
+    void OnEntityRemoved(const secs::Entity& e) override
     {
-        auto& tlc = component<TileComponent>(e);
-        m_outputMatrix->set(tlc.previous.x(), tlc.previous.y(), 0);
-        m_outputMatrix->set(tlc.current.x(), tlc.current.y(), 0);
+        auto& tlc = GetComponent<TileComponent>(e);
+        m_outputMatrix->SetCell(tlc.previous.GetX(), tlc.previous.GetY(), 0);
+        m_outputMatrix->SetCell(tlc.current.GetX(), tlc.current.GetY(), 0);
     }
 
 
@@ -61,6 +61,6 @@ public:
     PlaceEnemyInMapSystem( aether::math::Matrix2Di::SharedPtr output_matrix )
         : PlaceInMapSystem( output_matrix, BRUSH )
     {
-        addNeededComponents<EnemyComponent>();
+        AddNeededComponents<EnemyComponent>();
     }
 };

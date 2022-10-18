@@ -10,22 +10,22 @@ public:
     WallAwarePlacementSystem(MapScene& map_scene)
         : m_mapScene(map_scene)
     {
-        setStepConfiguration(false, false);
-        setNeededComponents<WallAwarePlacedComponent, TileComponent, RenderFacingComponent>();
+        SetStepConfiguration(false, false);
+        SetNeededComponents<WallAwarePlacedComponent, TileComponent, RenderFacingComponent>();
     }
 
-    void onAdded(const secs::Entity& e) override
+    void OnEntityAdded(const secs::Entity& e) override
     {
-        auto& tlc = component<TileComponent>(e);
-        auto& rfc = component<RenderFacingComponent>(e);
-        m_mapScene.placementMap().setUsedValue(tlc.current.x(), tlc.current.y(), rfc.facing, true);
+        auto& tlc = GetComponent<TileComponent>(e);
+        auto& rfc = GetComponent<RenderFacingComponent>(e);
+        m_mapScene.placementMap().setUsedValue(tlc.current.GetX(), tlc.current.GetY(), rfc.facing, true);
     }
 
-    void onRemoved(const secs::Entity& e) override
+    void OnEntityRemoved(const secs::Entity& e) override
     {
-        auto& tlc = component<TileComponent>(e);
-        auto& rfc = component<RenderFacingComponent>(e);
-        m_mapScene.placementMap().setUsedValue(tlc.current.x(), tlc.current.y(), rfc.facing, false);
+        auto& tlc = GetComponent<TileComponent>(e);
+        auto& rfc = GetComponent<RenderFacingComponent>(e);
+        m_mapScene.placementMap().setUsedValue(tlc.current.GetX(), tlc.current.GetY(), rfc.facing, false);
     }
 
 private:

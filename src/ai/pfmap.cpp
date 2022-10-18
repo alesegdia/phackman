@@ -63,7 +63,7 @@ const std::vector<PathNode::SharedPtr> &NavigationMap::nodes()
 }
 
 NavigationMap::NavigationMap(aether::math::Matrix2Di::SharedPtr input)
-	: m_collector(input->cols(), input->rows()), m_map(input)
+	: m_collector(input->GetColsNumber(), input->GetRowsNumber()), m_map(input)
 {
 	// extract navigation data
 	convolute4x4(*input, &m_collector);
@@ -81,7 +81,7 @@ PathNode::SharedPtr NavigationMap::getNodeAt(float x, float y)
 	{
 		for( row = 0; row < 3; row++ )
 		{
-			PathNode::SharedPtr cell = m_collector.navigationMap->get(tx + col, ty + row);
+			PathNode::SharedPtr cell = m_collector.navigationMap->GetCell(tx + col, ty + row);
 			if( cell != nullptr )
 			{
 				mah_node = cell;
@@ -129,22 +129,22 @@ bool NavigationMap::canMove(float x, float y, Facing dir)
 	case Facing::Up:
 		c_next = tx;
 		r_next = ty-1;
-		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
+		is_next_free = m_map->GetCell(c_next, r_next) == 0 && m_map->GetCell(c_next + 1, r_next) == 0 ;
 		break;
 	case Facing::Right:
 		c_next = tx+1;
 		r_next = ty;
-		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
+		is_next_free = m_map->GetCell(c_next, r_next) == 0 && m_map->GetCell(c_next, r_next + 1) == 0 ;
 		break;
 	case Facing::Down:
 		c_next = tx;
 		r_next = ty+1;
-		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
+		is_next_free = m_map->GetCell(c_next, r_next) == 0 && m_map->GetCell(c_next + 1, r_next) == 0 ;
 		break;
 	case Facing::Left:
 		c_next = tx-1;
 		r_next = ty;
-		is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
+		is_next_free = m_map->GetCell(c_next, r_next) == 0 && m_map->GetCell(c_next, r_next + 1) == 0 ;
 		break;
     default: break;
 	}
@@ -181,31 +181,31 @@ void NavigationMap::searchNeighboor(PathNode::SharedPtr node, Facing direction)
 		case Facing::Up:
 			c_next = c;
 			r_next = r-1;
-			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
+			is_next_free = m_map->GetCell(c_next, r_next) == 0 && m_map->GetCell(c_next + 1, r_next) == 0 ;
 			r--;
 			break;
 		case Facing::Right:
 			c_next = c+1;
 			r_next = r;
-			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
+			is_next_free = m_map->GetCell(c_next, r_next) == 0 && m_map->GetCell(c_next, r_next + 1) == 0 ;
 			c++;
 			break;
 		case Facing::Down:
 			c_next = c;
 			r_next = r+1;
-			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next + 1, r_next) == 0 ;
+			is_next_free = m_map->GetCell(c_next, r_next) == 0 && m_map->GetCell(c_next + 1, r_next) == 0 ;
 			r++;
 			break;
 		case Facing::Left:
 			c_next = c-1;
 			r_next = r;
-			is_next_free = m_map->get(c_next, r_next) == 0 && m_map->get(c_next, r_next + 1) == 0 ;
+			is_next_free = m_map->GetCell(c_next, r_next) == 0 && m_map->GetCell(c_next, r_next + 1) == 0 ;
 			c--;
 			break;
         default: assert(false); break;
 		}
 
-		auto node_cell = m_collector.navigationMap->get(c_next, r_next);
+		auto node_cell = m_collector.navigationMap->GetCell(c_next, r_next);
 
 		if( node_cell != nullptr )
 		{
@@ -247,7 +247,7 @@ int NavigationMap::ConvolutorCollector::operator ()(int d00, int d10, int d20, i
 		{
 			PathNode::SharedPtr node(new PathNode(x, y));
 			nodes.push_back(node);
-			navigationMap->set(x, y, node);
+			navigationMap->SetCell(x, y, node);
 			ret = 1;
 		}
 	}

@@ -18,8 +18,8 @@ public:
           m_mapScene(map_scene),
           m_factory(f)
     {
-        setStepConfiguration(true, true);
-        setExecutionPriority(10);
+        SetStepConfiguration(true, true);
+        SetExecutionPriority(10);
     }
 
     void process(double delta, const secs::Entity &e, WallPlacementComponent &wpc, TransformComponent& tc) override
@@ -47,73 +47,73 @@ public:
                 (l && m_left) ||
                 (r && m_right) )
             {
-                if( true == m_mapScene.isReinforced(m_playerTile.x(), m_playerTile.y()) )
+                if( true == m_mapScene.isReinforced(m_playerTile.GetX(), m_playerTile.GetY()) )
                 {
-                    if( true == m_mapScene.placementMap().isUsed( m_playerTile.x(), m_playerTile.y(), f ) )
+                    if( true == m_mapScene.placementMap().isUsed( m_playerTile.GetX(), m_playerTile.GetY(), f ) )
                     {
-                        m_factory.makeCountdownText( tc.position.x(), tc.position.y(), "no space" );
+                        m_factory.makeCountdownText( tc.position.GetX(), tc.position.GetY(), "no space" );
                     }
                     else
                     {
-                        auto& rsc = component<ResourceStorageComponent>(e);
+                        auto& rsc = GetComponent<ResourceStorageComponent>(e);
                         static constexpr int COST = 3;
                         if( rsc.industryCells >= COST )
                         {
                             rsc.industryCells -= COST;
-                            m_factory.makeBuildingOnWall(m_playerTile.x(), m_playerTile.y(), 0, f);
-                            m_factory.makeCountdownText( tc.position.x(), tc.position.y(), "turret built" );
+                            m_factory.makeBuildingOnWall(m_playerTile.GetX(), m_playerTile.GetY(), 0, f);
+                            m_factory.makeCountdownText( tc.position.GetX(), tc.position.GetY(), "turret built" );
                         }
                         else
                         {
-                            m_factory.makeCountdownText( tc.position.x(), tc.position.y(), "not enough nodes" );
+                            m_factory.makeCountdownText( tc.position.GetX(), tc.position.GetY(), "not enough nodes" );
                         }
                     }
                 }
             }
-            processor()->removeComponent<WallPlacementComponent>(e);
+            GetEntityProcessor()->RemoveComponent<WallPlacementComponent>(e);
         }
     }
 
 
-    void render(const secs::Entity &e) override
+    void Render(const secs::Entity &e) override
     {
         SECS_UNUSED(e);
-        if( m_up == 1 ) debugDrawRect(m_playerTile.x(), m_playerTile.y() - 1);
-        if( m_down == 1 ) debugDrawRect(m_playerTile.x(), m_playerTile.y() + 1);
-        if( m_right == 1 ) debugDrawRect(m_playerTile.x() + 1, m_playerTile.y());
-        if( m_left == 1 ) debugDrawRect(m_playerTile.x() - 1, m_playerTile.y());
+        if( m_up == 1 ) debugDrawRect(m_playerTile.GetX(), m_playerTile.GetY() - 1);
+        if( m_down == 1 ) debugDrawRect(m_playerTile.GetX(), m_playerTile.GetY() + 1);
+        if( m_right == 1 ) debugDrawRect(m_playerTile.GetX() + 1, m_playerTile.GetY());
+        if( m_left == 1 ) debugDrawRect(m_playerTile.GetX() - 1, m_playerTile.GetY());
     }
 
-    void onAdded(const secs::Entity &e) override
+    void OnEntityAdded(const secs::Entity &e) override
     {
-        m_world.disableGroup( SystemGroups::GuiStop );
-        auto& tc = component<TransformComponent>(e);
-        auto& aic = component<AgentInputComponent>(e);
+        m_world.DisableGroup( SystemGroups::GuiStop );
+        auto& tc = GetComponent<TransformComponent>(e);
+        auto& aic = GetComponent<AgentInputComponent>(e);
         aic.inputRequested = false;
         computePossiblePlaceWalls(tc);
     }
 
-    void onRemoved(const secs::Entity &e) override
+    void OnEntityRemoved(const secs::Entity &e) override
     {
         SECS_UNUSED(e);
-        m_world.enableGroup( SystemGroups::GuiStop );
+        m_world.EnableGroup( SystemGroups::GuiStop );
     }
 
 private:
 
     void computePossiblePlaceWalls(TransformComponent& tc)
     {
-        m_playerTile = aether::math::Vec2i( int(tc.position.x()+16), int(tc.position.y() + 16) );
+        m_playerTile = aether::math::Vec2i( int(tc.position.GetX()+16), int(tc.position.GetY() + 16) );
         m_playerPos = tc.position;
         m_playerTile = m_playerTile / 32;
 
-        printf("TILE: %d, %d\n", m_playerTile.x(), m_playerTile.y()); fflush(0);
-        printf("POS: %f, %f\n", m_playerPos.x(), m_playerPos.y()); fflush(0);
+        printf("TILE: %d, %d\n", m_playerTile.GetX(), m_playerTile.GetY()); fflush(0);
+        printf("POS: %f, %f\n", m_playerPos.GetX(), m_playerPos.GetY()); fflush(0);
 
-        m_up = m_mapScene.getSolidness( m_playerTile.x(), m_playerTile.y() - 1 );
-        m_down = m_mapScene.getSolidness( m_playerTile.x(), m_playerTile.y() + 1 );
-        m_left = m_mapScene.getSolidness( m_playerTile.x() - 1, m_playerTile.y() );
-        m_right = m_mapScene.getSolidness( m_playerTile.x() + 1, m_playerTile.y() );
+        m_up = m_mapScene.getSolidness( m_playerTile.GetX(), m_playerTile.GetY() - 1 );
+        m_down = m_mapScene.getSolidness( m_playerTile.GetX(), m_playerTile.GetY() + 1 );
+        m_left = m_mapScene.getSolidness( m_playerTile.GetX() - 1, m_playerTile.GetY() );
+        m_right = m_mapScene.getSolidness( m_playerTile.GetX() + 1, m_playerTile.GetY() );
         //printf("u: %d, d: %d, l: %d, r: %d\n", u, d, l, r); fflush(0);
     }
 

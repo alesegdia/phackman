@@ -12,7 +12,7 @@ public:
 
     void step(double delta );
 
-	void render();
+	void Render();
 
 	EntityFactory& factory();
 

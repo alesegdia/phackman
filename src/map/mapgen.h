@@ -88,6 +88,12 @@ public:
     Solution solve(Solution inputShapes);
 
 private:
+
+    CompactSolver()
+    {
+		rng.seed(time(NULL) + 0xDEADBEEF);
+    }
+
     void shuffle(Solution& v);
 
     aether::math::Matrix2Di buildSolution(const Solution& solution);
@@ -95,6 +101,10 @@ private:
     void plotShape(aether::math::Matrix2Di& map, const ShapeInstance& shape);
 
     bool collideMove(const aether::math::Matrix2Di& playground, const ShapeInstance& instance);
+
+private:
+	std::mt19937 rng;
+
 };
 
 

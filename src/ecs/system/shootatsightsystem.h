@@ -21,7 +21,7 @@ public:
             {
                 detected = true;
                 attackToDirection( f, aic );
-                auto& ssc = component<ShootComponent>(e);
+                auto& ssc = GetComponent<ShootComponent>(e);
                 ssc.facing = f;
                 break;
             }

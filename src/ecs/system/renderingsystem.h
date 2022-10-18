@@ -9,25 +9,25 @@ public:
 
     RenderingSystem()
     {
-        setStepConfiguration(false, true);
-        setNeededComponents<RenderComponent, TransformComponent>();
+        SetStepConfiguration(false, true);
+        SetNeededComponents<RenderComponent, TransformComponent>();
     }
 
-    void render( const secs::Entity &e) override
+    void Render( const secs::Entity &e) override
     {
-        auto& render_comp = component<RenderComponent>(e);
-        auto& transform_comp = component<TransformComponent>(e);
+        auto& render_comp = GetComponent<RenderComponent>(e);
+        auto& transform_comp = GetComponent<TransformComponent>(e);
 
-        assert(render_comp.bitmap.valid());
+        assert(render_comp.bitmap.IsValid());
 
         auto bitmap = render_comp.bitmap;
 
-        float cx = static_cast<float>(bitmap.clip().w()) / 2.f;
-        float cy = static_cast<float>(bitmap.clip().h()) / 2.f;
+        float cx = static_cast<float>(bitmap.GetClip().w()) / 2.f;
+        float cy = static_cast<float>(bitmap.GetClip().h()) / 2.f;
 
-        bitmap.draw(
-                    transform_comp.position.x() + cx,
-                    transform_comp.position.y() + cy,
+        bitmap.Draw(
+                    transform_comp.position.GetX() + cx,
+                    transform_comp.position.GetY() + cy,
                     cx, cy,
                     transform_comp.angle);
 

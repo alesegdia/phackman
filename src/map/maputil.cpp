@@ -5,23 +5,23 @@
 
 void plot(const aether::math::Matrix2Di& src, aether::math::Matrix2Di& target, int ox, int oy, bool nonzero, int brush)
 {
-	for( int y = 0; y < src.rows(); y++ )
+	for( int y = 0; y < src.GetRowsNumber(); y++ )
 	{
 		int ry = oy + y;
-		for( int x = 0; x < src.cols(); x++ )
+		for( int x = 0; x < src.GetColsNumber(); x++ )
 		{
 			int rx = ox + x;
-			if( ((nonzero && src.get(x, y) != 0) || !nonzero) &&
-				rx < target.cols() &&
-				ry < target.rows() )
+			if( ((nonzero && src.GetCell(x, y) != 0) || !nonzero) &&
+				rx < target.GetColsNumber() &&
+				ry < target.GetRowsNumber() )
 			{
 				if( brush == std::numeric_limits<int>::min() )
 				{
-					target.set(rx, ry, src.get(x, y));
+					target.SetCell(rx, ry, src.GetCell(x, y));
 				}
 				else
 				{
-					target.set(rx, ry, brush);
+					target.SetCell(rx, ry, brush);
 				}
 			}
 		}
@@ -30,22 +30,22 @@ void plot(const aether::math::Matrix2Di& src, aether::math::Matrix2Di& target, i
 
 bool collide( const aether::math::Matrix2Di& fixed, const aether::math::Matrix2Di& moved, int offx, int offy )
 {
-	if( fixed.cols() < moved.cols() + offx )
+	if( fixed.GetColsNumber() < moved.GetColsNumber() + offx )
 	{
 		return true;
 	}
-	else if( fixed.rows() < moved.rows() + offy )
+	else if( fixed.GetRowsNumber() < moved.GetRowsNumber() + offy )
 	{
 		return true;
 	}
-	for( int col_m = 0; col_m < moved.cols(); col_m++ )
+	for( int col_m = 0; col_m < moved.GetColsNumber(); col_m++ )
 	{
 		int col_f = col_m + offx;
-		for( int row_m = 0; row_m < moved.rows(); row_m++ )
+		for( int row_m = 0; row_m < moved.GetRowsNumber(); row_m++ )
 		{
 			int row_f = row_m + offy;
-			int moved_cell = moved.get(col_m, row_m);
-			int fixed_cell = fixed.get(col_f, row_f);
+			int moved_cell = moved.GetCell(col_m, row_m);
+			int fixed_cell = fixed.GetCell(col_f, row_f);
 			if( moved_cell != 0 && fixed_cell != 0 )
 			{
 				return true;
@@ -67,19 +67,19 @@ aether::math::Matrix2Di::SharedPtr rotate( const aether::math::Matrix2Di& matrix
 		int cols, rows;
 		if( angle == 1 || angle == 3 )
 		{
-			cols = matrix_in.rows();
-			rows = matrix_in.cols();
+			cols = matrix_in.GetRowsNumber();
+			rows = matrix_in.GetColsNumber();
 		}
 		else
 		{
-			cols = matrix_in.cols();
-			rows = matrix_in.rows();
+			cols = matrix_in.GetColsNumber();
+			rows = matrix_in.GetRowsNumber();
 		}
         matrix_out.reset(new aether::math::Matrix2Di(cols, rows, 0));
 
-		for( int row_in = 0; row_in < matrix_in.rows(); row_in++ )
+		for( int row_in = 0; row_in < matrix_in.GetRowsNumber(); row_in++ )
 		{
-			for( int col_in = 0; col_in < matrix_in.cols(); col_in++ )
+			for( int col_in = 0; col_in < matrix_in.GetColsNumber(); col_in++ )
 			{
 				int row_out, col_out;
 				row_out = col_out = 0; // fixed ...
@@ -90,15 +90,15 @@ aether::math::Matrix2Di::SharedPtr rotate( const aether::math::Matrix2Di& matrix
 				}
 				else if( angle == 2 )
 				{
-					row_out = matrix_in.rows() - row_in - 1;
-					col_out = matrix_in.cols() - col_in - 1;
+					row_out = matrix_in.GetRowsNumber() - row_in - 1;
+					col_out = matrix_in.GetColsNumber() - col_in - 1;
 				}
 				else if( angle == 3 ) // ... warning here
 				{
-					row_out = matrix_in.cols() - col_in - 1;
+					row_out = matrix_in.GetColsNumber() - col_in - 1;
 					col_out = row_in;
 				}
-				matrix_out->set(col_out, row_out, matrix_in.get(col_in, row_in));
+				matrix_out->SetCell(col_out, row_out, matrix_in.GetCell(col_in, row_in));
 			}
 		}
 	}
@@ -113,18 +113,18 @@ aether::math::Matrix2Di::SharedPtr rotate( const aether::math::Matrix2Di& matrix
 aether::math::Matrix2Di::SharedPtr scale(const aether::math::Matrix2Di &input, int factor)
 {
     aether::math::Matrix2Di::SharedPtr output;
-    output.reset(new aether::math::Matrix2Di(input.cols() * factor, input.rows() * factor));
+    output.reset(new aether::math::Matrix2Di(input.GetColsNumber() * factor, input.GetRowsNumber() * factor));
 
-    for( int row_in = 0; row_in < input.rows(); row_in++ )
+    for( int row_in = 0; row_in < input.GetRowsNumber(); row_in++ )
     {
-        for( int col_in = 0; col_in < input.cols(); col_in++ )
+        for( int col_in = 0; col_in < input.GetColsNumber(); col_in++ )
         {
-            int value = input.get(col_in, row_in);
+            int value = input.GetCell(col_in, row_in);
             for( int row_out = row_in * factor; row_out < (row_in + 1) * factor; row_out++ )
             {
                 for( int col_out = col_in * factor; col_out < (col_in + 1) * factor; col_out++ )
                 {
-                    output->set(col_out, row_out, value);
+                    output->SetCell(col_out, row_out, value);
                 }
             }
         }
@@ -136,14 +136,14 @@ aether::math::Matrix2Di::SharedPtr scale(const aether::math::Matrix2Di &input, i
 aether::math::Matrix2Di::SharedPtr scale_down(const aether::math::Matrix2Di &input, int factor)
 {
     aether::math::Matrix2Di::SharedPtr output;
-    output.reset(new aether::math::Matrix2Di(input.cols() / factor, input.rows() / factor));
+    output.reset(new aether::math::Matrix2Di(input.GetColsNumber() / factor, input.GetRowsNumber() / factor));
 
-    for( int row_in = 0; row_in < input.rows(); row_in += factor )
+    for( int row_in = 0; row_in < input.GetRowsNumber(); row_in += factor )
     {
-        for( int col_in = 0; col_in < input.cols(); col_in += factor )
+        for( int col_in = 0; col_in < input.GetColsNumber(); col_in += factor )
         {
-            int value = input.get(col_in, row_in);
-            output->set(col_in / factor, row_in / factor, value);
+            int value = input.GetCell(col_in, row_in);
+            output->SetCell(col_in / factor, row_in / factor, value);
         }
     }
 
@@ -153,7 +153,7 @@ aether::math::Matrix2Di::SharedPtr scale_down(const aether::math::Matrix2Di &inp
 aether::math::Matrix2Di::SharedPtr add_border( const aether::math::Matrix2Di& input, int border_size )
 {
     aether::math::Matrix2Di::SharedPtr output;
-    output.reset(new aether::math::Matrix2Di(input.cols() + border_size * 2, input.rows() + border_size * 2, 0));
+    output.reset(new aether::math::Matrix2Di(input.GetColsNumber() + border_size * 2, input.GetRowsNumber() + border_size * 2, 0));
     plot(input, *output, border_size, border_size);
     return output;
 }
@@ -163,13 +163,13 @@ aether::math::Matrix2Di::SharedPtr add_integer(const aether::math::Matrix2Di &in
 {
     aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(input));
 
-	for( int i = 0; i < input.cols(); i++ )
+	for( int i = 0; i < input.GetColsNumber(); i++ )
 	{
-		for( int j = 0; j < input.rows(); j++ )
+		for( int j = 0; j < input.GetRowsNumber(); j++ )
 		{
-			if( input.get(i, j) != 0 || !nonzero )
+			if( input.GetCell(i, j) != 0 || !nonzero )
 			{
-				output->set(i, j, input.get(i, j) + n);
+				output->SetCell(i, j, input.GetCell(i, j) + n);
 			}
 		}
 	}
@@ -180,24 +180,24 @@ aether::math::Matrix2Di::SharedPtr add_integer(const aether::math::Matrix2Di &in
 
 aether::math::Matrix2Di::SharedPtr flip(const aether::math::Matrix2Di &input, bool horizontal)
 {
-    aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(input.cols(), input.rows(), 0));
+    aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(input.GetColsNumber(), input.GetRowsNumber(), 0));
 
-	for( int i = 0; i < input.cols(); i++ )
+	for( int i = 0; i < input.GetColsNumber(); i++ )
 	{
-		for( int j = 0; j < input.rows(); j++ )
+		for( int j = 0; j < input.GetRowsNumber(); j++ )
 		{
 			int out_col, out_row;
 			if( horizontal )
 			{
-				out_col = input.cols() - i - 1;
+				out_col = input.GetColsNumber() - i - 1;
 				out_row = j;
 			}
 			else
 			{
 				out_col = i;
-				out_row = input.rows() - j - 1;
+				out_row = input.GetRowsNumber() - j - 1;
 			}
-			output->set(out_col, out_row, input.get(i, j));
+			output->SetCell(out_col, out_row, input.GetCell(i, j));
 		}
 	}
 
@@ -207,10 +207,10 @@ aether::math::Matrix2Di::SharedPtr flip(const aether::math::Matrix2Di &input, bo
 
 aether::math::Matrix2Di::SharedPtr concat_horizontal(const aether::math::Matrix2Di &A, const aether::math::Matrix2Di &B)
 {
-	assert( A.rows() == B.rows() );
-    aether::math::Matrix2Di::SharedPtr output( new aether::math::Matrix2Di(A.cols() + B.cols(), A.rows() ));
+	assert( A.GetRowsNumber() == B.GetRowsNumber() );
+    aether::math::Matrix2Di::SharedPtr output( new aether::math::Matrix2Di(A.GetColsNumber() + B.GetColsNumber(), A.GetRowsNumber() ));
 	plot(A, *output, 0, 0, false);
-	plot(B, *output, A.cols(), 0, false);
+	plot(B, *output, A.GetColsNumber(), 0, false);
 	return output;
 }
 
@@ -219,14 +219,14 @@ aether::math::Matrix2Di::SharedPtr convolute3x3(const aether::math::Matrix2Di &m
 {
     aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(matrix));
 
-	for( int r = 0; r < matrix.rows() - 2; r++ )
+	for( int r = 0; r < matrix.GetRowsNumber() - 2; r++ )
 	{
-		for( int c = 0; c < matrix.cols() - 2; c++ )
+		for( int c = 0; c < matrix.GetColsNumber() - 2; c++ )
 		{
-			output->set(c+1, r+1, conv(
-						   matrix.get(c, r),   matrix.get(c+1, r),   matrix.get(c+2, r),
-						   matrix.get(c, r+1), matrix.get(c+1, r+1), matrix.get(c+2, r+1),
-						   matrix.get(c, r+2), matrix.get(c+1, r+2), matrix.get(c+2, r+2)));
+			output->SetCell(c+1, r+1, conv(
+						   matrix.GetCell(c, r),   matrix.GetCell(c+1, r),   matrix.GetCell(c+2, r),
+						   matrix.GetCell(c, r+1), matrix.GetCell(c+1, r+1), matrix.GetCell(c+2, r+1),
+						   matrix.GetCell(c, r+2), matrix.GetCell(c+1, r+2), matrix.GetCell(c+2, r+2)));
 		}
 	}
 
@@ -238,15 +238,15 @@ aether::math::Matrix2Di::SharedPtr convolute4x4(const aether::math::Matrix2Di &m
 {
     aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(matrix));
 
-	for( int r = 0; r < matrix.rows() - 3; r++ )
+	for( int r = 0; r < matrix.GetRowsNumber() - 3; r++ )
 	{
-		for( int c = 0; c < matrix.cols() - 3; c++ )
+		for( int c = 0; c < matrix.GetColsNumber() - 3; c++ )
 		{
-			output->set(c+1, r+1, (*conv)(
-							matrix.get(c, r),   matrix.get(c+1, r),   matrix.get(c+2, r),	matrix.get(c+3, r),
-							matrix.get(c, r+1), matrix.get(c+1, r+1), matrix.get(c+2, r+1),	matrix.get(c+3, r+1),
-							matrix.get(c, r+2), matrix.get(c+1, r+2), matrix.get(c+2, r+2),	matrix.get(c+3, r+2),
-							matrix.get(c, r+3), matrix.get(c+1, r+3), matrix.get(c+2, r+3),	matrix.get(c+3, r+3),
+			output->SetCell(c+1, r+1, (*conv)(
+							matrix.GetCell(c, r),   matrix.GetCell(c+1, r),   matrix.GetCell(c+2, r),	matrix.GetCell(c+3, r),
+							matrix.GetCell(c, r+1), matrix.GetCell(c+1, r+1), matrix.GetCell(c+2, r+1),	matrix.GetCell(c+3, r+1),
+							matrix.GetCell(c, r+2), matrix.GetCell(c+1, r+2), matrix.GetCell(c+2, r+2),	matrix.GetCell(c+3, r+2),
+							matrix.GetCell(c, r+3), matrix.GetCell(c+1, r+3), matrix.GetCell(c+2, r+3),	matrix.GetCell(c+3, r+3),
 							c+1, r+1));
 		}
 	}
@@ -290,13 +290,13 @@ int shrink_pieces_convolutor(int d00, int d10, int d20, int d01, int d11, int d2
 aether::math::Matrix2Di::SharedPtr tint(const aether::math::Matrix2Di &matrix, int brush)
 {
     aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(matrix));
-	for( int r = 0; r < matrix.rows(); r++ )
+	for( int r = 0; r < matrix.GetRowsNumber(); r++ )
 	{
-		for( int c = 0; c < matrix.cols(); c++ )
+		for( int c = 0; c < matrix.GetColsNumber(); c++ )
 		{
-			if( matrix.get(c, r) != 0 )
+			if( matrix.GetCell(c, r) != 0 )
 			{
-				output->set(c, r, brush);
+				output->SetCell(c, r, brush);
 			}
 		}
 	}
@@ -548,8 +548,8 @@ aether::math::Matrix2Di::SharedPtr cut(const aether::math::Matrix2Di& input, int
     {
 		for( int j = 0; j < h; j++ )
         {
-			int cell = input.get(x+i, y+j);
-			output->set(i, j, cell);
+			int cell = input.GetCell(x+i, y+j);
+			output->SetCell(i, j, cell);
         }
     }
     return output;
@@ -560,21 +560,21 @@ aether::math::Matrix2Di::SharedPtr trim(const aether::math::Matrix2Di& input, in
     aether::math::Matrix2Di::SharedPtr output;
     int left, right, top, bot;
 	left = top = 0;
-	right = input.cols();
-    bot = input.rows();
+	right = input.GetColsNumber();
+    bot = input.GetRowsNumber();
     bool leftStop, rightStop, topStop, botStop;
     leftStop = rightStop = topStop = botStop = false;
-    for( int col = 0; col < input.cols(); col++ )
+    for( int col = 0; col < input.GetColsNumber(); col++ )
     {
         bool leftHits, rightHits;
         rightHits = leftHits = false;
 
-        int rightCol = input.cols() - col - 1;
+        int rightCol = input.GetColsNumber() - col - 1;
 
-        for( int row = 0; row < input.rows(); row++ )
+        for( int row = 0; row < input.GetRowsNumber(); row++ )
         {
-            auto leftItem = input.get(col, row);
-            auto rightItem = input.get(rightCol, row);
+            auto leftItem = input.GetCell(col, row);
+            auto rightItem = input.GetCell(rightCol, row);
             if( leftItem != zeroItem )
             {
                 leftHits = true;
@@ -600,21 +600,21 @@ aether::math::Matrix2Di::SharedPtr trim(const aether::math::Matrix2Di& input, in
         }
         else if( !rightStop )
         {
-            right = input.cols() - col - 1;
+            right = input.GetColsNumber() - col - 1;
         }
     }
 
-    for( int row = 0; row < input.rows(); row++ )
+    for( int row = 0; row < input.GetRowsNumber(); row++ )
     {
         bool topHits, botHits;
         topHits = botHits = false;
 
-        int botRow = input.rows() - row - 1;
+        int botRow = input.GetRowsNumber() - row - 1;
 
-        for( int col = 0; col < input.cols(); col++ )
+        for( int col = 0; col < input.GetColsNumber(); col++ )
         {
-            auto topItem = input.get(col, row);
-            auto botItem = input.get(col, botRow);
+            auto topItem = input.GetCell(col, row);
+            auto botItem = input.GetCell(col, botRow);
             if( topItem != zeroItem )
             {
                 topHits = true;
@@ -640,7 +640,7 @@ aether::math::Matrix2Di::SharedPtr trim(const aether::math::Matrix2Di& input, in
         }
         else if( !botStop )
         {
-            bot = input.rows() - row - 1;
+            bot = input.GetRowsNumber() - row - 1;
         }
     }
 
@@ -648,7 +648,7 @@ aether::math::Matrix2Di::SharedPtr trim(const aether::math::Matrix2Di& input, in
     int h = bot - top;
     output = std::make_shared<aether::math::Matrix2Di>(right - left, bot - top);
     output = cut(input, left, top, w, h);
-	output->debugPrint();
+	output->DebugPrint();
 
 	return output;
 }

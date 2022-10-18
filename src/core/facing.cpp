@@ -36,10 +36,10 @@ void advanceFromFacing(aether::math::Vec2i& pos, Facing direction)
 {
     switch( direction )
     {
-    case Facing::Right: pos.x(pos.x() + 1); break;
-    case Facing::Left: pos.x(pos.x() - 1); break;
-    case Facing::Down: pos.y(pos.y() + 1); break;
-    case Facing::Up: pos.y(pos.y() - 1); break;
+    case Facing::Right: pos.SetX(pos.GetX() + 1); break;
+    case Facing::Left: pos.SetX(pos.GetX() - 1); break;
+    case Facing::Down: pos.SetY(pos.GetY() + 1); break;
+    case Facing::Up: pos.SetY(pos.GetY() - 1); break;
     default: ;
     }
 }

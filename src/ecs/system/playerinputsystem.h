@@ -16,12 +16,12 @@ public:
         : m_mapScene(map_scene),
           m_factory(factory)
 	{
-        setNeededComponents<PlayerInputComponent,
+        SetNeededComponents<PlayerInputComponent,
                             AgentInputComponent,
                             TransformComponent>();
 	}
 
-    void process( double delta, const secs::Entity &e ) override
+    void Process( double delta, const secs::Entity &e ) override
 	{
         SECS_UNUSED(delta);
 
@@ -30,7 +30,7 @@ public:
             return;
         }
 
-        auto& agtinput_comp = component<AgentInputComponent>(e);
+        auto& agtinput_comp = GetComponent<AgentInputComponent>(e);
 
         bool u, d, r, l, space;
         u = aether::core::is_key_down( aether::core::KeyCode::Up );
@@ -43,25 +43,25 @@ public:
 
         if( agtinput_comp.requestedDesinfect )
         {
-            if (!hasComponent<InfectComponent>(e))
+            if (!HasComponent<InfectComponent>(e))
             {
-                auto& leic = processor()->addComponent<InfectComponent>(e);
+                auto& leic = GetEntityProcessor()->AddComponent<InfectComponent>(e);
                 leic.desinfectDuration = 1e6;
                 leic.desinfectTimer = 1e6;
             }
-            auto& ic = processor()->component<InfectComponent>(e);
+            auto& ic = GetEntityProcessor()->Component<InfectComponent>(e);
             ic.desinfect = true;
             agtinput_comp.speed = agtinput_comp.lower_speed;
         }
-        else if(hasComponent<InfectComponent>(e))
+        else if(HasComponent<InfectComponent>(e))
         {
-            processor()->removeComponent<InfectComponent>(e);
+            GetEntityProcessor()->RemoveComponent<InfectComponent>(e);
             agtinput_comp.speed = agtinput_comp.normal_speed;
         }
 
         if( agtinput_comp.requestedReinforce )
         {
-            processor()->addComponent<ReinforceComponent>(e);
+            GetEntityProcessor()->AddComponent<ReinforceComponent>(e);
         }
 
 		if( u )
@@ -85,18 +85,18 @@ public:
 		agtinput_comp.inputRequested = (u | d | l | r) && !space;
 		agtinput_comp.requestedAttack = space;
 
-        auto& tlc = component<TileComponent>(e);
-        auto& tc = component<TransformComponent>(e);
+        auto& tlc = GetComponent<TileComponent>(e);
+        auto& tc = GetComponent<TransformComponent>(e);
 
         if( aether::core::is_key_just_pressed( aether::core::KeyCode::V ) )
         {
-            if( m_mapScene.isReinforced(tlc.current.x(), tlc.current.y()) )
+            if( m_mapScene.isReinforced(tlc.current.GetX(), tlc.current.GetY()) )
             {
-                processor()->addComponent<WallPlacementComponent>(e);
+                GetEntityProcessor()->AddComponent<WallPlacementComponent>(e);
             }
             else
             {
-                m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "needs power");
+                m_factory.makeCountdownText(tc.position.GetX(), tc.position.GetY(), "needs power");
             }
         }
 	}

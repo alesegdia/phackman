@@ -10,12 +10,12 @@ public:
     void process( double delta, const secs::Entity &e, DieOnStopComponent& dos, TransformComponent& tc )
     {
         SECS_UNUSED(delta);
-        if( dos.last_x == tc.position.x() && dos.last_y == tc.position.y() )
+        if( dos.last_x == tc.position.GetX() && dos.last_y == tc.position.GetY() )
         {
-            processor()->removeEntity(e);
+            GetEntityProcessor()->RemoveEntity(e);
         }
-        dos.last_x = tc.position.x();
-        dos.last_y = tc.position.y();
+        dos.last_x = tc.position.GetX();
+        dos.last_y = tc.position.GetY();
     }
 
 };

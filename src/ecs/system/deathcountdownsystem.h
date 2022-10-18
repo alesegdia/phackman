@@ -11,7 +11,7 @@ public:
         deathtimercomponent.ttl -= delta;
         if( deathtimercomponent.ttl < 0 )
         {
-            processor()->removeEntity(e);
+            GetEntityProcessor()->RemoveEntity(e);
         }
 	}
 };	

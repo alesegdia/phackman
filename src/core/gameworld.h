@@ -10,7 +10,7 @@ public:
 
     void step(double delta);
 
-    void render();
+    void Render();
 
     const aether::math::Vec2f& playerPos();
 
@@ -29,5 +29,6 @@ private:
     aether::math::Vec2i m_realMapSize;
     secs::Entity m_playerEntity;
     bool m_gameOver = false;
+    std::mt19937 rng;
 
 };

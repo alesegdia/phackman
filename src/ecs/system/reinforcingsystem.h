@@ -24,31 +24,31 @@ public:
         SECS_UNUSED(delta);
         SECS_UNUSED(rc);
         int x, y;
-        x = tlc.current.x();
-        y = tlc.current.y();
+        x = tlc.current.GetX();
+        y = tlc.current.GetY();
         bool is_infected = m_mapScene.isInfected(x, y);
         bool is_reinforced = m_mapScene.isReinforced(x, y);
-        auto& tc = component<TransformComponent>(e);
+        auto& tc = GetComponent<TransformComponent>(e);
         if( false == is_reinforced && false == is_infected )
         {
             if( rsc.reinforceCells > 0 )
             {
-                m_mapScene.reinforce(tlc.current.x(), tlc.current.y());
+                m_mapScene.reinforce(tlc.current.GetX(), tlc.current.GetY());
                 rsc.reinforceCells--;
-                m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "powered");
+                m_factory.makeCountdownText(tc.position.GetX(), tc.position.GetY(), "powered");
             }
             else
             {
-                m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "no power cells");
+                m_factory.makeCountdownText(tc.position.GetX(), tc.position.GetY(), "no power cells");
             }
         }
         else if( true == is_reinforced )
         {
             m_mapScene.undoReinforce(x, y);
             rsc.reinforceCells++;
-            m_factory.makeCountdownText(tc.position.x(), tc.position.y(), "unpowered");
+            m_factory.makeCountdownText(tc.position.GetX(), tc.position.GetY(), "unpowered");
         }
-        processor()->removeComponent<ReinforceComponent>(e);
+        GetEntityProcessor()->RemoveComponent<ReinforceComponent>(e);
     }
 
 private:

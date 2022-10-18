@@ -13,24 +13,24 @@ public:
 
     TextRenderingSystem()
     {
-        setStepConfiguration(false, true);
-        setNeededComponents<TransformComponent, TextComponent>();
+        SetStepConfiguration(false, true);
+        SetNeededComponents<TransformComponent, TextComponent>();
     }
 
-    void render( const secs::Entity& e )
+    void Render( const secs::Entity& e )
 	{
         SECS_UNUSED(e);
-        auto& transformcomponent = component<TransformComponent>(e);
-        auto& textcomponent = component<TextComponent>(e);
+        auto& transformcomponent = GetComponent<TransformComponent>(e);
+        auto& textcomponent = GetComponent<TextComponent>(e);
         auto font = Assets::instance->guiFont;
 
         aether::graphics::Color c(1.0f, 1.0f, 1.0f, 1.0f);
-        if( hasComponent<ColorTintComponent>(e) )
+        if( HasComponent<ColorTintComponent>(e) )
         {
-            auto& ctt = component<ColorTintComponent>(e);
+            auto& ctt = GetComponent<ColorTintComponent>(e);
             c = ctt.color;
         }
-        font.print(textcomponent.text.c_str(), transformcomponent.position.x(), transformcomponent.position.y(), 100, 100, aether::graphics::Color(c.r, c.g, c.b, c.a), true);
+        font.Print(textcomponent.text.c_str(), transformcomponent.position.GetX(), transformcomponent.position.GetY(), 100, 100, aether::graphics::Color(c.r, c.g, c.b, c.a), true);
     }
 
 };	

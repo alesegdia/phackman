@@ -44,7 +44,7 @@ public:
         if( newAnim != nullptr && newAnim != anim_comp.animation )
         {
             anim_comp.animation = newAnim;
-            anim_comp.animation->reset(anim_comp.animationData);
+            anim_comp.animation->Reset(anim_comp.animationData);
         }
 
 	}

@@ -18,7 +18,7 @@ public:
     {
         SECS_UNUSED(delta);
         SECS_UNUSED(e);
-        PathNode::SharedPtr my_node = Blackboard::instance.navigationMap->getNodeAt( transf_comp.position.x(), transf_comp.position.y() );
+        PathNode::SharedPtr my_node = Blackboard::instance.navigationMap->getNodeAt( transf_comp.position.GetX(), transf_comp.position.GetY() );
         if( my_node != nullptr && wander_comp.lastNodeDecided != my_node )
         {
             Facing next_facing = my_node->facings()[rand() % my_node->facings().size()];

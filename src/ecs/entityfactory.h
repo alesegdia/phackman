@@ -4,6 +4,7 @@
 #include <aether/aether.h>
 #include "components.h"
 #include "../game/assets.h"
+#include <algorithm>
 
 class EntityFactory
 {
@@ -39,9 +40,9 @@ private:
 
 
 	template <typename ComponentType>
-	ComponentType& addComponent( const secs::Entity& e )
+	ComponentType& AddComponent( const secs::Entity& e )
 	{
-		return m_world.processor().addComponent<ComponentType>(e);
+		return m_world.GetEntityProcessor().AddComponent<ComponentType>(e);
 	}
 
 	secs::Engine& m_world;

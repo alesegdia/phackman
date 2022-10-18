@@ -14,10 +14,10 @@ public:
     ~GameplayScreen() override = default;
 
 	// IScreen interface
-	void show() override;
-    void update(uint64_t delta) override;
-	void render() override;
-	void hide() override;
+	int Load() override;
+    void Update(uint64_t delta) override;
+	void Render() override;
+	int Unload() override;
 
 private:
 

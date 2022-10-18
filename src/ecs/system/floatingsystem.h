@@ -10,7 +10,7 @@ public:
 	{
         SECS_UNUSED(delta);
         SECS_UNUSED(e);
-        transformcomponent.position.y(transformcomponent.position.y() - floatingcomponent.speed);
+        transformcomponent.position.SetY(transformcomponent.position.GetY() - floatingcomponent.speed);
 	}
 };	
 

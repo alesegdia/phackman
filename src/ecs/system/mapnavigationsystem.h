@@ -12,15 +12,15 @@ public:
     MapNavigationSystem( MapScene& map_scene )
         : m_mapScene(map_scene)
     {
-        setNeededComponents<TransformComponent,
+        SetNeededComponents<TransformComponent,
                             AgentInputComponent,
                             AgentMapStateComponent,
                             RenderFacingComponent>();
     }
 
-    void process( double delta, const secs::Entity &e ) override
+    void Process( double delta, const secs::Entity &e ) override
     {
-        auto& agtinput_comp = component<AgentInputComponent>(e);
+        auto& agtinput_comp = GetComponent<AgentInputComponent>(e);
 
         if (agtinput_comp.requestedAttack)
         {
@@ -42,14 +42,14 @@ public:
         if( do_process && agtinput_comp.inputRequested )
         {
 
-            auto& transform_comp = component<TransformComponent>(e);
-            auto& agtstate_comp = component<AgentMapStateComponent>(e);
-            auto& facing_comp = component<RenderFacingComponent>(e);
+            auto& transform_comp = GetComponent<TransformComponent>(e);
+            auto& agtstate_comp = GetComponent<AgentMapStateComponent>(e);
+            auto& facing_comp = GetComponent<RenderFacingComponent>(e);
 
             // get node at my position
             PathNode::SharedPtr my_node = Blackboard::instance.navigationMap->getNodeAt(
-                        transform_comp.position.x(),
-                        transform_comp.position.y() );
+                        transform_comp.position.GetX(),
+                        transform_comp.position.GetY() );
 
             // if I'm in a node
             if( my_node == nullptr )
@@ -77,7 +77,7 @@ public:
 
             PathNode::SharedPtr facing_neighboor = nullptr;
             auto pp = transform_comp.position;
-            aether::math::Vec2i p(pp.x() / 32.f, pp.y() / 32.f);
+            aether::math::Vec2i p(pp.GetX() / 32.f, pp.GetY() / 32.f);
             if( agtstate_comp.lastNode == nullptr )
             {
                 agtstate_comp.lastNode = scanForNode(p, reverseFacing(facing_comp.facing));
@@ -105,31 +105,31 @@ public:
                 const aether::math::Vec2f np = aether::math::Vec2f(facing_neighboor->x() * 16, facing_neighboor->y() * 16);
                 const aether::math::Vec2f p = transform_comp.position;
 
-                float neighboor_dist = abs((np.x() - p.x()) + (np.y() - p.y()));
+                float neighboor_dist = abs((np.GetX() - p.GetX()) + (np.GetY() - p.GetY()));
                 displacement = displacement < neighboor_dist ? displacement : neighboor_dist;
 
                 switch (facing_comp.facing)
                 {
                 case Up:
                     nx = agtstate_comp.lastNode->x() * 16;
-                    ny = transform_comp.position.y() - displacement;
+                    ny = transform_comp.position.GetY() - displacement;
                     break;
                 case Right:
-                    nx = transform_comp.position.x() + displacement;
+                    nx = transform_comp.position.GetX() + displacement;
                     ny = agtstate_comp.lastNode->y() * 16;
                     break;
                 case Down:
                     nx = agtstate_comp.lastNode->x() * 16;
-                    ny = transform_comp.position.y() + displacement;
+                    ny = transform_comp.position.GetY() + displacement;
                     break;
                 case Left:
-                    nx = transform_comp.position.x() - displacement;
+                    nx = transform_comp.position.GetX() - displacement;
                     ny = agtstate_comp.lastNode->y() * 16;
                     break;
                 default: break;
                 }
 
-                transform_comp.position.set(nx, ny);
+                transform_comp.position.Set(nx, ny);
             }
         }
     }
@@ -142,8 +142,8 @@ private:
         PathNode::SharedPtr n = nullptr;
         while( tile != 1 && n == nullptr )
         {
-            tile = m_mapScene.getSolidness(p.x(), p.y());
-            n = m_mapScene.navmap()->getNodeAt(p.x() * 32, p.y() * 32);
+            tile = m_mapScene.getSolidness(p.GetX(), p.GetY());
+            n = m_mapScene.navmap()->getNodeAt(p.GetX() * 32, p.GetY() * 32);
             advanceFromFacing(p, direction);
         }
         return n;

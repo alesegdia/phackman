@@ -17,9 +17,9 @@ public:
         }
         if( aic.requestedAttack && sc.nextShotAvailable <= 0 && sc.force_disable == false )
         {
-            if (!hasComponent<TriggerComponent>(e))
+            if (!HasComponent<TriggerComponent>(e))
             {
-                processor()->addComponent<TriggerComponent>(e);
+                GetEntityProcessor()->AddComponent<TriggerComponent>(e);
             }
             sc.nextShotAvailable = sc.rate;
         }

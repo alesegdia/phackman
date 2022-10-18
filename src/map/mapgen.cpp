@@ -2,6 +2,7 @@
 #include <ctime>
 #include <vector>
 #include <cassert>
+#include <algorithm>
 
 #include "mapgen.h"
 
@@ -41,8 +42,8 @@ aether::math::Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<aet
 
 		while( selected_col == -1 )
 		{
-			row = rng() % (m_layoutMatrix->rows() - the_shape->rows());
-			int final_col = m_layoutMatrix->cols() - the_shape->cols();
+			row = rng() % (m_layoutMatrix->GetRowsNumber() - the_shape->GetRowsNumber());
+			int final_col = m_layoutMatrix->GetColsNumber() - the_shape->GetColsNumber();
 
 			for( int col = 0; col < final_col; col++ )
 			{
@@ -82,7 +83,7 @@ aether::math::Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<aet
     output = convolute3x3(*output, shrink_pieces_convolutor);
     output = tint(*output, 1);
 
-    aether::math::Matrix2Di::SharedPtr real_output(new aether::math::Matrix2Di(output->cols()-2, output->rows()-2, 0));
+    aether::math::Matrix2Di::SharedPtr real_output(new aether::math::Matrix2Di(output->GetColsNumber()-2, output->GetRowsNumber()-2, 0));
     plot(*output, *real_output, -1, -1, true, 1);
 
     return real_output;
@@ -155,7 +156,7 @@ CompactSolver::Solution CompactSolver::solve(CompactSolver::Solution inputShapes
 
 void CompactSolver::shuffle(CompactSolver::Solution &v)
 {
-    std::random_shuffle(v.begin(), v.end());
+    std::shuffle(v.begin(), v.end(), rng);
 }
 
 aether::math::Matrix2Di CompactSolver::buildSolution(const CompactSolver::Solution &solution)
@@ -171,10 +172,10 @@ aether::math::Matrix2Di CompactSolver::buildSolution(const CompactSolver::Soluti
 
 void CompactSolver::plotShape(aether::math::Matrix2Di &map, const ShapeInstance &shape)
 {
-    plot(*shape.shape, map, shape.pos.x(), shape.pos.y(), true, 1);
+    plot(*shape.shape, map, shape.pos.GetX(), shape.pos.GetY(), true, 1);
 }
 
 bool CompactSolver::collideMove(const aether::math::Matrix2Di &playground, const ShapeInstance &instance)
 {
-    return collide(playground, *instance.shape, instance.pos.x(), instance.pos.y());
+    return collide(playground, *instance.shape, instance.pos.GetX(), instance.pos.GetY());
 }

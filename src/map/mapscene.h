@@ -19,23 +19,23 @@ public:
 
         m_solidnessMap = scale_down(*m_map, 2);
 
-        m_placementMap.reset( m_solidnessMap->cols(), m_solidnessMap->rows() );
+        m_placementMap.reset( m_solidnessMap->GetColsNumber(), m_solidnessMap->GetRowsNumber() );
 
         printf("SOLIDITY MAP\n");
-        m_solidnessMap->debugPrint();
+        m_solidnessMap->DebugPrint();
         printf("===========\n");
 
         m_enemyVisibilityMap = scale_down(*m_map, 2);
         printf("enemy visibility map\n");
-        m_enemyVisibilityMap->debugPrint();
+        m_enemyVisibilityMap->DebugPrint();
         printf("===========\n");
         fflush(0);
 
         m_nodesMap = scale_down(*m_map, 2);
         m_nodesMap = convolute3x3(*m_nodesMap, place_collectible_nodes);
-        m_nodesMap->debugPrint();
+        m_nodesMap->DebugPrint();
 
-        m_infectionMap->debugPrint();
+        m_infectionMap->DebugPrint();
 
         m_renderMap = convolute3x3(*m_map, draw_map_tiles_convolutor);
 
@@ -47,12 +47,12 @@ public:
 
     void infect(int x, int y)
     {
-        m_infectionMap->set(x, y, 3);
+        m_infectionMap->SetCell(x, y, 3);
     }
 
     void desinfect(int x, int y)
     {
-        m_infectionMap->set(x, y, 0);
+        m_infectionMap->SetCell(x, y, 0);
     }
 
     void undoReinforce(int x, int y)
@@ -62,7 +62,7 @@ public:
 
     void reinforce(int x, int y)
     {
-        m_infectionMap->set(x, y, 4);
+        m_infectionMap->SetCell(x, y, 4);
     }
 
     std::shared_ptr<NavigationMap> navmap()
@@ -80,17 +80,17 @@ public:
         return m_enemyVisibilityMap;
     }
 
-    void render()
+    void Render()
     {
         al_hold_bitmap_drawing(true);
-        for( int r = 0; r < m_renderMap->rows(); r++ )
+        for( int r = 0; r < m_renderMap->GetRowsNumber(); r++ )
         {
-            for( int c = 0; c < m_renderMap->cols(); c++ )
+            for( int c = 0; c < m_renderMap->GetColsNumber(); c++ )
             {
                 int x1, y1;
                 x1 = c * 16; y1 = r * 16;
 
-                int frame = m_renderMap->get(c, r);
+                int frame = m_renderMap->GetCell(c, r);
 
                 int ncx, ncy;
                 ncx = c / 2;
@@ -106,8 +106,8 @@ public:
                     frame += 60;
                 }
 
-                auto bm = Assets::instance->maptilesSheet->getFrame(frame);
-                bm->draw(x1, y1);
+                auto bm = Assets::instance->maptilesSheet->GetFrame(frame);
+                bm->Draw(x1, y1);
             }
         }
         al_hold_bitmap_drawing(false);
@@ -115,17 +115,17 @@ public:
 
     int getSolidness(int x, int y)
     {
-        return m_solidnessMap->get(x, y);
+        return m_solidnessMap->GetCell(x, y);
     }
 
     bool isInfected(int x, int y)
     {
-        return m_infectionMap->get(x, y) == 3;
+        return m_infectionMap->GetCell(x, y) == 3;
     }
 
     bool isReinforced(int x, int y)
     {
-        return m_infectionMap->get(x, y) == 4;
+        return m_infectionMap->GetCell(x, y) == 4;
     }
 
     void toggleReinforced(int x, int y)
@@ -149,20 +149,20 @@ public:
 
     aether::math::Vec2f renderMapSize()
     {
-        return aether::math::Vec2f(m_renderMap->cols(), m_renderMap->rows());
+        return aether::math::Vec2f(m_renderMap->GetColsNumber(), m_renderMap->GetRowsNumber());
     }
 
     void debugRender()
     {
-        for( int r = 0; r < m_map->rows(); r++ )
+        for( int r = 0; r < m_map->GetRowsNumber(); r++ )
         {
-            for( int c = 0; c < m_map->cols(); c++ )
+            for( int c = 0; c < m_map->GetColsNumber(); c++ )
             {
                 int x1, y1, x2, y2;
                 x1 = c * 16; y1 = r * 16;
                 x2 = (c+1) * 16; y2 = (r+1) * 16;
 
-                if( m_map->get(c, r) == 1 )
+                if( m_map->GetCell(c, r) == 1 )
                 {
                     al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 255, 0));
                 }

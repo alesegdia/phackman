@@ -1,5 +1,6 @@
 #pragma once
 
+/*
 #include <allegro5/allegro5.h>
 #include <alligator/util/matrix.h>
 
@@ -16,15 +17,15 @@ public:
 
     }
 
-    void render()
+    void Render()
     {
         // HACER NODOS EN CENTRO CUADRICULA Y VER COMO QUEDAN :)
         ALLEGRO_COLOR color;
-        for( int i = 0; i < m_map->cols(); i++ )
+        for( int i = 0; i < m_map->GetColsNumber(); i++ )
         {
-            for( int j = 0; j < m_map->rows(); j++ )
+            for( int j = 0; j < m_map->GetRowsNumber(); j++ )
             {
-                int tile = m_map->get(i, j);
+                int tile = m_map->GetCell(i, j);
                 if( tile == 1 ) {
                     color = al_map_rgba(255, 0, 0, 128);
                 } else {
@@ -48,3 +49,5 @@ private:
     MapPtr m_map;
 
 };
+
+*/
