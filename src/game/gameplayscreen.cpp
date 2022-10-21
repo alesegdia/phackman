@@ -26,7 +26,7 @@ void GameplayScreen::Update(uint64_t delta)
 	//m_player->update(delta);
     if( aether::core::is_key_down(aether::core::KeyCode::Escape) )
 	{
-		//m_game->close();
+        RequestCloseApp();
 	}
 
     if( aether::core::is_key_down(aether::core::KeyCode::K1) )
@@ -118,6 +118,7 @@ void GameplayScreen::Render()
 
 int GameplayScreen::Unload()
 {
+	Assets::Dispose();
 	return 0;
 }
 

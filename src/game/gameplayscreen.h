@@ -30,4 +30,6 @@ private:
 
     bool m_pause = true;
 
+    bool m_requestCloseApp = false;
+
 };
