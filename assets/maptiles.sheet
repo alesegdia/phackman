@@ -1,0 +1,4 @@
+[default]
+rows = 4
+cols = 6
+asset = "maptiles.png"

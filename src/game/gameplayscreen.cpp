@@ -5,6 +5,7 @@
 #include "gameplayscreen.h"
 #include "assets.h"
 #include "../constants.h"
+#include "aether/resources/AssetsManager.h"
 
 //#include "../debug/mapsoliddebug.h"
 
@@ -16,6 +17,8 @@ GameplayScreen::GameplayScreen()
 
 int GameplayScreen::Load()
 {
+    aether::resources::AssetsManager assetsManager;
+    assetsManager.LoadFolder("assets/");
     gw = std::make_shared<GameWorld>();
     gw->step(0);
     return 0;
