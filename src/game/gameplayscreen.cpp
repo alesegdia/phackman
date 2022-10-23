@@ -5,6 +5,7 @@
 #include "gameplayscreen.h"
 #include "assets.h"
 #include "../constants.h"
+#include <filesystem>
 #include "aether/resources/AssetsManager.h"
 
 //#include "../debug/mapsoliddebug.h"
