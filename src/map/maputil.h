@@ -149,3 +149,5 @@ aether::math::Matrix2Di::SharedPtr tint( const aether::math::Matrix2Di& matrix, 
 aether::math::Matrix2Di::SharedPtr cut(const aether::math::Matrix2Di& input, int x1, int y1, int x2, int y2);
 
 aether::math::Matrix2Di::SharedPtr trim(const aether::math::Matrix2Di& input, int zeroItem=0);
+
+aether::math::Matrix2Di::SharedPtr fill_limits(const aether::math::Matrix2Di input, int value);

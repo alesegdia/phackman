@@ -215,19 +215,38 @@ aether::math::Matrix2Di::SharedPtr concat_horizontal(const aether::math::Matrix2
 }
 
 
-aether::math::Matrix2Di::SharedPtr convolute3x3(const aether::math::Matrix2Di &matrix, convolutor3x3 conv)
+aether::math::Matrix2Di::SharedPtr convolute3x3(const aether::math::Matrix2Di& matrix, convolutor3x3 conv)
 {
-    aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(matrix));
+	aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(matrix));
 
-	for( int r = 0; r < matrix.GetRowsNumber() - 2; r++ )
+	for (int r = 0; r < matrix.GetRowsNumber() - 2; r++)
 	{
-		for( int c = 0; c < matrix.GetColsNumber() - 2; c++ )
+		for (int c = 0; c < matrix.GetColsNumber() - 2; c++)
 		{
-			output->SetCell(c+1, r+1, conv(
-						   matrix.GetCell(c, r),   matrix.GetCell(c+1, r),   matrix.GetCell(c+2, r),
-						   matrix.GetCell(c, r+1), matrix.GetCell(c+1, r+1), matrix.GetCell(c+2, r+1),
-						   matrix.GetCell(c, r+2), matrix.GetCell(c+1, r+2), matrix.GetCell(c+2, r+2)));
+			output->SetCell(c + 1, r + 1, conv(
+				matrix.GetCell(c, r), matrix.GetCell(c + 1, r), matrix.GetCell(c + 2, r),
+				matrix.GetCell(c, r + 1), matrix.GetCell(c + 1, r + 1), matrix.GetCell(c + 2, r + 1),
+				matrix.GetCell(c, r + 2), matrix.GetCell(c + 1, r + 2), matrix.GetCell(c + 2, r + 2)));
 		}
+	}
+
+	return output;
+}
+
+aether::math::Matrix2Di::SharedPtr fill_borders(const aether::math::Matrix2Di& matrix, int fill_value)
+{
+	aether::math::Matrix2Di::SharedPtr output(new aether::math::Matrix2Di(matrix));
+
+	for (int r = 0; r < matrix.GetRowsNumber() - 1; r++)
+	{
+		output->SetCell(0, r, fill_value);
+		output->SetCell(matrix.GetColsNumber() - 1, r, fill_value);
+	}
+
+	for (int c = 0; c < matrix.GetColsNumber() - 1; c++)
+	{
+		output->SetCell(c, 0, fill_value);
+		output->SetCell(c, matrix.GetRowsNumber() - 1, fill_value);
 	}
 
 	return output;

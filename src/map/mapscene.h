@@ -38,6 +38,8 @@ public:
         m_infectionMap->DebugPrint();
 
         m_renderMap = convolute3x3(*m_map, draw_map_tiles_convolutor);
+        m_renderMap = fill_borders(*m_map, 89);
+        m_renderMap->DebugPrint();
 
         m_navmap.reset(new NavigationMap(m_map));
 
