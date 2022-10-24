@@ -30,7 +30,7 @@ public:
             auto& ctt = GetComponent<ColorTintComponent>(e);
             c = ctt.color;
         }
-        font.Print(textcomponent.text.c_str(), transformcomponent.position.GetX(), transformcomponent.position.GetY(), 100, 100, aether::graphics::Color(c.r, c.g, c.b, c.a), true);
+        font->Print(textcomponent.text.c_str(), transformcomponent.position.GetX(), transformcomponent.position.GetY(), 100, 100, aether::graphics::Color(c.r, c.g, c.b, c.a), true);
     }
 
 };	

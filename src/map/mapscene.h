@@ -98,12 +98,12 @@ public:
 
                 if( isInfected(ncx, ncy) )
                 {
-                    frame += 30;
+                    frame += 24;
                 }
 
                 if( isReinforced(ncx, ncy) )
                 {
-                    frame += 60;
+                    frame += 48;
                 }
 
                 auto bm = Assets::instance->maptilesSheet->GetFrame(frame);

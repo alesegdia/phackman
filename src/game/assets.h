@@ -44,7 +44,7 @@ public:
     std::shared_ptr<aether::graphics::Animation> spawnerStand;
     std::shared_ptr<aether::graphics::Animation> turretStand;
 
-    aether::graphics::Font guiFont;
+    std::shared_ptr<aether::graphics::Font> guiFont;
 
     aether::resources::AssetsManager assetsManager;
 

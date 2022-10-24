@@ -338,28 +338,28 @@ int draw_map_tiles_convolutor(int d00, int d10, int d20, int d01, int d11, int d
 		d01 == 1 && d11 == 0 && d21 == 0 &&
 		d02 == 1 && d12 == 0 && d22 == 0 )
 	{
-        return 6;
+        return 0;
 	}
 
 	else if( d00 == 1 && d10 == 0 && d20 == 0 &&
 			 d01 == 1 && d11 == 0 && d21 == 0 &&
 			 d02 == 1 && d12 == 1 && d22 == 1 )
 	{
-        return 12;
+        return 6;
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 1 &&
 			 d01 == 0 && d11 == 0 && d21 == 1 &&
 			 d02 == 1 && d12 == 1 && d22 == 1 )
 	{
-        return 13;
+        return 7;
 	}
 
 	else if( d00 == 1 && d10 == 1 && d20 == 1 &&
 			 d01 == 0 && d11 == 0 && d21 == 1 &&
 			 d02 == 0 && d12 == 0 && d22 == 1 )
 	{
-        return 7;
+        return 1;
 	}
 
 
@@ -482,37 +482,37 @@ int draw_map_tiles_convolutor(int d00, int d10, int d20, int d01, int d11, int d
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 24;
+		return 18;
 	}
 
 	else if( d00 == 1 && d10 == 0 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 0 && d22 == 0 )
 	{
-		return 25;
+		return 19;
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 1 && d12 == 0 && d22 == 0 )
 	{
-		return 19;
+		return 13;
 	}
 
 	else if( d00 == 0 && d10 == 0 && d20 == 0 &&
 			 d01 == 0 && d11 == 0 && d21 == 0 &&
 			 d02 == 0 && d12 == 0 && d22 == 1 )
 	{
-		return 18;
+		return 12;
 	}
 
 	else if( d11 == 0 )
 	{
-		return 0;
+		return 88;
 	}
 	else
 	{
-		return 1;
+		return 89;
 	}
 }
 

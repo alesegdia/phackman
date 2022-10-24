@@ -34,10 +34,10 @@ Assets::Assets()
 	lsBullet = phackmanAnimData->anims["PhackBullet"];
     
     industryNode.reset(new aether::graphics::Animation(STATIC_DURATION));
-    industryNode->AddFrame(*maptilesSheet->GetFrame(30));
+    industryNode->AddFrame(*maptilesSheet->GetFrame(72));
 
     powerNode.reset(new aether::graphics::Animation(STATIC_DURATION));
-    powerNode->AddFrame(*maptilesSheet->GetFrame(31));
+    powerNode->AddFrame(*maptilesSheet->GetFrame(73));
 
     turretStand.reset(new aether::graphics::Animation(STATIC_DURATION));
     turretStand->AddFrame(*buildingsSheet->GetFrame(0));
@@ -70,7 +70,7 @@ Assets::Assets()
     spawnerStand->AddFrame(*enemySheet->GetFrame(2));
     spawnerStand->AddFrame(*enemySheet->GetFrame(2));
 
-    guiFont.Load("assets/bitcell.ttf", 16);
+    guiFont = assetsManager.GetAsset<aether::graphics::Font>("assets/bitcell_big.font");
 }
 
 Assets::~Assets()
@@ -78,7 +78,7 @@ Assets::~Assets()
     enemyBitmap.Destroy();
     maptilesBitmap.Destroy();
     buildingsBitmap.Destroy();
-    guiFont.Destroy();
+    guiFont->Destroy();
 }
 
 void Assets::Initialize()
