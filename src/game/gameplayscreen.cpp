@@ -74,7 +74,7 @@ void GameplayScreen::Render()
     auto new_pos = gw->playerPos();
 
     m_cam->SetScale(m_scale, m_scale);
-    m_scroll.Focus(new_pos.GetX(), new_pos.GetY());
+    m_scroll.Focus(new_pos.GetX() + 16, new_pos.GetY() + 16);
 
     aether::graphics::clear(0,0,0);
     gw->Render();
