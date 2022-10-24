@@ -6,22 +6,20 @@
 #include "assets.h"
 #include "../constants.h"
 #include <filesystem>
-#include "aether/resources/AssetsManager.h"
 
 //#include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen()
-    : m_cam(new aether::graphics::Camera()), m_guiCam(new aether::graphics::Camera())
+    : m_cam(new aether::graphics::Camera({Constants::WindowWidth, Constants::WindowHeight})), m_guiCam(new aether::graphics::Camera())
 {
 
 }
 
 int GameplayScreen::Load()
 {
-    aether::resources::AssetsManager assetsManager;
-    assetsManager.LoadFolder("assets/");
     gw = std::make_shared<GameWorld>();
     gw->step(0);
+    m_scroll.Setup(m_cam, aether::math::Rectf(0, 0, gw->mapSize().GetX() * 16, gw->mapSize().GetY() * 16));
     return 0;
 }
 
@@ -75,20 +73,8 @@ void GameplayScreen::Render()
 {
     auto new_pos = gw->playerPos();
 
-    float xmin = Constants::WindowWidth/4.f;
-    float xmax = gw->mapSize().GetX() * 16 - Constants::WindowWidth/4.f;
-    new_pos.SetX(std::max(std::min(new_pos.GetX(), xmax), xmin));
-
-    float ymin = Constants::WindowHeight/4.f;
-    float ymax = gw->mapSize().GetY() * 16 - Constants::WindowHeight/4.f;
-    new_pos.SetY(std::max(std::min(new_pos.GetY(), ymax), ymin));
-
-    new_pos.SetX(-floor(new_pos.GetX()) * m_scale + Constants::WindowWidth/2);
-    new_pos.SetY(-floor(new_pos.GetY()) * m_scale + Constants::WindowHeight/2);
-
-	m_cam->SetPosition(new_pos.GetX(), new_pos.GetY());
     m_cam->SetScale(m_scale, m_scale);
-    m_cam->Bind();
+    m_scroll.Focus(new_pos.GetX(), new_pos.GetY());
 
     aether::graphics::clear(0,0,0);
     gw->Render();

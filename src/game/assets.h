@@ -3,6 +3,9 @@
 #include <memory>
 #include <aether/aether.h>
 
+#include "aether/resources/AssetsManager.h"
+
+
 class Assets
 {
 public:
@@ -15,12 +18,10 @@ public:
 	Assets();
 	~Assets();
 
-    aether::graphics::Texture characterBitmap;
     aether::graphics::Texture enemyBitmap;
     aether::graphics::Texture maptilesBitmap;
     aether::graphics::Texture buildingsBitmap;
 
-    std::shared_ptr<aether::graphics::Spritesheet> characterSheet;
     std::shared_ptr<aether::graphics::Spritesheet> enemySheet;
     std::shared_ptr<aether::graphics::Spritesheet> buildingsSheet;
     std::shared_ptr<aether::graphics::Spritesheet> maptilesSheet;
@@ -44,6 +45,9 @@ public:
     std::shared_ptr<aether::graphics::Animation> turretStand;
 
     aether::graphics::Font guiFont;
+
+    aether::resources::AssetsManager assetsManager;
+
 
 
 };

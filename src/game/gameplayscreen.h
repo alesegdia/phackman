@@ -7,6 +7,8 @@
 
 #include <allegro5/allegro_ttf.h>
 
+#include "aether/graphics/topdownscroller.h"
+
 
 class GameplayScreen : public aether::core::IScreen {
 public:
@@ -31,5 +33,7 @@ private:
     bool m_pause = true;
 
     bool m_requestCloseApp = false;
+
+	aether::graphics::TopDownMapScroller m_scroll;
 
 };
