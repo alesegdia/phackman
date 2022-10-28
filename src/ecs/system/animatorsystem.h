@@ -41,6 +41,18 @@ public:
             newAnim = antr_comp.desinfect_stand_animation;
         }
 
+        if(agtinput_comp.carryCrucible)
+        {
+			if (agtinput_comp.inputRequested)
+			{
+				newAnim = antr_comp.carry_crucible_walk_animation;
+			}
+            else
+            {
+				newAnim = antr_comp.carry_crucible_stand_animation;
+            }
+        }
+
         if( newAnim != nullptr && newAnim != anim_comp.animation )
         {
             anim_comp.animation = newAnim;

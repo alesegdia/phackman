@@ -142,8 +142,8 @@ private:
         PathNode::SharedPtr n = nullptr;
         while( tile != 1 && n == nullptr )
         {
-            tile = m_mapScene.getSolidness(p.GetX(), p.GetY());
-            n = m_mapScene.navmap()->getNodeAt(p.GetX() * 32, p.GetY() * 32);
+            tile = m_mapScene.GetSolidness(p.GetX(), p.GetY());
+            n = m_mapScene.GetNavigationMap()->getNodeAt(p.GetX() * 32, p.GetY() * 32);
             advanceFromFacing(p, direction);
         }
         return n;

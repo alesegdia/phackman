@@ -57,7 +57,7 @@ float PathNode::cost(Facing direction) {
 	return m_costs[direction];
 }
 
-const std::vector<PathNode::SharedPtr> &NavigationMap::nodes()
+const std::vector<PathNode::SharedPtr> &NavigationMap::GetNodes()
 {
 	return m_collector.nodes;
 }

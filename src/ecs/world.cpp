@@ -19,8 +19,8 @@ ECSWorld::ECSWorld(MapScene& map_scene)
     m_dieOnStopSystem = m_world.CreateSystem<DieOnStopSystem>();
     m_wallPlacementSystem = m_world.CreateSystem<WallPlacementSystem>(m_world, map_scene, m_factory);
     m_computeTileSystem = m_world.CreateSystem<ComputeTileSystem>();
-    m_placeEnemyInMapSystem = m_world.CreateSystem<PlaceEnemyInMapSystem>(map_scene.enemyVisibilityMap());
-    m_mapAwarenessSystem = m_world.CreateSystem<MapAwarenessSystem>(map_scene.enemyVisibilityMap());
+    m_placeEnemyInMapSystem = m_world.CreateSystem<PlaceEnemyInMapSystem>(map_scene.GetEnemyVisibilityMap());
+    m_mapAwarenessSystem = m_world.CreateSystem<MapAwarenessSystem>(map_scene.GetEnemyVisibilityMap());
     m_shootAtSightSystem = m_world.CreateSystem<ShootAtSightSystem>();
     m_hadronCollisionSystem = m_world.CreateSystem<HadronCollisionSystem>();
     m_dieSystem = m_world.CreateSystem<DieSystem>();

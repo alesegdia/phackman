@@ -14,7 +14,7 @@ public:
 
     secs::Entity makePlayer(float x, float y, OnDeathActionComponent::Action action);
 
-    secs::Entity makeEnemy( float x, float y );
+    secs::Entity makeEnemy( float x, float y, int level );
 
     secs::Entity makeSpawner( float x, float y );
 
@@ -24,15 +24,17 @@ public:
 
     secs::Entity makeLSBullet( float x, float y, Facing direction );
 
-    secs::Entity makeTurretBullet( float x, float y, Facing direction );
+    secs::Entity MakeTurretBullet( float x, float y, Facing direction );
 
-    secs::Entity makeBuildingOnWall( int tile_x, int tile_y, int building_type, Facing facing );
+    secs::Entity MakeBuildingOnWall( int tile_x, int tile_y, int building_type, Facing facing );
 
-    secs::Entity makeBuildingTurret( const secs::Entity& e );
+    secs::Entity MakeBuildingTurret( const secs::Entity& e );
 
-    secs::Entity makeCountdownText( float x, float y, const char* text );
+    secs::Entity MakeCountdownText( float x, float y, const char* text );
 
-    secs::Entity makeCrucible( float x, float y );
+    secs::Entity MakeCrucible( float x, float y );
+
+    secs::Entity MakeDoor( float x, float y );
 
 private:
 
@@ -46,5 +48,6 @@ private:
 	}
 
 	secs::Engine& m_world;
+    secs::Entity m_playerEntity;
 
 };

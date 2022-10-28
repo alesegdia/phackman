@@ -20,7 +20,7 @@ public:
         SECS_UNUSED(delta);
         SECS_UNUSED(e);
         powerconsumercomponent.powered =
-                m_mapScene.isReinforced(
+                m_mapScene.IsReinforced(
                     tilecomponent.current.GetX(),
                     tilecomponent.current.GetY());
 	}

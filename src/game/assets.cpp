@@ -13,8 +13,7 @@ Assets::Assets()
 {
     assetsManager.LoadFolder("assets/");
 
-    maptilesBitmap.Load("assets/maptiles.png");
-    maptilesSheet.reset(new aether::graphics::Spritesheet(6, 15, maptilesBitmap));
+    maptilesSheet = assetsManager.GetAsset<aether::graphics::Spritesheet>("maptiles.sheet");
 
     enemyBitmap.Load("assets/enemysheet.png");
     enemySheet.reset(new aether::graphics::Spritesheet(4, 2, enemyBitmap));
@@ -22,17 +21,6 @@ Assets::Assets()
     buildingsBitmap.Load("assets/turrets.png");
     buildingsSheet.reset(new aether::graphics::Spritesheet(4, 2, buildingsBitmap));
 
-    // ANIMATIONS
-    auto phackmanAnimData = assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("assets/anim-phackman.json");
-    phackmanWalk = phackmanAnimData->anims["PhackWalk"];
-    phackmanStand = phackmanAnimData->anims["PhackStand"];
-    phackmanAttack = phackmanAnimData->anims["PhackShoot"];
-    phackmanDesinfectWalk = phackmanAnimData->anims["PhackWalkInfect"];
-    phackmanDesinfectStand = phackmanAnimData->anims["PhackStandInfect"];
-
-    slimeWalk = phackmanAnimData->anims["SlimeWalk"];
-	lsBullet = phackmanAnimData->anims["PhackBullet"];
-    
     industryNode.reset(new aether::graphics::Animation(STATIC_DURATION));
     industryNode->AddFrame(*maptilesSheet->GetFrame(72));
 
@@ -45,38 +33,14 @@ Assets::Assets()
     turretBullet.reset(new aether::graphics::Animation(STATIC_DURATION));
     turretBullet->AddFrame(*buildingsSheet->GetFrame(1));
 
-    spawnerStand.reset(new aether::graphics::Animation(0.25e6));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(0));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(0));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(0));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(0));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(1));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(1));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(1));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(1));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(3));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(3));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(3));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(3));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(2));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(2));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(2));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(2));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(4));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(5));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(4));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(2));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(2));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(2));
-    spawnerStand->AddFrame(*enemySheet->GetFrame(2));
+    spawnerStand = assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("spawner.json")->anims["SpawnerStand"];
 
-    guiFont = assetsManager.GetAsset<aether::graphics::Font>("assets/bitcell_big.font");
+    guiFont = assetsManager.GetAsset<aether::graphics::Font>("bitcell_big.font");
 }
 
 Assets::~Assets()
 {
     enemyBitmap.Destroy();
-    maptilesBitmap.Destroy();
     buildingsBitmap.Destroy();
     guiFont->Destroy();
 }

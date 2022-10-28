@@ -47,11 +47,11 @@ public:
                 (l && m_left) ||
                 (r && m_right) )
             {
-                if( true == m_mapScene.isReinforced(m_playerTile.GetX(), m_playerTile.GetY()) )
+                if( true == m_mapScene.IsReinforced(m_playerTile.GetX(), m_playerTile.GetY()) )
                 {
                     if( true == m_mapScene.placementMap().isUsed( m_playerTile.GetX(), m_playerTile.GetY(), f ) )
                     {
-                        m_factory.makeCountdownText( tc.position.GetX(), tc.position.GetY(), "no space" );
+                        m_factory.MakeCountdownText( tc.position.GetX(), tc.position.GetY(), "no space" );
                     }
                     else
                     {
@@ -60,12 +60,12 @@ public:
                         if( rsc.industryCells >= COST )
                         {
                             rsc.industryCells -= COST;
-                            m_factory.makeBuildingOnWall(m_playerTile.GetX(), m_playerTile.GetY(), 0, f);
-                            m_factory.makeCountdownText( tc.position.GetX(), tc.position.GetY(), "turret built" );
+                            m_factory.MakeBuildingOnWall(m_playerTile.GetX(), m_playerTile.GetY(), 0, f);
+                            m_factory.MakeCountdownText( tc.position.GetX(), tc.position.GetY(), "turret built" );
                         }
                         else
                         {
-                            m_factory.makeCountdownText( tc.position.GetX(), tc.position.GetY(), "not enough nodes" );
+                            m_factory.MakeCountdownText( tc.position.GetX(), tc.position.GetY(), "not enough nodes" );
                         }
                     }
                 }
@@ -110,10 +110,10 @@ private:
         printf("TILE: %d, %d\n", m_playerTile.GetX(), m_playerTile.GetY()); fflush(0);
         printf("POS: %f, %f\n", m_playerPos.GetX(), m_playerPos.GetY()); fflush(0);
 
-        m_up = m_mapScene.getSolidness( m_playerTile.GetX(), m_playerTile.GetY() - 1 );
-        m_down = m_mapScene.getSolidness( m_playerTile.GetX(), m_playerTile.GetY() + 1 );
-        m_left = m_mapScene.getSolidness( m_playerTile.GetX() - 1, m_playerTile.GetY() );
-        m_right = m_mapScene.getSolidness( m_playerTile.GetX() + 1, m_playerTile.GetY() );
+        m_up = m_mapScene.GetSolidness( m_playerTile.GetX(), m_playerTile.GetY() - 1 );
+        m_down = m_mapScene.GetSolidness( m_playerTile.GetX(), m_playerTile.GetY() + 1 );
+        m_left = m_mapScene.GetSolidness( m_playerTile.GetX() - 1, m_playerTile.GetY() );
+        m_right = m_mapScene.GetSolidness( m_playerTile.GetX() + 1, m_playerTile.GetY() );
         //printf("u: %d, d: %d, l: %d, r: %d\n", u, d, l, r); fflush(0);
     }
 

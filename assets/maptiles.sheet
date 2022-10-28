@@ -1,4 +1,4 @@
 [default]
-rows = 4
+rows = 15
 cols = 6
-asset = "maptiles.png"
+asset = maptiles.png

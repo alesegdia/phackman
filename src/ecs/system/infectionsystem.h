@@ -21,13 +21,14 @@ public:
     void Process( double delta, const secs::Entity &e ) override
     {
         auto& infect = GetComponent<InfectComponent>(e);
+
         auto& tlc = GetComponent<TileComponent>(e);
         SECS_UNUSED(e);
         int x, y;
         x = tlc.current.GetX();
         y = tlc.current.GetY();
 
-        if( false == m_mapScene.isReinforced(x, y) )
+        if( false == m_mapScene.IsReinforced(x, y) )
         {
             if( tlc.previous == tlc.current )
             {
@@ -43,16 +44,16 @@ public:
                     auto& tc = GetComponent<TransformComponent>(e);
                     if( true == infect.desinfect )
                     {
-                        bool prev = m_mapScene.isInfected( x, y );
-                        m_mapScene.desinfect( x, y );
+                        bool prev = m_mapScene.IsInfected( x, y );
+                        m_mapScene.Desinfect( x, y );
                         if( prev )
                         {
-                            m_factory.makeCountdownText(tc.position.GetX(), tc.position.GetY(), "desinfected");
+                            m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "desinfected");
                         }
                     }
                     else
                     {
-                        m_mapScene.infect( x, y );
+                        m_mapScene.Infect( x, y );
                     }
                 }
             }
@@ -76,11 +77,11 @@ public:
         x = tlc.current.GetX();
         y = tlc.current.GetY();
 
-        if( false == m_mapScene.isReinforced(x, y) )
+        if( false == m_mapScene.IsReinforced(x, y) )
         {
             bool must_show =
-                    ( infect.desinfect &&  m_mapScene.isInfected(x, y))
-                 || (!infect.desinfect && !m_mapScene.isInfected(x, y));
+                    ( infect.desinfect &&  m_mapScene.IsInfected(x, y))
+                 || (!infect.desinfect && !m_mapScene.IsInfected(x, y));
 
             if( infect.desinfectTimer > 0 && must_show)
             {

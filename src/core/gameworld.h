@@ -20,7 +20,12 @@ public:
 
     aether::math::Vec2f mapSize()
     {
-        return m_mapScene.renderMapSize();
+        return m_mapScene.GetRenderMapSize();
+    }
+
+    bool DidPlayerEscape()
+    {
+	    return m_ecsWorld.DidPlayerEscape();
     }
 
 private:

@@ -123,6 +123,12 @@ ShapeStorage::ShapeStorage()
 std::vector<std::shared_ptr<aether::math::Matrix2Di> > ShapeStorage::makeSample()
 {
     std::vector<aether::math::Matrix2Di::SharedPtr> shapes;
+
+	shapes.push_back(m_L1);
+	shapes.push_back(m_L2);
+	shapes.push_back(m_T);
+
+    /*
     shapes.push_back(m_L1);
     shapes.push_back(m_L1);
 	shapes.push_back(m_L1);
@@ -136,6 +142,7 @@ std::vector<std::shared_ptr<aether::math::Matrix2Di> > ShapeStorage::makeSample(
 	shapes.push_back(m_T);
 	shapes.push_back(m_T);
     shapes.push_back(m_T);
+    */
     return shapes;
 }
 

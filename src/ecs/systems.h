@@ -5,6 +5,7 @@
 #include "system/animationsystem.h"
 #include "system/animatorsystem.h"
 #include "system/computetilesystem.h"
+#include "system/cruciblesystem.h"
 #include "system/deathcountdownsystem.h"
 #include "system/dieonstopsystem.h"
 #include "system/diesystem.h"

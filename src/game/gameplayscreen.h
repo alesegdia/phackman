@@ -26,7 +26,7 @@ private:
     aether::graphics::Camera::SharedPtr m_cam;
     aether::graphics::Camera::SharedPtr m_guiCam;
 
-    std::shared_ptr<GameWorld> gw;
+    std::shared_ptr<GameWorld> m_gameWorld;
 
     float m_scale = 2.f;
 

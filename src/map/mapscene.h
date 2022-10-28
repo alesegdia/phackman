@@ -7,205 +7,53 @@
 #include "../ai/pfmap.h"
 #include "../ai/blackboard.h"
 #include "../game/assets.h"
+#include "secs/entity.h"
 
 class MapScene
 {
 public:
-    MapScene()
+    MapScene(int level);
+
+    void GenerateMap(int level);
+
+    void Infect(int x, int y);
+
+    void Desinfect(int x, int y);
+
+    void UndoReinforce(int x, int y);
+
+    void Reinforce(int x, int y);
+
+    std::shared_ptr<NavigationMap> GetNavigationMap();
+
+    aether::math::Matrix2Di::SharedPtr GetNodesMap();
+
+    aether::math::Matrix2Di::SharedPtr GetEnemyVisibilityMap();
+
+    void Render();
+
+    int GetSolidness(int x, int y);
+
+    bool IsInfected(int x, int y);
+
+    bool IsReinforced(int x, int y);
+
+    void ToggleReinforced(int x, int y);
+
+    aether::math::Vec2f GetRenderMapSize();
+
+    void GetDebugRender();
+
+    PlacementMap& placementMap();
+
+    void SetCrucibleEntity(secs::Entity e)
     {
-        m_map = LayoutBuilder().generate(ShapeStorage().makeSample());
-
-        m_infectionMap = scale_down(*m_map, 2);
-
-        m_solidnessMap = scale_down(*m_map, 2);
-
-        m_placementMap.reset( m_solidnessMap->GetColsNumber(), m_solidnessMap->GetRowsNumber() );
-
-        printf("SOLIDITY MAP\n");
-        m_solidnessMap->DebugPrint();
-        printf("===========\n");
-
-        m_enemyVisibilityMap = scale_down(*m_map, 2);
-        printf("enemy visibility map\n");
-        m_enemyVisibilityMap->DebugPrint();
-        printf("===========\n");
-        fflush(0);
-
-        m_nodesMap = scale_down(*m_map, 2);
-        m_nodesMap = convolute3x3(*m_nodesMap, place_collectible_nodes);
-        m_nodesMap->DebugPrint();
-
-        m_infectionMap->DebugPrint();
-
-        m_renderMap = convolute3x3(*m_map, draw_map_tiles_convolutor);
-        m_renderMap = fill_borders(*m_map, 89);
-        m_renderMap->DebugPrint();
-
-        m_navmap.reset(new NavigationMap(m_map));
-
-        Blackboard::instance.navigationMap = m_navmap;
-
+	    m_crucibleEntity = e;
     }
 
-    void infect(int x, int y)
+    secs::Entity GetCrucibleEntity()
     {
-        m_infectionMap->SetCell(x, y, 3);
-    }
-
-    void desinfect(int x, int y)
-    {
-        m_infectionMap->SetCell(x, y, 0);
-    }
-
-    void undoReinforce(int x, int y)
-    {
-        desinfect(x, y);
-    }
-
-    void reinforce(int x, int y)
-    {
-        m_infectionMap->SetCell(x, y, 4);
-    }
-
-    std::shared_ptr<NavigationMap> navmap()
-    {
-        return m_navmap;
-    }
-
-    aether::math::Matrix2Di::SharedPtr nodesMap()
-    {
-        return m_nodesMap;
-    }
-
-    aether::math::Matrix2Di::SharedPtr enemyVisibilityMap()
-    {
-        return m_enemyVisibilityMap;
-    }
-
-    void Render()
-    {
-        al_hold_bitmap_drawing(true);
-        for( int r = 0; r < m_renderMap->GetRowsNumber(); r++ )
-        {
-            for( int c = 0; c < m_renderMap->GetColsNumber(); c++ )
-            {
-                int x1, y1;
-                x1 = c * 16; y1 = r * 16;
-
-                int frame = m_renderMap->GetCell(c, r);
-
-                int ncx, ncy;
-                ncx = c / 2;
-                ncy = r / 2;
-
-                if( isInfected(ncx, ncy) )
-                {
-                    frame += 24;
-                }
-
-                if( isReinforced(ncx, ncy) )
-                {
-                    frame += 48;
-                }
-
-                auto bm = Assets::instance->maptilesSheet->GetFrame(frame);
-                bm->Draw(x1, y1);
-            }
-        }
-        al_hold_bitmap_drawing(false);
-    }
-
-    int getSolidness(int x, int y)
-    {
-        return m_solidnessMap->GetCell(x, y);
-    }
-
-    bool isInfected(int x, int y)
-    {
-        return m_infectionMap->GetCell(x, y) == 3;
-    }
-
-    bool isReinforced(int x, int y)
-    {
-        return m_infectionMap->GetCell(x, y) == 4;
-    }
-
-    void toggleReinforced(int x, int y)
-    {
-        if( false == isInfected(x, y) )
-        {
-            if( isReinforced(x, y) )
-            {
-                desinfect(x, y);
-            }
-            else
-            {
-                reinforce(x, y);
-            }
-        }
-        if( isReinforced(x, y) && ! isInfected(x, y) )
-        {
-
-        }
-    }
-
-    aether::math::Vec2f renderMapSize()
-    {
-        return aether::math::Vec2f(m_renderMap->GetColsNumber(), m_renderMap->GetRowsNumber());
-    }
-
-    void debugRender()
-    {
-        for( int r = 0; r < m_map->GetRowsNumber(); r++ )
-        {
-            for( int c = 0; c < m_map->GetColsNumber(); c++ )
-            {
-                int x1, y1, x2, y2;
-                x1 = c * 16; y1 = r * 16;
-                x2 = (c+1) * 16; y2 = (r+1) * 16;
-
-                if( m_map->GetCell(c, r) == 1 )
-                {
-                    al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 255, 0));
-                }
-                else
-                {
-                    al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 255));
-                }
-            }
-        }
-
-        for( PathNode::SharedPtr node : m_navmap->nodes() )
-        {
-            float cx, cy;
-            cx = (node->x()+1) * 16;
-            cy = (node->y()+1) * 16;
-
-            for( PathNode::SharedPtr neighboor : node->neighboors() )
-            {
-                int ncx, ncy;
-                ncx = (neighboor->x()+1) * 16;
-                ncy = (neighboor->y()+1) * 16;
-
-                al_draw_line(cx, cy, ncx, ncy, al_map_rgba(0, 255, 255, 2), 1);
-            }
-
-            al_draw_filled_circle(cx, cy, 3, al_map_rgb(255, 0, 0));
-        }
-
-        for( PathNode::SharedPtr node : m_navmap->nodes() )
-        {
-            float x, y;
-            x = (node->x()+1) * 16;
-            y = (node->y()+1) * 16;
-            al_draw_ellipse( x, y, 4, 4, al_map_rgb(255, 255, 0), 1);
-        }
-
-    }
-
-    PlacementMap& placementMap()
-    {
-        return m_placementMap;
+	    return m_crucibleEntity;
     }
 
 
@@ -219,6 +67,8 @@ private:
     aether::math::Matrix2Di::SharedPtr m_nodesMap;
     aether::math::Matrix2Di::SharedPtr m_solidnessMap;
     aether::math::Matrix2Di::SharedPtr m_enemyVisibilityMap;
+
+    secs::Entity m_crucibleEntity;
 
 };
 

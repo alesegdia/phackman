@@ -18,6 +18,11 @@ public:
 
     secs::Engine& engine();
 
+    bool DidPlayerEscape()
+    {
+	    return m_hadronCollisionSystem->DidPlayerEscape();
+    }
+
 private:
 
     secs::Engine m_world;

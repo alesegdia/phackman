@@ -5,6 +5,7 @@
 #include <aether/platform.h>
 
 #include "constants.h"
+#include "game/mainmenuscreen.h"
 
 std::shared_ptr<aether::core::Application> aether_create_app()
 {
@@ -14,5 +15,5 @@ std::shared_ptr<aether::core::Application> aether_create_app()
 std::shared_ptr<aether::core::IScreen> aether_boot_screen()
 {
 	Assets::Initialize();
-	return std::make_shared<GameplayScreen>();
+	return std::make_shared<MainMenuScreen>();
 }

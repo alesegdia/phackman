@@ -6,6 +6,8 @@
 
 #include <allegro5/allegro_primitives.h>
 
+class GameWorld;
+
 class HadronCollisionSystem
         : public secs::TypedEntitySystem<HadronCollisionComponent, TransformComponent>,
           public hadron::ICollisionListener
@@ -69,7 +71,6 @@ public:
         delete eptr;
         delete hcc.body;
         hcc.body = nullptr;
-        printf("cleanup\n"); fflush(0);
     }
 
     void OnCollisionEnter(hadron::Body &b1, hadron::Body &b2, hadron::CollisionResult result) override
@@ -83,7 +84,6 @@ public:
     {
         SECS_UNUSED(b1);
         SECS_UNUSED(b2);
-        printf("meh\n"); fflush(0);
     }
 
     void HandleCollision( const secs::Entity& e1, const secs::Entity& e2 )
@@ -112,6 +112,15 @@ public:
             auto& hc = GetComponent<HealthComponent>(out1);
             hc.currentHealth = 0;
         }
+        else if(entitiesHaveComponents<PlayerInputComponent, CrucibleComponent>(e1, e2, &out1, &out2))
+        {
+            m_playerEscaped = GetComponent<AgentInputComponent>(out1).carryCrucible;
+        }
+    }
+
+    bool DidPlayerEscape()
+    {
+	    return m_playerEscaped;
     }
 
 private:
@@ -141,5 +150,7 @@ private:
     hadron::collision::World m_physicsWorld;
 
     bool enabled = false;
+
+    bool m_playerEscaped = false;
 
 };

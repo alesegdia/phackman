@@ -2,10 +2,27 @@
 #include <algorithm>
 
 GameWorld::GameWorld()
-    : m_ecsWorld(m_mapScene)
+	: m_mapScene(0),
+      m_ecsWorld(m_mapScene)
 {
     rng.seed(time(NULL) + 0xFACEFEED);
-    auto start_node = m_mapScene.navmap()->nodes()[0];
+    auto start_node = m_mapScene.GetNavigationMap()->GetNodes()[0];
+
+    float max_dist = 0;
+    std::shared_ptr<PathNode> doorNode = nullptr;
+    auto startNodePos = start_node->GetPosition();
+    for(auto node : m_mapScene.GetNavigationMap()->GetNodes())
+    {
+	    auto currentNodePos = node->GetPosition();
+        auto dist = aether::math::Vec2i::EuclideanDistance(startNodePos, currentNodePos);
+        if(dist > max_dist)
+        {
+	        max_dist = dist;
+            doorNode = node;
+        }
+    }
+
+    m_ecsWorld.factory().MakeDoor(doorNode->x() * 16, doorNode->y() * 16);
 
     m_playerEntity = m_ecsWorld.factory().makePlayer(
                 (start_node->x()) * 16, (start_node->y()) * 16,
@@ -13,14 +30,19 @@ GameWorld::GameWorld()
         gameOver = true;
     });
 
-    m_ecsWorld.factory().makeCrucible((start_node->x()) * 16, (start_node->y()) * 16);
+    auto crucibleEntity = m_ecsWorld.factory().MakeCrucible((start_node->x()) * 16, (start_node->y()) * 16);
+    m_mapScene.SetCrucibleEntity(crucibleEntity);
 
-    auto nm = m_mapScene.nodesMap();
+
+
+
+
+    auto nm = m_mapScene.GetNodesMap();
     for( int i = 0; i < nm->GetColsNumber(); i++ )
     {
-        for( int j = 0; j < nm->GetRowsNumber(); j++ )
+        for( int j = 0; j < nm->GetRowsNumberInt(); j++ )
         {
-            if( i != 0 && j != 0 && i != nm->GetColsNumber() -1 && j != nm->GetRowsNumber() - 1)
+            if( i != 0 && j != 0 && i != nm->GetColsNumberInt() -1 && j != nm->GetRowsNumberInt() - 1)
             {
                 auto cell = nm->GetCell(i, j);
                 int cx, cy;
@@ -38,13 +60,59 @@ GameWorld::GameWorld()
         }
     }
 
-    auto nodes = m_mapScene.navmap()->nodes();
+
+
+	std::shared_ptr<PhackmanMapModel> model = std::make_shared<PhackmanMapModel>(m_mapScene.GetNavigationMap());
+	AStar<PhackmanMapModel> astar(model);
+	std::shared_ptr<PhackmanMapModel::Node> nn1 = std::make_shared<PhackmanMapModel::Node>(start_node);
+	std::shared_ptr<PhackmanMapModel::Node> nn2 = std::make_shared<PhackmanMapModel::Node>(doorNode);
+	nn1->G(0);
+	nn1->H(model->hCost(nn1, nn2));
+	nn1->computeF();
+
+	astar.restartSearch(nn1, nn2);
+	auto retvalue = astar.step();
+	while (retvalue == AStarSearchStatus::Running)
+	{
+		retvalue = astar.step();
+	}
+	assert(retvalue == AStarSearchStatus::Finished);
+	auto solution = astar.solution();
+
+
+
+
+    auto nodes = m_mapScene.GetNavigationMap()->GetNodes();
     std::shuffle(nodes.begin(), nodes.end(), rng);
 
-    for( int i = 0; i < nodes.size() / 10.0f; i++ )
+    auto numSpawners = 0;
+    int i = 0;
+
+    auto spawnersToSpawn = nodes.size() / 7.0f;
+    while(numSpawners < spawnersToSpawn)
     {
-        m_ecsWorld.factory().makeSpawner(nodes[i]->x() * 16, nodes[i]->y() * 16);
+        if(nodes[i]->GetPosition() != doorNode->GetPosition() &&
+			nodes[i]->GetPosition() != start_node->GetPosition())
+        {
+            bool inMiddleOfSolution = false;
+            for(auto soln : solution)
+            {
+                inMiddleOfSolution = soln->node->GetPosition() == nodes[i]->GetPosition();
+                if(inMiddleOfSolution) break;
+            }
+            if(!inMiddleOfSolution)
+            {
+				m_ecsWorld.factory().makeSpawner(nodes[i]->x() * 16, nodes[i]->y() * 16);
+                numSpawners++;
+            }
+        }
+		i++;
+        if(i == nodes.size())
+        {
+	        break;
+        }
     }
+
 }
 
 void GameWorld::step(double delta)

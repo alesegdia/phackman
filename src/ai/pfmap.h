@@ -8,6 +8,8 @@
 #include "../core/facing.h"
 #include "../map/maputil.h"
 
+#include "astar.h"
+
 /**
  * @brief A node representing a possible change of direction in the path.
  * One node positioned at x, y covers 4 tiles, this is, from x,y to x+1,y+1.
@@ -23,6 +25,10 @@ public:
 	PathNode( int x, int y );
 	int x();
 	int y();
+	aether::math::Vec2i GetPosition()
+	{
+		return aether::math::Vec2i(m_x, m_y);
+	}
     const std::vector<PathNode::SharedPtr>& neighboors();
     const std::vector<Facing>& facings();
 
@@ -74,7 +80,7 @@ public:
 
 	PathNode::SharedPtr getNodeAt( float x, float y );
 	bool canMove( float x, float y, Facing dir );
-	const std::vector<PathNode::SharedPtr>& nodes();
+	const std::vector<PathNode::SharedPtr>& GetNodes();
     aether::math::Matrix2D<PathNode::SharedPtr>::SharedPtr nodesMatrix()
     {
         return m_collector.navigationMap;
@@ -86,5 +92,77 @@ private:
 
 	void connectNodes();
 	void searchNeighboor( PathNode::SharedPtr node, Facing direction );
+
+};
+
+
+
+
+class PhackmanMapModel
+{
+public:
+	typedef std::shared_ptr<PhackmanMapModel> Ptr;
+	class Node : public AStarNode<Node>
+	{
+	public:
+		typedef std::shared_ptr<Node> Ptr;
+		Node(PathNode::SharedPtr pnode)
+		{
+			node = pnode;	
+		}
+
+		Ptr Parent() const
+		{
+			return m_parent;
+		}
+		void Parent(Ptr node)
+		{
+			m_parent = node;
+		}
+
+		PathNode::SharedPtr node;
+		Ptr m_parent;
+
+	};
+	typedef std::shared_ptr<PhackmanMapModel::Node> NodePtr;
+
+	PhackmanMapModel(std::shared_ptr<NavigationMap> navmap)
+		: m_navMap(navmap)
+	{
+		
+	}
+
+	std::vector<std::shared_ptr<Node>> getNeighboors(Node::Ptr src, Node::Ptr target)
+	{
+		std::vector<std::shared_ptr<Node>> nodes;
+		
+		for(auto n : src->node->neighboors())
+		{
+			std::shared_ptr<Node> no = std::make_shared<Node>(n);
+			nodes.push_back(no);
+		}
+
+		return nodes;
+	}
+
+	float hCost(std::shared_ptr<Node> n1, std::shared_ptr<Node> n2)
+	{
+		return aether::math::Vec2i::ManhattanDistance(
+			n1->node->GetPosition(), n2->node->GetPosition());
+	}
+
+	float gCost(std::shared_ptr<Node> n1, std::shared_ptr<Node> n2)
+	{
+		return aether::math::Vec2i::ManhattanDistance(
+			n1->node->GetPosition(), n2->node->GetPosition());
+	}
+
+	bool equal(std::shared_ptr<Node> n1, std::shared_ptr<Node> n2)
+	{
+		return n1->node->GetPosition() == n2->node->GetPosition();
+	}
+
+private:
+	std::shared_ptr<NavigationMap> m_navMap;
 
 };

@@ -9,6 +9,7 @@ EntityFactory::EntityFactory(secs::Engine &world)
 secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent::Action action)
 {
 	secs::Entity player = m_world.GetEntityProcessor().AddEntity();
+    m_playerEntity = player;
 
 	auto& transform_comp = AddComponent<TransformComponent>(player);
 	transform_comp.position.Set( x, y );
@@ -16,7 +17,7 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
 	AddComponent<RenderComponent>(player);
 
 	auto& animation_comp = AddComponent<AnimationComponent>(player);
-	animation_comp.animation = Assets::instance->phackmanWalk;
+	animation_comp.animation = Assets::instance->assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("anim-phackman.json")->anims["PhackWalk"];
 
     auto& hc = AddComponent<HealthComponent>(player);
     hc.maxHealth = 10;
@@ -26,8 +27,11 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
     AddComponent<PlayerInputComponent>(player);
 
     auto& aic = AddComponent<AgentInputComponent>(player);
-    aic.lower_speed = 0.00004f;
-    aic.normal_speed = 0.00008f;
+	aic.lowest_speed = 0.000010f;
+	aic.low_speed = 0.00003f;
+	aic.normal_speed = 0.00008f;
+	aic.fast_speed = 0.00012f;
+    aic.normallow_speed = 0.00005f;
     aic.speed = 0.00008f;
 
     AddComponent<AgentMapStateComponent>(player);
@@ -39,12 +43,15 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
     };
     sc.rate = 0.1e6;
 
+    auto phackmanAnims = Assets::instance->assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("anim-phackman.json")->anims;
     auto& ac = AddComponent<AnimatorComponent>(player);
-	ac.attack_animation = Assets::instance->phackmanAttack;
-	ac.stand_animation = Assets::instance->phackmanStand;
-    ac.walk_animation = Assets::instance->phackmanWalk;
-    ac.desinfect_walk_animation = Assets::instance->phackmanDesinfectWalk;
-    ac.desinfect_stand_animation = Assets::instance->phackmanDesinfectStand;
+	ac.attack_animation = phackmanAnims["PhackShoot"];
+	ac.stand_animation = phackmanAnims["PhackStand"];
+    ac.walk_animation = phackmanAnims["PhackWalk"];
+    ac.desinfect_walk_animation = phackmanAnims["PhackWalkInfect"];
+	ac.desinfect_stand_animation = phackmanAnims["PhackStandInfect"];
+	ac.carry_crucible_walk_animation = phackmanAnims["PhackCarryWalk"];
+	ac.carry_crucible_stand_animation = phackmanAnims["PhackCarryStand"];
 
     auto& hcc = AddComponent<HadronCollisionComponent>(player);
     hcc.body = new hadron::Body(x, y, 12, 12);
@@ -60,7 +67,7 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
 }
 
 
-secs::Entity EntityFactory::makeEnemy(float x, float y)
+secs::Entity EntityFactory::makeEnemy(float x, float y, int level)
 {
     secs::Entity enemy = m_world.GetEntityProcessor().AddEntity();
 
@@ -71,13 +78,13 @@ secs::Entity EntityFactory::makeEnemy(float x, float y)
     rc.offset = 0;
 
     auto& animation_comp = AddComponent<AnimationComponent>(enemy);
-    animation_comp.animation = Assets::instance->slimeWalk;
+    animation_comp.animation = Assets::instance->assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("anim-phackman.json")->anims["SlimeWalk"];
 
     AddComponent<RenderFacingComponent>(enemy);
     AddComponent<TileComponent>(enemy);
 
     auto& aic = AddComponent<AgentInputComponent>(enemy);
-    aic.speed = 0.00001f;
+    aic.speed = 0.00001f + 0.000005f * level + ((rand()%100) / 100.f) * 0.000005f;
 
     AddComponent<EnemyComponent>(enemy);
 
@@ -114,6 +121,12 @@ secs::Entity EntityFactory::makeSpawner(float x, float y)
     AddComponent<AlwaysShootComponent>(spawner);
     AddComponent<AgentInputComponent>(spawner);
 
+	auto& hcc = AddComponent<HadronCollisionComponent>(spawner);
+	hcc.body = new hadron::Body(x, y, 14, 14);
+	hcc.offset.Set(8, 8);
+
+	AddComponent<EnemyComponent>(spawner);
+
     auto& sc = AddComponent<ShootComponent>(spawner);
     sc.rate = 3e6;
     sc.shoot = [this, spawner](const secs::Entity& ent) {
@@ -121,7 +134,9 @@ secs::Entity EntityFactory::makeSpawner(float x, float y)
         auto& spawn = m_world.GetComponent<SpawnComponent>(ent);
         if( spawn.currentEntities < spawn.maxNumEntities )
         {
-            auto enemy = this->makeEnemy( tc.position.GetX() - 2, tc.position.GetY() - 2 );
+            auto& plic = m_world.GetComponent<AgentInputComponent>(m_playerEntity);
+            auto enemyLevel = plic.carryCrucible ? 2 : 0;
+            auto enemy = this->makeEnemy( tc.position.GetX() - 2, tc.position.GetY() - 2, enemyLevel );
             spawn.currentEntities++;
             auto& death = AddComponent<OnDeathActionComponent>(enemy);
             death.action = [this, spawner](const secs::Entity& entity) {
@@ -130,6 +145,8 @@ secs::Entity EntityFactory::makeSpawner(float x, float y)
             };
         }
     };
+
+    m_world.GetEntityProcessor().TagEntity(spawner, "spawner");
 
     return spawner;
 }
@@ -173,7 +190,7 @@ secs::Entity EntityFactory::makePowerNode(float x, float y)
     return node;
 }
 
-secs::Entity EntityFactory::makeCountdownText(float x, float y, const char *text)
+secs::Entity EntityFactory::MakeCountdownText(float x, float y, const char *text)
 {
     secs::Entity t = m_world.GetEntityProcessor().AddEntity();
 
@@ -226,19 +243,19 @@ secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Anim
 
 secs::Entity EntityFactory::makeLSBullet(float x, float y, Facing direction)
 {
-    secs::Entity b = makeBullet(x, y, Assets::instance->lsBullet, direction, 0.0002f);
+    secs::Entity b = makeBullet(x, y, Assets::instance->assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("anim-phackman.json")->anims["PhackBullet"], direction, 0.0002f);
     AddComponent<PlayerBulletComponent>(b);
     return b;
 }
 
-secs::Entity EntityFactory::makeTurretBullet(float x, float y, Facing direction)
+secs::Entity EntityFactory::MakeTurretBullet(float x, float y, Facing direction)
 {
     secs::Entity b = makeBullet(x, y, Assets::instance->turretBullet, direction, 0.0003f);
     AddComponent<PlayerBulletComponent>(b);
     return b;
 }
 
-secs::Entity EntityFactory::makeBuildingOnWall(int tile_x, int tile_y, int building_type, Facing facing)
+secs::Entity EntityFactory::MakeBuildingOnWall(int tile_x, int tile_y, int building_type, Facing facing)
 {
     float x = tile_x * 32;
     float y = tile_y * 32;
@@ -255,7 +272,7 @@ secs::Entity EntityFactory::makeBuildingOnWall(int tile_x, int tile_y, int build
     rfc.facing = facing;
 
     auto& aic = AddComponent<AgentInputComponent>(building);
-    aic.lower_speed = 0;
+    aic.low_speed = 0;
     aic.normal_speed = 0;
     aic.speed = 0;
 
@@ -265,13 +282,13 @@ secs::Entity EntityFactory::makeBuildingOnWall(int tile_x, int tile_y, int build
     switch( building_type )
     {
     case 0: /* TURRET */
-        makeBuildingTurret(building);
+        MakeBuildingTurret(building);
     }
 
     return building;
 }
 
-secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
+secs::Entity EntityFactory::MakeBuildingTurret( const secs::Entity& e )
 {
     auto& animator = AddComponent<AnimatorComponent>(e);
     animator.stand_animation = Assets::instance->turretStand;
@@ -287,7 +304,7 @@ secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
     sc.shoot = [this](const secs::Entity& ent) {
         TransformComponent tc = m_world.GetComponent<TransformComponent>(ent);
         ShootComponent scc = m_world.GetComponent<ShootComponent>(ent);
-        this->makeTurretBullet(tc.position.GetX(), tc.position.GetY(), scc.facing);
+        this->MakeTurretBullet(tc.position.GetX(), tc.position.GetY(), scc.facing);
     };
 
     auto& pcc = AddComponent<PowerConsumerComponent>(e);
@@ -298,16 +315,40 @@ secs::Entity EntityFactory::makeBuildingTurret( const secs::Entity& e )
 }
 
 
-secs::Entity EntityFactory::makeCrucible( float x, float y )
+secs::Entity EntityFactory::MakeCrucible( float x, float y )
 {
     secs::Entity crucible = m_world.GetEntityProcessor().AddEntity();
 
     auto& tc = AddComponent<TransformComponent>(crucible);
     tc.position.Set( x, y );
 
+    AddComponent<TileComponent>(crucible);
+
+
     auto& rc = AddComponent<RenderComponent>(crucible);
     rc.bitmap = *Assets::instance->buildingsSheet->GetFrame(1, 1);
+
 
     return crucible;
 }
 
+
+secs::Entity EntityFactory::MakeDoor(float x, float y)
+{
+	secs::Entity entity = m_world.GetEntityProcessor().AddEntity();
+
+	auto& tc = AddComponent<TransformComponent>(entity);
+	tc.position.Set(x, y);
+
+	AddComponent<TileComponent>(entity);
+
+	auto& rc = AddComponent<RenderComponent>(entity);
+	rc.bitmap = *Assets::instance->buildingsSheet->GetFrame(3, 0);
+	AddComponent<CrucibleComponent>(entity);
+
+	auto& hcc = AddComponent<HadronCollisionComponent>(entity);
+	hcc.body = new hadron::Body(x, y, 32, 32);
+	hcc.offset.Set(0, 0);
+
+	return entity;
+}

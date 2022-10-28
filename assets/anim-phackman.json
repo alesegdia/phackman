@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "anim-phackman-0",
+    "filename": "anim-phackman 0.ase",
     "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -9,61 +9,7 @@
     "duration": 100
    },
    {
-    "filename": "anim-phackman-1",
-    "frame": { "x": 0, "y": 32, "w": 32, "h": 32 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
-    "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
-   },
-   {
-    "filename": "anim-phackman-2",
-    "frame": { "x": 0, "y": 64, "w": 32, "h": 32 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
-    "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
-   },
-   {
-    "filename": "anim-phackman-3",
-    "frame": { "x": 0, "y": 32, "w": 32, "h": 32 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
-    "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
-   },
-   {
-    "filename": "anim-phackman-4",
-    "frame": { "x": 0, "y": 32, "w": 32, "h": 32 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
-    "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
-   },
-   {
-    "filename": "anim-phackman-5",
-    "frame": { "x": 0, "y": 96, "w": 32, "h": 32 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
-    "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
-   },
-   {
-    "filename": "anim-phackman-6",
-    "frame": { "x": 0, "y": 128, "w": 32, "h": 32 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
-    "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
-   },
-   {
-    "filename": "anim-phackman-7",
+    "filename": "anim-phackman 1.ase",
     "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -72,7 +18,52 @@
     "duration": 100
    },
    {
-    "filename": "anim-phackman-8",
+    "filename": "anim-phackman 2.ase",
+    "frame": { "x": 64, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "anim-phackman 3.ase",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "anim-phackman 4.ase",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "anim-phackman 5.ase",
+    "frame": { "x": 96, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "anim-phackman 6.ase",
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "anim-phackman 7.ase",
     "frame": { "x": 32, "y": 32, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
@@ -81,17 +72,53 @@
     "duration": 100
    },
    {
-    "filename": "anim-phackman-9",
+    "filename": "anim-phackman 8.ase",
+    "frame": { "x": 64, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "anim-phackman 9.ase",
+    "frame": { "x": 96, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 200
+   },
+   {
+    "filename": "anim-phackman 10.ase",
+    "frame": { "x": 0, "y": 64, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 200
+   },
+   {
+    "filename": "anim-phackman 11.ase",
     "frame": { "x": 32, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
+    "duration": 200
    },
    {
-    "filename": "anim-phackman-10",
-    "frame": { "x": 32, "y": 96, "w": 32, "h": 32 },
+    "filename": "anim-phackman 12.ase",
+    "frame": { "x": 0, "y": 64, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 200
+   },
+   {
+    "filename": "anim-phackman 13.ase",
+    "frame": { "x": 0, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
@@ -99,26 +126,44 @@
     "duration": 100
    },
    {
-    "filename": "anim-phackman-11",
-    "frame": { "x": 32, "y": 128, "w": 32, "h": 32 },
+    "filename": "anim-phackman 14.ase",
+    "frame": { "x": 64, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
+    "duration": 200
    },
    {
-    "filename": "anim-phackman-12",
-    "frame": { "x": 32, "y": 96, "w": 32, "h": 32 },
+    "filename": "anim-phackman 15.ase",
+    "frame": { "x": 96, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
     "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
+    "duration": 200
    },
    {
-    "filename": "anim-phackman-13",
-    "frame": { "x": 32, "y": 96, "w": 32, "h": 32 },
+    "filename": "anim-phackman 16.ase",
+    "frame": { "x": 0, "y": 96, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 200
+   },
+   {
+    "filename": "anim-phackman 17.ase",
+    "frame": { "x": 96, "y": 64, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 200
+   },
+   {
+    "filename": "anim-phackman 18.ase",
+    "frame": { "x": 96, "y": 64, "w": 32, "h": 32 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
@@ -131,7 +176,7 @@
   "version": "1.2.40-x64",
   "image": "anim-phackman.png",
   "format": "RGBA8888",
-  "size": { "w": 64, "h": 160 },
+  "size": { "w": 128, "h": 128 },
   "scale": "1",
   "frameTags": [
    { "name": "PhackWalk", "from": 0, "to": 3, "direction": "forward" },
@@ -140,7 +185,9 @@
    { "name": "SlimeWalk", "from": 7, "to": 7, "direction": "forward" },
    { "name": "PhackBullet", "from": 8, "to": 8, "direction": "forward" },
    { "name": "PhackWalkInfect", "from": 9, "to": 12, "direction": "forward" },
-   { "name": "PhackStandInfect", "from": 13, "to": 13, "direction": "forward" }
+   { "name": "PhackStandInfect", "from": 13, "to": 13, "direction": "forward" },
+   { "name": "PhackCarryWalk", "from": 14, "to": 17, "direction": "forward" },
+   { "name": "PhackCarryStand", "from": 18, "to": 18, "direction": "forward" }
   ],
   "layers": [
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
