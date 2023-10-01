@@ -5,7 +5,7 @@
 
 #include "../core/gameworld.h"
 
-#include <allegro5/allegro_ttf.h>
+#include "aether/graphics/camera.h"
 
 #include "aether/graphics/topdownscroller.h"
 

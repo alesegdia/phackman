@@ -5,7 +5,6 @@
 
 #include "../../game/assets.h"
 
-#include <allegro5/allegro_ttf.h>
 
 class TextRenderingSystem : public secs::EntitySystem
 {

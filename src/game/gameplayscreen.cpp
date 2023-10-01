@@ -1,5 +1,3 @@
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
 #include <iostream>
 
 #include "gameplayscreen.h"
@@ -83,9 +81,11 @@ void GameplayScreen::Render()
 
     m_cam->SetScale(m_scale, m_scale);
     m_scroll.Focus(new_pos.GetX() + 16, new_pos.GetY() + 16);
+    m_cam->Bind();
 
     aether::graphics::clear(0.f,0.f,0.f);
-    m_gameWorld->Render();
+	m_gameWorld->Render();
+	//m_cam->UnBind();
 
     m_guiCam->SetScale(m_scale, m_scale);
     m_guiCam->SetPosition(0, 0);
@@ -112,6 +112,8 @@ void GameplayScreen::Render()
             300.0f, 15.0f,
             aether::graphics::Color(1.0f, 1.0f, 1.0f, 1.0f), false);
     }
+
+    //m_guiCam->UnBind();
 }
 
 int GameplayScreen::Unload()

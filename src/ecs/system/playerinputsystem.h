@@ -32,7 +32,7 @@ public:
 
         auto& agtinput_comp = GetComponent<AgentInputComponent>(e);
 
-        bool u, d, r, l, space, z;
+        bool u, d, r, l, space;
         u = aether::core::is_key_down( aether::core::KeyCode::Up );
         d = aether::core::is_key_down( aether::core::KeyCode::Down );
         r = aether::core::is_key_down( aether::core::KeyCode::Right );

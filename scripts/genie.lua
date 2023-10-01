@@ -1,5 +1,6 @@
 AETHER_DIR = path.getabsolute("../module/aether")
 
+dofile(path.join(AETHER_DIR, "scripts/genie.lua"))
 dofile(path.join(AETHER_DIR, "scripts/util/util.lua"))
 
 aetherConfig()

@@ -95,7 +95,7 @@ public:
                 y0 = tp.GetY() + BORDER;
                 x1 = x0 + xx;
                 y1 = y0 + BARHEIGHT;
-                al_draw_filled_rectangle(x0, y0, x1, y1, al_map_rgb(0, 255, 0));
+                aether::graphics::draw_filled_rectangle(x0, y0, x1, y1, aether::graphics::Color::Red);
             }
         }
     }

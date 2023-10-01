@@ -1,6 +1,6 @@
 #include "mapscene.h"
 
-#include <allegro5/allegro_primitives.h>
+// #include <allegro5/allegro_primitives.h>
 
 MapScene::MapScene(int level)
 {
@@ -97,7 +97,7 @@ aether::math::Matrix2Di::SharedPtr MapScene::GetEnemyVisibilityMap()
 
 void MapScene::Render()
 {
-	al_hold_bitmap_drawing(true);
+	//al_hold_bitmap_drawing(true);
 	for (int r = 0; r < m_renderMap->GetRowsNumberInt(); r++)
 	{
 		for (int c = 0; c < m_renderMap->GetColsNumberInt(); c++)
@@ -125,7 +125,7 @@ void MapScene::Render()
 			bm->Draw(x1, y1);
 		}
 	}
-	al_hold_bitmap_drawing(false);
+	//al_hold_bitmap_drawing(false);
 }
 
 int MapScene::GetSolidness(int x, int y)
@@ -179,11 +179,11 @@ void MapScene::GetDebugRender()
 
 			if (m_map->GetCell(c, r) == 1)
 			{
-				al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 255, 0));
+				//al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 255, 0));
 			}
 			else
 			{
-				al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 255));
+				//al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 255));
 			}
 		}
 	}
@@ -200,10 +200,10 @@ void MapScene::GetDebugRender()
 			ncx = (neighboor->x() + 1) * 16;
 			ncy = (neighboor->y() + 1) * 16;
 
-			al_draw_line(cx, cy, ncx, ncy, al_map_rgba(0, 255, 255, 2), 1);
+			//al_draw_line(cx, cy, ncx, ncy, al_map_rgba(0, 255, 255, 2), 1);
 		}
 
-		al_draw_filled_circle(cx, cy, 3, al_map_rgb(255, 0, 0));
+		// al_draw_filled_circle(cx, cy, 3, al_map_rgb(255, 0, 0));
 	}
 
 	for (PathNode::SharedPtr node : m_navmap->GetNodes())
@@ -211,7 +211,7 @@ void MapScene::GetDebugRender()
 		float x, y;
 		x = (node->x() + 1) * 16;
 		y = (node->y() + 1) * 16;
-		al_draw_ellipse(x, y, 4, 4, al_map_rgb(255, 255, 0), 1);
+		// al_draw_ellipse(x, y, 4, 4, al_map_rgb(255, 255, 0), 1);
 	}
 }
 
