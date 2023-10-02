@@ -36,4 +36,6 @@ private:
 
 	aether::graphics::TopDownMapScroller m_scroll;
 
+    std::shared_ptr<aether::scene::Scene> m_scene;
+
 };

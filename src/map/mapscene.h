@@ -1,6 +1,6 @@
 #pragma once
 
-#include <aether/aether.h>
+#include "aether/scene/scene.h"
 
 #include "../map/mapgen.h"
 #include "../map/placementmap.h"
@@ -12,7 +12,7 @@
 class MapScene
 {
 public:
-    MapScene(int level);
+    MapScene(int level, std::shared_ptr<aether::scene::Scene> scene);
 
     void GenerateMap(int level);
 
@@ -69,6 +69,8 @@ private:
     aether::math::Matrix2Di::SharedPtr m_enemyVisibilityMap;
 
     secs::Entity m_crucibleEntity;
+
+    std::shared_ptr<aether::scene::Scene> m_scene;
 
 };
 

@@ -43,7 +43,7 @@ aether::math::Matrix2Di::SharedPtr LayoutBuilder::generate(const std::vector<aet
 		while( selected_col == -1 )
 		{
 			row = rng() % (m_layoutMatrix->GetRowsNumber() - the_shape->GetRowsNumber());
-			int final_col = m_layoutMatrix->GetColsNumber() - the_shape->GetColsNumber();
+			int final_col = int(m_layoutMatrix->GetColsNumber()) - int(the_shape->GetColsNumber());
 
 			for( int col = 0; col < final_col; col++ )
 			{

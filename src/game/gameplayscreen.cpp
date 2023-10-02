@@ -17,7 +17,8 @@ GameplayScreen::GameplayScreen()
 
 int GameplayScreen::Load()
 {
-    m_gameWorld = std::make_shared<GameWorld>();
+    m_scene = std::make_shared<aether::scene::Scene>();
+    m_gameWorld = std::make_shared<GameWorld>(m_scene);
     m_gameWorld->step(0);
     m_scroll.Setup(m_cam, aether::math::Rectf(0, 0, m_gameWorld->mapSize().GetX() * 16, m_gameWorld->mapSize().GetY() * 16));
     return 0;
@@ -57,8 +58,7 @@ void GameplayScreen::Update(uint64_t delta)
 
         if(m_gameWorld->isGameOver() )
         {
-            m_gameWorld = std::make_shared<GameWorld>();
-            m_gameWorld->step(0);
+            Load();
         }
     }
 
@@ -68,10 +68,9 @@ void GameplayScreen::Update(uint64_t delta)
 	    GoToScreen(nextScreen);
     }
 
-    if( aether::core::is_key_just_pressed(aether::core::KeyCode::R) )
+    if (aether::core::is_key_just_pressed(aether::core::KeyCode::R))
     {
-        m_gameWorld = std::make_shared<GameWorld>();
-        m_gameWorld->step(0);
+        Load();
     }
 }
 
@@ -97,9 +96,9 @@ void GameplayScreen::Render()
 
     const auto& rsc = m_gameWorld->playerResourceStorageComponent();
     char rc[4]; char ic[4]; char pc[4];
-    sprintf(rc, "%d", rsc.reinforceCells);
-    sprintf(ic, "%d", rsc.industryCells);
-    sprintf(pc, "%d", rsc.powerCells);
+    sprintf_s(rc, "%d", rsc.reinforceCells);
+    sprintf_s(ic, "%d", rsc.industryCells);
+    sprintf_s(pc, "%d", rsc.powerCells);
     Assets::instance->guiFont->Print(rc, 18,  0, aether::graphics::Color(1.0f, 1.0f, 1.0f));
     Assets::instance->guiFont->Print(ic, 18, 16, aether::graphics::Color(1.0f, 1.0f, 1.0f));
     Assets::instance->guiFont->Print(pc, 18, 32, aether::graphics::Color(1.0f, 1.0f, 1.0f));

@@ -1,9 +1,10 @@
 #include "gameworld.h"
 #include <algorithm>
 
-GameWorld::GameWorld()
-	: m_mapScene(0),
-      m_ecsWorld(m_mapScene)
+GameWorld::GameWorld(std::shared_ptr<aether::scene::Scene> scene)
+	: m_mapScene(0, scene),
+      m_ecsWorld(m_mapScene),
+      m_scene(scene)
 {
     rng.seed(time(NULL) + 0xFACEFEED);
     auto start_node = m_mapScene.GetNavigationMap()->GetNodes()[0];
@@ -33,10 +34,6 @@ GameWorld::GameWorld()
     auto crucibleEntity = m_ecsWorld.factory().MakeCrucible((start_node->x()) * 16, (start_node->y()) * 16);
     m_mapScene.SetCrucibleEntity(crucibleEntity);
 
-
-
-
-
     auto nm = m_mapScene.GetNodesMap();
     for( int i = 0; i < nm->GetColsNumber(); i++ )
     {
@@ -60,8 +57,6 @@ GameWorld::GameWorld()
         }
     }
 
-
-
 	std::shared_ptr<PhackmanMapModel> model = std::make_shared<PhackmanMapModel>(m_mapScene.GetNavigationMap());
 	AStar<PhackmanMapModel> astar(model);
 	std::shared_ptr<PhackmanMapModel::Node> nn1 = std::make_shared<PhackmanMapModel::Node>(start_node);
@@ -78,9 +73,6 @@ GameWorld::GameWorld()
 	}
 	assert(retvalue == AStarSearchStatus::Finished);
 	auto solution = astar.solution();
-
-
-
 
     auto nodes = m_mapScene.GetNavigationMap()->GetNodes();
     std::shuffle(nodes.begin(), nodes.end(), rng);
@@ -123,6 +115,7 @@ void GameWorld::step(double delta)
 void GameWorld::Render()
 {
     m_mapScene.Render();
+    m_scene->Render();
     m_ecsWorld.Render();
 }
 

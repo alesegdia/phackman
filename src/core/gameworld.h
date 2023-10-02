@@ -6,7 +6,7 @@
 class GameWorld
 {
 public:
-    GameWorld();
+    GameWorld(std::shared_ptr<aether::scene::Scene> scene);
 
     void step(double delta);
 
@@ -29,11 +29,13 @@ public:
     }
 
 private:
+
     MapScene m_mapScene;
     ECSWorld m_ecsWorld;
     aether::math::Vec2i m_realMapSize;
     secs::Entity m_playerEntity;
     bool m_gameOver = false;
     std::mt19937 rng;
+    std::shared_ptr<aether::scene::Scene> m_scene;
 
 };

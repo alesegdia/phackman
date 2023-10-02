@@ -63,7 +63,7 @@ const std::vector<PathNode::SharedPtr> &NavigationMap::GetNodes()
 }
 
 NavigationMap::NavigationMap(aether::math::Matrix2Di::SharedPtr input)
-	: m_collector(input->GetColsNumber(), input->GetRowsNumber()), m_map(input)
+	: m_collector(int(input->GetColsNumber()), int(input->GetRowsNumber())), m_map(input)
 {
 	// extract navigation data
 	convolute4x4(*input, &m_collector);

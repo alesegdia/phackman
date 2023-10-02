@@ -1,8 +1,8 @@
 #include "mapscene.h"
 
-// #include <allegro5/allegro_primitives.h>
+#include "aether/scene/tilemapscenenode.h"
 
-MapScene::MapScene(int level)
+MapScene::MapScene(int level, std::shared_ptr<aether::scene::Scene> scene)
 {
 	bool blocked = true;
 	while(blocked)
@@ -37,6 +37,8 @@ MapScene::MapScene(int level)
 			// m_solidnessMap->DebugPrint();
 		}
 	}
+	m_scene = scene;
+	m_scene->AddToScene<aether::scene::TilemapSceneNode>(m_renderMap, Assets::instance->maptilesSheet, 16);
 }
 
 void MapScene::GenerateMap(int level)
@@ -97,14 +99,10 @@ aether::math::Matrix2Di::SharedPtr MapScene::GetEnemyVisibilityMap()
 
 void MapScene::Render()
 {
-	//al_hold_bitmap_drawing(true);
 	for (int r = 0; r < m_renderMap->GetRowsNumberInt(); r++)
 	{
 		for (int c = 0; c < m_renderMap->GetColsNumberInt(); c++)
 		{
-			int x1, y1;
-			x1 = c * 16; y1 = r * 16;
-
 			int frame = m_renderMap->GetCell(c, r);
 
 			int ncx, ncy;
@@ -120,12 +118,8 @@ void MapScene::Render()
 			{
 				frame += 48;
 			}
-
-			auto bm = Assets::instance->maptilesSheet->GetFrame(frame);
-			bm->Draw(x1, y1);
 		}
 	}
-	//al_hold_bitmap_drawing(false);
 }
 
 int MapScene::GetSolidness(int x, int y)
