@@ -60,6 +60,7 @@ public:
 private:
     aether::math::Matrix2Di::SharedPtr m_map;
     aether::math::Matrix2Di::SharedPtr m_renderMap;
+    aether::math::Matrix2Di::SharedPtr m_renderMapCopy;
     aether::math::Matrix2Di::SharedPtr m_infectionMap;
     std::shared_ptr<NavigationMap> m_navmap;
     PlacementMap m_placementMap;

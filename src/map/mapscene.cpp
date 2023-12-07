@@ -2,6 +2,8 @@
 
 #include "aether/scene/tilemapscenenode.h"
 
+#include "allegro5/allegro_primitives.h"
+
 MapScene::MapScene(int level, std::shared_ptr<aether::scene::Scene> scene)
 {
 	bool blocked = true;
@@ -38,7 +40,8 @@ MapScene::MapScene(int level, std::shared_ptr<aether::scene::Scene> scene)
 		}
 	}
 	m_scene = scene;
-	m_scene->AddToScene<aether::scene::TilemapSceneNode>(m_renderMap, Assets::instance->maptilesSheet, 16);
+	m_renderMapCopy = std::make_shared<aether::math::Matrix2Di>(*m_renderMap);
+	m_scene->AddToScene<aether::scene::TilemapSceneNode>(m_renderMapCopy, Assets::instance->maptilesSheet, 16);
 }
 
 void MapScene::GenerateMap(int level)
@@ -118,6 +121,9 @@ void MapScene::Render()
 			{
 				frame += 48;
 			}
+
+			m_renderMapCopy->SetCell(c, r, frame);
+
 		}
 	}
 }
@@ -173,11 +179,11 @@ void MapScene::GetDebugRender()
 
 			if (m_map->GetCell(c, r) == 1)
 			{
-				//al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 255, 0));
+				al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 255, 0));
 			}
 			else
 			{
-				//al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 255));
+				al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 255));
 			}
 		}
 	}
@@ -194,10 +200,10 @@ void MapScene::GetDebugRender()
 			ncx = (neighboor->x() + 1) * 16;
 			ncy = (neighboor->y() + 1) * 16;
 
-			//al_draw_line(cx, cy, ncx, ncy, al_map_rgba(0, 255, 255, 2), 1);
+			al_draw_line(cx, cy, ncx, ncy, al_map_rgba(0, 255, 255, 2), 1);
 		}
 
-		// al_draw_filled_circle(cx, cy, 3, al_map_rgb(255, 0, 0));
+		al_draw_filled_circle(cx, cy, 3, al_map_rgb(255, 0, 0));
 	}
 
 	for (PathNode::SharedPtr node : m_navmap->GetNodes())
@@ -205,7 +211,7 @@ void MapScene::GetDebugRender()
 		float x, y;
 		x = (node->x() + 1) * 16;
 		y = (node->y() + 1) * 16;
-		// al_draw_ellipse(x, y, 4, 4, al_map_rgb(255, 255, 0), 1);
+		al_draw_ellipse(x, y, 4, 4, al_map_rgb(255, 255, 0), 1);
 	}
 }
 
