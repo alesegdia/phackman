@@ -29,7 +29,14 @@ public:
             auto& ctt = GetComponent<ColorTintComponent>(e);
             c = ctt.color;
         }
-        font->Print(textcomponent.text.c_str(), transformcomponent.position.GetX(), transformcomponent.position.GetY(), 100, 100, aether::graphics::Color(c.r, c.g, c.b, c.a), true);
+        auto numchars = textcomponent.text.length();
+        auto x = transformcomponent.position.GetX() - 2;
+        auto y = transformcomponent.position.GetY() + 2;
+        auto w = numchars * 6.5f;
+        auto h = 12;
+        aether::graphics::draw_filled_rectangle(x - 1, y - 1, w + 2, h + 2, c);
+        aether::graphics::draw_filled_rectangle(x, y, w, h, aether::graphics::Color(0, 0, 0, c.a));
+        font->Print(textcomponent.text.c_str(), transformcomponent.position.GetX(), transformcomponent.position.GetY(), 100, 100, c, true);
     }
 
 };	

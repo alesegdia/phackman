@@ -48,7 +48,7 @@ public:
                         m_mapScene.Desinfect( x, y );
                         if( prev )
                         {
-                            m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "desinfected");
+                            m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "desinfected", aether::graphics::Color::Green);
                         }
                     }
                     else
@@ -90,12 +90,10 @@ public:
                 static constexpr float BARHEIGHT = 3;
                 auto tp = aether::math::Vec2i(x * 32, y * 32);
                 float xx = infect.desinfectTimer * BARSIZE / infect.desinfectDuration;
-                float x0, y0, x1, y1;
+                float x0, y0;
                 x0 = tp.GetX() + BORDER;
                 y0 = tp.GetY() + BORDER;
-                x1 = x0 + xx;
-                y1 = y0 + BARHEIGHT;
-                aether::graphics::draw_filled_rectangle(x0, y0, x1, y1, aether::graphics::Color::Red);
+                aether::graphics::draw_filled_rectangle(x0, y0, xx, BARHEIGHT, aether::graphics::Color::Red);
             }
         }
     }

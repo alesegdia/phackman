@@ -21,6 +21,11 @@ public:
     aether::graphics::Texture enemyBitmap;
     aether::graphics::Texture buildingsBitmap;
 
+
+    aether::graphics::Texture mainMenuScreenBitmap;
+    aether::graphics::Texture elevatorBGBitmap;
+    aether::graphics::Texture elevatorDudeBitmap;
+
     std::shared_ptr<aether::graphics::Spritesheet> enemySheet;
     std::shared_ptr<aether::graphics::Spritesheet> buildingsSheet;
     std::shared_ptr<aether::graphics::Spritesheet> maptilesSheet;

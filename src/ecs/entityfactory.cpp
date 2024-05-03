@@ -84,7 +84,7 @@ secs::Entity EntityFactory::makeEnemy(float x, float y, int level)
     AddComponent<TileComponent>(enemy);
 
     auto& aic = AddComponent<AgentInputComponent>(enemy);
-    aic.speed = 0.00001f + 0.000005f * level + ((rand()%100) / 100.f) * 0.000005f;
+    aic.speed = 0.00002f + 0.00001f * level + ((rand()%100) / 100.f) * 0.000005f;
 
     AddComponent<EnemyComponent>(enemy);
 
@@ -190,7 +190,7 @@ secs::Entity EntityFactory::makePowerNode(float x, float y)
     return node;
 }
 
-secs::Entity EntityFactory::MakeCountdownText(float x, float y, const char *text)
+secs::Entity EntityFactory::MakeCountdownText(float x, float y, const char *text, aether::graphics::Color c)
 {
     secs::Entity t = m_world.GetEntityProcessor().AddEntity();
 
@@ -200,9 +200,9 @@ secs::Entity EntityFactory::MakeCountdownText(float x, float y, const char *text
     auto& fac = AddComponent<FadeComponent>(t);
     auto& fc = AddComponent<FloatingComponent>(t);
     auto& ctc = AddComponent<ColorTintComponent>(t);
-    ctc.color = aether::graphics::Color(1.0f, 1.0f, 1.0f, 1.0f);
-    fc.speed = 0.07f;
-    fac.rate = 0.008f;
+    ctc.color = c;
+    fc.speed = 0.03f;
+    fac.rate = 0.012f;
     transform.position.Set(x + 16, y-20);
     death.ttl = 2e6;
     textcomp.text = text;

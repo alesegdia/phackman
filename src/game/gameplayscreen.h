@@ -28,7 +28,7 @@ private:
 
     std::shared_ptr<GameWorld> m_gameWorld;
 
-    float m_scale = 2.f;
+    float m_scale = 4.f;
 
     bool m_pause = true;
 

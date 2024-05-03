@@ -179,11 +179,11 @@ void MapScene::GetDebugRender()
 
 			if (m_map->GetCell(c, r) == 1)
 			{
-				al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 255, 0));
+				aether::graphics::draw_filled_rectangle(x1, y1, x2 - x1, y2 - y1, aether::graphics::Color::Yellow);
 			}
 			else
 			{
-				al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(0, 0, 255));
+				aether::graphics::draw_filled_rectangle(x1, y1, x2 - x1, y2 - y1, aether::graphics::Color::Blue);
 			}
 		}
 	}

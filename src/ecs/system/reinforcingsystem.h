@@ -35,18 +35,18 @@ public:
             {
                 m_mapScene.Reinforce(tlc.current.GetX(), tlc.current.GetY());
                 rsc.reinforceCells--;
-                m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "powered");
+                m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "powered", aether::graphics::Color::Cyan);
             }
             else
             {
-                m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "no power cells");
+                m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "no power cells", aether::graphics::Color::Red);
             }
         }
         else if( true == is_reinforced )
         {
             m_mapScene.UndoReinforce(x, y);
             rsc.reinforceCells++;
-            m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "unpowered");
+            m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "unpowered", aether::graphics::Color::Red);
         }
         GetEntityProcessor()->RemoveComponent<ReinforceComponent>(e);
     }

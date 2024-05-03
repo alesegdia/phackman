@@ -39,7 +39,12 @@ void MainMenuScreen::Render()
 	aether::graphics::clear(0.f, 0.f, 0.f);
 
 	m_cam->SetPosition(0, 0);
-	m_cam->SetScale(2.f, 2.f);
+	m_cam->SetScale(1.f, 1.f);
+	m_cam->Bind();
+	Assets::instance->mainMenuScreenBitmap.Draw(-1920/2, -1080/2);
+
+	m_cam->SetPosition(0, 0);
+	m_cam->SetScale(4.f, 4.f);
 	m_cam->Bind();
 	Assets::instance->assetsManager.GetAsset<aether::graphics::Font>("bitcell_super.font")->Print(
 		"Phackman", 0, -50,

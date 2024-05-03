@@ -18,7 +18,8 @@ public:
             {
                 alpha = 0;
             }
-            colortintcomponent.color = aether::graphics::Color(alpha, alpha, alpha, alpha);
+            auto c = colortintcomponent.color;
+            colortintcomponent.color = aether::graphics::Color(c.r / 255.f, c.g / 255.f, c.b / 255.f, alpha);
             fadecomponent.currentAlpha = alpha;
         }
 	}

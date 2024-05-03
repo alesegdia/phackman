@@ -21,6 +21,10 @@ Assets::Assets()
     buildingsBitmap.Load("assets/turrets.png");
     buildingsSheet.reset(new aether::graphics::Spritesheet(4, 2, buildingsBitmap));
 
+    mainMenuScreenBitmap.Load("assets/mainScreen1920.png");
+    elevatorBGBitmap.Load("assets/elevatorScreen1920_BG.png");
+    elevatorDudeBitmap.Load("assets/elevatorScreen1920_DUDE.png");
+
     industryNode.reset(new aether::graphics::Animation(STATIC_DURATION));
     industryNode->AddFrame(*maptilesSheet->GetFrame(72));
 

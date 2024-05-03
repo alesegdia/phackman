@@ -30,7 +30,7 @@ public:
 
     secs::Entity MakeBuildingTurret( const secs::Entity& e );
 
-    secs::Entity MakeCountdownText( float x, float y, const char* text );
+    secs::Entity MakeCountdownText( float x, float y, const char* text, aether::graphics::Color c = aether::graphics::Color::White);
 
     secs::Entity MakeCrucible( float x, float y );
 

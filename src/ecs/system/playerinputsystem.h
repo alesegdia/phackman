@@ -99,7 +99,7 @@ public:
 			}
 			else
 			{
-				m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "needs power");
+				m_factory.MakeCountdownText(tc.position.GetX(), tc.position.GetY(), "needs power", aether::graphics::Color::Red);
 			}
 		}
 

@@ -72,6 +72,9 @@ void GameplayScreen::Update(uint64_t delta)
     {
         Load();
     }
+
+//    m_cam->Update(delta);
+    m_cam->Update();
 }
 
 void GameplayScreen::Render()

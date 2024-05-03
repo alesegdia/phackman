@@ -43,14 +43,9 @@ public:
     {
         auto& hcc = GetComponent<HadronCollisionComponent>(e);
         const auto& aabb = hcc.body->GetAABB();
-        float x1, y1, x2, y2;
-        x1 = aabb.x;
-        x2 = x1 + aabb.width;
-        y1 = aabb.y;
-        y2 = y1 + aabb.height;
         if( enabled )
         {
-            aether::graphics::draw_filled_rectangle(x1, y1, x2, y2, aether::graphics::Color(1.0f, 0.0f, 1.0f));
+            aether::graphics::draw_filled_rectangle(aabb.x, aabb.y, aabb.width, aabb.height, aether::graphics::Color(1.0f, 0.0f, 1.0f));
         }
     }
 

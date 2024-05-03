@@ -51,7 +51,7 @@ public:
                 {
                     if( true == m_mapScene.placementMap().isUsed( m_playerTile.GetX(), m_playerTile.GetY(), f ) )
                     {
-                        m_factory.MakeCountdownText( tc.position.GetX(), tc.position.GetY(), "no space" );
+                        m_factory.MakeCountdownText( tc.position.GetX(), tc.position.GetY(), "no space", aether::graphics::Color::Red);
                     }
                     else
                     {
@@ -61,11 +61,11 @@ public:
                         {
                             rsc.industryCells -= COST;
                             m_factory.MakeBuildingOnWall(m_playerTile.GetX(), m_playerTile.GetY(), 0, f);
-                            m_factory.MakeCountdownText( tc.position.GetX(), tc.position.GetY(), "turret built" );
+                            m_factory.MakeCountdownText( tc.position.GetX(), tc.position.GetY(), "turret built", aether::graphics::Color::Cyan);
                         }
                         else
                         {
-                            m_factory.MakeCountdownText( tc.position.GetX(), tc.position.GetY(), "not enough nodes" );
+                            m_factory.MakeCountdownText( tc.position.GetX(), tc.position.GetY(), "not enough nodes", aether::graphics::Color::Red);
                         }
                     }
                 }
@@ -119,7 +119,7 @@ private:
 
     void debugDrawRect(int x, int y)
     {
-        aether::graphics::draw_filled_rectangle(x * 32, y * 32, (x+1) * 32, (y+1) * 32, aether::graphics::Color(1.0f, 0.0f, 0.0f));
+        aether::graphics::draw_filled_rectangle(x * 32, y * 32, 32, 32, aether::graphics::Color(1.0f, 0.0f, 0.0f));
     }
 
     secs::Engine& m_world;
