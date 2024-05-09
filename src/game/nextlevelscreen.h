@@ -17,5 +17,7 @@ public:
 private:
 
     aether::graphics::Camera::SharedPtr m_cam;
+	float m_playerPos = 0;
+	float m_bgPos = 0;
 
 };

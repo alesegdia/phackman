@@ -34,6 +34,9 @@ void NextLevelScreen::Update(uint64_t delta)
 		std::shared_ptr<GameplayScreen> gameplayScreen = std::make_shared<GameplayScreen>();
 		GoToScreen(gameplayScreen);
 	}
+
+	m_playerPos += 0.3f;
+	m_bgPos += 0.3f;
 }
 
 void NextLevelScreen::Render()
@@ -43,12 +46,29 @@ void NextLevelScreen::Render()
 	m_cam->SetPosition(0, 0);
 	m_cam->SetScale(2.f, 2.f);
 	m_cam->Bind();
+
+	{
+		float shakeX = rand() % 100 / 50.f;
+		float shakeY = rand() % 100 / 50.f;
+		Assets::instance->elevatorBGBitmap.Draw(-1920 / 2 - m_bgPos * 0.1f + shakeX, shakeY + -1080 / 2 + m_bgPos);
+	}
+
+	{
+		float shakeX = rand() % 100 / 50.f;
+		float shakeY = rand() % 100 / 25.f;
+		Assets::instance->elevatorDudeBitmap.Draw(m_playerPos * 0.1f + -1920 / 2 + shakeX, 300 + shakeY + -m_playerPos + -1080 / 2);
+	}
+
 	Assets::instance->assetsManager.GetAsset<aether::graphics::Font>("bitcell_super.font")->Print(
 		"Level Cleared", 0, -50,
 		aether::graphics::Color::White, aether::graphics::TextAlign::Center);
 	Assets::instance->assetsManager.GetAsset<aether::graphics::Font>("bitcell_big.font")->Print(
 		"Press SPACE for next level", 0, 20,
 		aether::graphics::Color::White, aether::graphics::TextAlign::Center);
+
+
+
+
 }
 
 int NextLevelScreen::Unload()

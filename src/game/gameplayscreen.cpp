@@ -7,6 +7,22 @@
 
 #include "nextlevelscreen.h"
 
+namespace
+{
+
+    std::map<std::string, std::string> controlsMap = {
+        { "move", "<ARROWS> = move" },
+        { "pause", "<P> = pause / unpause" },
+        { "shoot", "<SPACE> = shoot" },
+        { "desinfect", "<C> = desinfect" },
+        { "reinforce", "<C> = reinforce" },
+        { "buildturret", "<V> = build turret" },
+        { "pickcore", "<Z> = pick core" },
+        { "normalize", "<C> = remove reinforce" },
+        { "needcore", "Pick up core to exit!" },
+    };
+}
+
 //#include "../debug/mapsoliddebug.h"
 
 GameplayScreen::GameplayScreen()
@@ -23,6 +39,7 @@ int GameplayScreen::Load()
     m_scroll.Setup(m_cam, aether::math::Rectf(0, 0, m_gameWorld->mapSize().GetX() * 16, m_gameWorld->mapSize().GetY() * 16));
     return 0;
 }
+
 
 void GameplayScreen::Update(uint64_t delta)
 {
@@ -62,7 +79,7 @@ void GameplayScreen::Update(uint64_t delta)
         }
     }
 
-    if( m_gameWorld->DidPlayerEscape())
+    if( m_gameWorld->DidPlayerEscape() || aether::core::is_key_just_pressed(aether::core::KeyCode::I))
     {
         std::shared_ptr<IScreen> nextScreen = std::make_shared<NextLevelScreen>();
 	    GoToScreen(nextScreen);
@@ -75,6 +92,45 @@ void GameplayScreen::Update(uint64_t delta)
 
 //    m_cam->Update(delta);
     m_cam->Update();
+
+
+    m_contextControls.clear();
+    m_contextControls.push_back("move");
+    m_contextControls.push_back("pause");
+    if (m_gameWorld->IsPlayerInfected() && !m_gameWorld->PlayerHoldsCore())
+    {
+        m_contextControls.push_back("desinfect");
+    }
+    else if (m_gameWorld->IsPlayerReinforced() && !m_gameWorld->PlayerHoldsCore())
+    {
+        m_contextControls.push_back("normalize");
+    }
+    else if(!m_gameWorld->PlayerHoldsCore() && !m_gameWorld->PlayerHoldsCore())
+    {
+        m_contextControls.push_back("reinforce");
+    }
+
+    if (!m_gameWorld->PlayerHoldsCore())
+    {
+        m_contextControls.push_back("shoot");
+        if (m_gameWorld->IsPlayerReinforced())
+        {
+            m_contextControls.push_back("buildturret");
+        }
+    }
+
+    if (m_gameWorld->PlayerOverCrucible() && !m_gameWorld->PlayerHoldsCore())
+    {
+        m_contextControls.push_back("pickcore");
+    }
+
+    if (m_gameWorld->PlayerOverExit())
+    {
+        m_contextControls.push_back("needcore");
+    }
+
+
+
 }
 
 void GameplayScreen::Render()
@@ -116,6 +172,16 @@ void GameplayScreen::Render()
     }
 
     //m_guiCam->UnBind();
+
+    if (!m_pause)
+    {
+        for (int i = 0; i < m_contextControls.size(); i++)
+        {
+            auto text = controlsMap[m_contextControls[i]];
+            Assets::instance->guiFont->Print(text, 350, 240 - i * 12, aether::graphics::Color::White, aether::graphics::Left);
+        }
+    }
+
 }
 
 int GameplayScreen::Unload()

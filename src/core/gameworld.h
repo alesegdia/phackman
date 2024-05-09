@@ -28,7 +28,52 @@ public:
 	    return m_ecsWorld.DidPlayerEscape();
     }
 
+    bool PlayerHoldsCore()
+    {
+        const auto& aic = m_ecsWorld.engine().GetEntityProcessor().Component<AgentInputComponent>(m_playerEntity);
+        return aic.carryCrucible;
+    }
+
+    bool IsPlayerInfected()
+    {
+        return m_mapScene.IsInfected(GetPlayerTile());
+    }
+
+    bool IsPlayerReinforced()
+    {
+        return m_mapScene.IsReinforced(GetPlayerTile());
+    }
+
+    bool PlayerOverCrucible()
+    {
+        auto crucibleTile = GetCrucibleTile();
+        auto playerTile = GetPlayerTile();
+        return crucibleTile == playerTile;
+    }
+
+    bool PlayerOverExit()
+    {
+        auto crucibleTile = GetExitTile();
+        auto playerTile = GetPlayerTile();
+        return crucibleTile == playerTile;
+    }
+
 private:
+
+    aether::math::Vec2i GetPlayerTile()
+    {
+        return m_ecsWorld.engine().GetEntityProcessor().Component<TileComponent>(m_playerEntity).current;
+    }
+    aether::math::Vec2i GetCrucibleTile()
+    {
+        return m_ecsWorld.engine().GetEntityProcessor().Component<TileComponent>(m_mapScene.GetCrucibleEntity()).current;
+    }
+
+    aether::math::Vec2i GetExitTile()
+    {
+        return m_ecsWorld.engine().GetEntityProcessor().Component<TileComponent>(m_mapScene.GetExitEntity()).current;
+    }
+
 
     MapScene m_mapScene;
     ECSWorld m_ecsWorld;

@@ -1,5 +1,7 @@
 #include "entityfactory.h"
 
+#include "../constants.h"
+
 EntityFactory::EntityFactory(secs::Engine &world)
 	: m_world(world)
 {
@@ -27,12 +29,12 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
     AddComponent<PlayerInputComponent>(player);
 
     auto& aic = AddComponent<AgentInputComponent>(player);
-	aic.lowest_speed = 0.000010f;
-	aic.low_speed = 0.00003f;
-	aic.normal_speed = 0.00008f;
-	aic.fast_speed = 0.00012f;
-    aic.normallow_speed = 0.00005f;
-    aic.speed = 0.00008f;
+	aic.lowest_speed = Constants::Player::LowestSpeed;
+	aic.low_speed = Constants::Player::LowSpeed;
+	aic.normal_speed = Constants::Player::NormalSpeed;
+	aic.fast_speed = Constants::Player::FastSpeed;
+    aic.normallow_speed = Constants::Player::NormalLowSpeed;
+    aic.speed = Constants::Player::Speed;
 
     AddComponent<AgentMapStateComponent>(player);
     auto& sc = AddComponent<ShootComponent>(player);
@@ -41,7 +43,7 @@ secs::Entity EntityFactory::makePlayer(float x, float y, OnDeathActionComponent:
         RenderFacingComponent rf = m_world.GetComponent<RenderFacingComponent>(e);
         this->makeLSBullet(tc.position.GetX(), tc.position.GetY(), rf.facing);
     };
-    sc.rate = 0.1e6;
+    sc.rate = Constants::GunSkill::Rate;
 
     auto phackmanAnims = Assets::instance->assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("anim-phackman.json")->anims;
     auto& ac = AddComponent<AnimatorComponent>(player);
@@ -290,9 +292,6 @@ secs::Entity EntityFactory::MakeBuildingOnWall(int tile_x, int tile_y, int build
 
 secs::Entity EntityFactory::MakeBuildingTurret( const secs::Entity& e )
 {
-    auto& animator = AddComponent<AnimatorComponent>(e);
-    animator.stand_animation = Assets::instance->turretStand;
-
     auto& ac = AddComponent<AnimationComponent>(e);
     ac.animation = Assets::instance->turretStand;
 

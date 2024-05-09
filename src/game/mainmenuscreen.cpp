@@ -32,6 +32,7 @@ void MainMenuScreen::Update(uint64_t delta)
 		std::shared_ptr<GameplayScreen> gameplayScreen = std::make_shared<GameplayScreen>();
 		GoToScreen(gameplayScreen);
 	}
+
 }
 
 void MainMenuScreen::Render()

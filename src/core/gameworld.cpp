@@ -23,7 +23,8 @@ GameWorld::GameWorld(std::shared_ptr<aether::scene::Scene> scene)
         }
     }
 
-    m_ecsWorld.factory().MakeDoor(doorNode->x() * 16, doorNode->y() * 16);
+    auto exitEntity = m_ecsWorld.factory().MakeDoor(doorNode->x() * 16, doorNode->y() * 16);
+    m_mapScene.SetExitEntity(exitEntity);
 
     m_playerEntity = m_ecsWorld.factory().makePlayer(
                 (start_node->x()) * 16, (start_node->y()) * 16,

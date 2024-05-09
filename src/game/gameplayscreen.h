@@ -2,6 +2,7 @@
 
 #include <aether/aether.h>
 #include <secs/secs.h>
+#include <set>
 
 #include "../core/gameworld.h"
 
@@ -37,5 +38,7 @@ private:
 	aether::graphics::TopDownMapScroller m_scroll;
 
     std::shared_ptr<aether::scene::Scene> m_scene;
+
+    std::vector<std::string> m_contextControls;
 
 };

@@ -36,7 +36,17 @@ public:
 
     bool IsInfected(int x, int y);
 
+    bool IsInfected(const aether::math::Vec2i& v)
+    {
+        return IsInfected(v.GetX(), v.GetY());
+    }
+
     bool IsReinforced(int x, int y);
+
+    bool IsReinforced(const aether::math::Vec2i& v)
+    {
+        return IsReinforced(v.GetX(), v.GetY());
+    }
 
     void ToggleReinforced(int x, int y);
 
@@ -48,12 +58,22 @@ public:
 
     void SetCrucibleEntity(secs::Entity e)
     {
-	    m_crucibleEntity = e;
+        m_crucibleEntity = e;
     }
 
     secs::Entity GetCrucibleEntity()
     {
-	    return m_crucibleEntity;
+        return m_crucibleEntity;
+    }
+
+    void SetExitEntity(secs::Entity e)
+    {
+        m_exitEntity = e;
+    }
+
+    secs::Entity GetExitEntity()
+    {
+	    return m_exitEntity;
     }
 
 
@@ -70,6 +90,7 @@ private:
     aether::math::Matrix2Di::SharedPtr m_enemyVisibilityMap;
 
     secs::Entity m_crucibleEntity;
+    secs::Entity m_exitEntity;
 
     std::shared_ptr<aether::scene::Scene> m_scene;
 

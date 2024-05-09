@@ -15,7 +15,6 @@ public:
 	int Unload() override;
 
 private:
-
 	aether::graphics::Camera::SharedPtr m_cam;
 
 };
