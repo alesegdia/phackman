@@ -34,7 +34,9 @@ public:
 
     secs::Entity MakeCrucible( float x, float y );
 
-    secs::Entity MakeDoor( float x, float y );
+    secs::Entity MakeDoor(float x, float y);
+
+    secs::Entity MakeExplosion(float x, float y);
 
 private:
 

@@ -231,7 +231,11 @@ secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Anim
     ainput.requestedFacing = direction;
 
     AddComponent<AgentMapStateComponent>(bullet);
-    AddComponent<DieOnStopComponent>(bullet);
+    auto& dosc = AddComponent<DieOnStopComponent>(bullet);
+    dosc.onDeath = [=]() {
+        auto& tc = m_world.GetEntityProcessor().Component<TransformComponent>(bullet);
+        MakeExplosion(tc.position.GetX(), tc.position.GetY());
+    };
 
     auto& animation_comp = AddComponent<AnimationComponent>(bullet);
     animation_comp.animation = anim;
@@ -255,6 +259,23 @@ secs::Entity EntityFactory::MakeTurretBullet(float x, float y, Facing direction)
     secs::Entity b = makeBullet(x, y, Assets::instance->turretBullet, direction, 0.0003f);
     AddComponent<PlayerBulletComponent>(b);
     return b;
+}
+
+secs::Entity EntityFactory::MakeExplosion(float x, float y)
+{
+    secs::Entity e = m_world.GetEntityProcessor().AddEntity();
+    auto& tc = AddComponent<TransformComponent>(e);
+    tc.position.SetX(x);
+    tc.position.SetY(y);
+    AddComponent<RenderComponent>(e);
+    auto& animation_comp = AddComponent<AnimationComponent>(e);
+    auto& anim = Assets::instance->assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("explosion.json")->anims["explosion"];
+    anim->SetWrapMode(aether::graphics::Animation::WrapMode::Loop);
+    animation_comp.animation = anim;
+    animation_comp.animationData.onAnimationFinished = [=]() {
+        //m_world.GetEntityProcessor().RemoveEntity(e);
+    };
+    return e;
 }
 
 secs::Entity EntityFactory::MakeBuildingOnWall(int tile_x, int tile_y, int building_type, Facing facing)

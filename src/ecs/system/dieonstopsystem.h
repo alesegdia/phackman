@@ -13,6 +13,10 @@ public:
         if( dos.last_x == tc.position.GetX() && dos.last_y == tc.position.GetY() )
         {
             GetEntityProcessor()->RemoveEntity(e);
+            if (dos.onDeath)
+            {
+                dos.onDeath();
+            }
         }
         dos.last_x = tc.position.GetX();
         dos.last_y = tc.position.GetY();
