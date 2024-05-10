@@ -1,5 +1,6 @@
 #include "entityfactory.h"
 
+#include "aether/math/tween.h"
 #include "../constants.h"
 
 EntityFactory::EntityFactory(secs::Engine &world)
@@ -231,10 +232,11 @@ secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Anim
     ainput.requestedFacing = direction;
 
     AddComponent<AgentMapStateComponent>(bullet);
-    auto& dosc = AddComponent<DieOnStopComponent>(bullet);
-    dosc.onDeath = [=]() {
-        auto& tc = m_world.GetEntityProcessor().Component<TransformComponent>(bullet);
-        MakeExplosion(tc.position.GetX(), tc.position.GetY());
+    AddComponent<DieOnStopComponent>(bullet);
+    auto& odac = AddComponent<OnDeathActionComponent>(bullet);
+    odac.action = [=](const secs::Entity& e) {
+        auto& tc = m_world.GetEntityProcessor().GetComponent<TransformComponent>(bullet);
+        MakeExplosions(tc.position.GetX(), tc.position.GetY());
     };
 
     auto& animation_comp = AddComponent<AnimationComponent>(bullet);
@@ -250,32 +252,45 @@ secs::Entity EntityFactory::makeBullet( float x, float y, aether::graphics::Anim
 secs::Entity EntityFactory::makeLSBullet(float x, float y, Facing direction)
 {
     secs::Entity b = makeBullet(x, y, Assets::instance->assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("anim-phackman.json")->anims["PhackBullet"], direction, 0.0002f);
-    AddComponent<PlayerBulletComponent>(b);
+    AddComponent<BulletComponent>(b);
     return b;
 }
 
 secs::Entity EntityFactory::MakeTurretBullet(float x, float y, Facing direction)
 {
     secs::Entity b = makeBullet(x, y, Assets::instance->turretBullet, direction, 0.0003f);
-    AddComponent<PlayerBulletComponent>(b);
+    AddComponent<BulletComponent>(b);
     return b;
 }
+
+#define M_PI       3.14159265358979323846   // pi
+#define M_PI_2     1.57079632679489661923   // pi/2
 
 secs::Entity EntityFactory::MakeExplosion(float x, float y)
 {
     secs::Entity e = m_world.GetEntityProcessor().AddEntity();
     auto& tc = AddComponent<TransformComponent>(e);
-    tc.position.SetX(x);
-    tc.position.SetY(y);
+    static constexpr int RANDOM_OFFSET = 8;
+    tc.position.SetX(x + rand() % RANDOM_OFFSET - RANDOM_OFFSET/2);
+    tc.position.SetY(y + rand() % RANDOM_OFFSET - RANDOM_OFFSET/2);
+    tc.angle = M_PI_2 * (rand() % 4);
     AddComponent<RenderComponent>(e);
     auto& animation_comp = AddComponent<AnimationComponent>(e);
     auto& anim = Assets::instance->assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("explosion.json")->anims["explosion"];
-    anim->SetWrapMode(aether::graphics::Animation::WrapMode::Loop);
+    anim->SetWrapMode(aether::graphics::Animation::WrapMode::Once);
     animation_comp.animation = anim;
     animation_comp.animationData.onAnimationFinished = [=]() {
-        //m_world.GetEntityProcessor().RemoveEntity(e);
+        m_world.GetEntityProcessor().RemoveEntity(e);
     };
     return e;
+}
+
+void EntityFactory::MakeExplosions(float x, float y)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        aether::TimerManager::GetInstance().CreateTimer(uint64_t(5e4 * i)).OnExpire([=]() { MakeExplosion(x, y); });
+    }
 }
 
 secs::Entity EntityFactory::MakeBuildingOnWall(int tile_x, int tile_y, int building_type, Facing facing)

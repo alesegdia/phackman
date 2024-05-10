@@ -30,7 +30,7 @@ public:
 
     bool PlayerHoldsCore()
     {
-        const auto& aic = m_ecsWorld.engine().GetEntityProcessor().Component<AgentInputComponent>(m_playerEntity);
+        const auto& aic = m_ecsWorld.engine().GetEntityProcessor().GetComponent<AgentInputComponent>(m_playerEntity);
         return aic.carryCrucible;
     }
 
@@ -62,18 +62,18 @@ private:
 
     aether::math::Vec2i GetPlayerTile()
     {
-        return m_ecsWorld.engine().GetEntityProcessor().Component<TileComponent>(m_playerEntity).current;
+        return m_ecsWorld.engine().GetEntityProcessor().GetComponent<TileComponent>(m_playerEntity).current;
     }
+
     aether::math::Vec2i GetCrucibleTile()
     {
-        return m_ecsWorld.engine().GetEntityProcessor().Component<TileComponent>(m_mapScene.GetCrucibleEntity()).current;
+        return m_ecsWorld.engine().GetEntityProcessor().GetComponent<TileComponent>(m_mapScene.GetCrucibleEntity()).current;
     }
 
     aether::math::Vec2i GetExitTile()
     {
-        return m_ecsWorld.engine().GetEntityProcessor().Component<TileComponent>(m_mapScene.GetExitEntity()).current;
+        return m_ecsWorld.engine().GetEntityProcessor().GetComponent<TileComponent>(m_mapScene.GetExitEntity()).current;
     }
-
 
     MapScene m_mapScene;
     ECSWorld m_ecsWorld;

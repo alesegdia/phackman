@@ -2,7 +2,7 @@
 
 // Idea of CollisionLayerComponent instead of multiple components
 
-struct PlayerBulletComponent
+struct BulletComponent
 {
 
 };

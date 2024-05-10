@@ -52,7 +52,7 @@ public:
 	                leic.desinfectDuration = 1e6;
 	                leic.desinfectTimer = 1e6;
 	            }
-	            auto& ic = GetEntityProcessor()->Component<InfectComponent>(e);
+	            auto& ic = GetEntityProcessor()->GetComponent<InfectComponent>(e);
 				ic.desinfect = true;
 				infect_wants_slow_speed = true;
 	        }

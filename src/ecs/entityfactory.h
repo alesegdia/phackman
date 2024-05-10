@@ -38,6 +38,19 @@ public:
 
     secs::Entity MakeExplosion(float x, float y);
 
+    secs::Entity MakeBombAtTile(float x, float y)
+    {
+
+    }
+
+    secs::Entity MakeBombDamageAreaAtTile(float x, float y)
+    {
+
+    }
+
+
+    void MakeExplosions(float x, float y);
+
 private:
 
     secs::Entity makeBullet(float x, float y, aether::graphics::Animation::SharedPtr anim , Facing direction, float speed);

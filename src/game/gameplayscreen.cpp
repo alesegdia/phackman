@@ -4,6 +4,7 @@
 #include "assets.h"
 #include "../constants.h"
 #include <filesystem>
+#include <aether/math/tween.h>
 
 #include "nextlevelscreen.h"
 
@@ -129,7 +130,7 @@ void GameplayScreen::Update(uint64_t delta)
         m_contextControls.push_back("needcore");
     }
 
-
+    aether::TimerManager::GetInstance().Update(delta);
 
 }
 
@@ -186,6 +187,7 @@ void GameplayScreen::Render()
 
 int GameplayScreen::Unload()
 {
+    aether::TimerManager::GetInstance().ClearAllTimers();
 	return 0;
 }
 

@@ -12,11 +12,11 @@ public:
         SECS_UNUSED(delta);
         if( dos.last_x == tc.position.GetX() && dos.last_y == tc.position.GetY() )
         {
-            GetEntityProcessor()->RemoveEntity(e);
-            if (dos.onDeath)
+            if (!GetEntityProcessor()->HasComponent<DieComponent>(e))
             {
-                dos.onDeath();
+                GetEntityProcessor()->AddComponent<DieComponent>(e);
             }
+            GetEntityProcessor()->RemoveComponent<DieOnStopComponent>(e);
         }
         dos.last_x = tc.position.GetX();
         dos.last_y = tc.position.GetY();

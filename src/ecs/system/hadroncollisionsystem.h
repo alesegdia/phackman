@@ -84,7 +84,7 @@ public:
     void HandleCollision( const secs::Entity& e1, const secs::Entity& e2 )
     {
         secs::Entity out1, out2;
-        if( entitiesHaveComponents<PlayerInputComponent, CellComponent>(e1, e2, &out1, &out2) )
+        if( entitiesHaveComponents<PlayerInputComponent, CellComponent>(e1, e2, &out1, &out2) && !HasComponent<DieComponent>(out2))
         {
             auto& cell_comp = GetComponent<CellComponent>(out2);
             auto& resources = GetComponent<ResourceStorageComponent>(out1);
@@ -93,14 +93,21 @@ public:
             case CellType::IndustryCell: resources.industryCells++; break;
             case CellType::PowerCell: resources.powerCells++; break;
             }
-            GetEntityProcessor()->RemoveEntity(out2);
+            if (!GetEntityProcessor()->HasComponent<DieComponent>(out2))
+            {
+                GetEntityProcessor()->AddComponent<DieComponent>(out2);
+            }
 
         }
-        else if( entitiesHaveComponents<PlayerBulletComponent, EnemyComponent>(e1, e2, &out1, &out2) )
+        else if( entitiesHaveComponents<BulletComponent, EnemyComponent>(e1, e2, &out1, &out2) )
         {
-            GetEntityProcessor()->RemoveEntity(out1);
-            auto& hc = GetComponent<HealthComponent>(out2);
-            hc.currentHealth--;
+            if (!GetEntityProcessor()->HasComponent<DieComponent>(out1))
+            {
+                GetEntityProcessor()->AddComponent<DieComponent>(out1);
+            }
+            auto& dc = GetEntityProcessor()->AddComponent<DamageComponent>(out2);
+            dc.damageDone = 1;
+            dc.painTimer = 1000000;
         }
         else if( entitiesHaveComponents<PlayerInputComponent, EnemyComponent>(e1, e2, &out1, &out2) )
         {

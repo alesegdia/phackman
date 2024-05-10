@@ -57,5 +57,7 @@ private:
     std::shared_ptr < FadingSystem                >    m_fadingSystem;
     std::shared_ptr < WallAwarePlacementSystem     >   m_wallAwarePlacementSystem;
     std::shared_ptr < AlwaysShootSystem             >  m_alwaysShootSystem;
+    std::shared_ptr < DamageSystem             >  m_damageSystem;
+    //std::shared_ptr < BombSystem >  m_bombSystem;
 
 };

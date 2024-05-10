@@ -23,7 +23,6 @@ ECSWorld::ECSWorld(MapScene& map_scene)
     m_mapAwarenessSystem = m_world.CreateSystem<MapAwarenessSystem>(map_scene.GetEnemyVisibilityMap());
     m_shootAtSightSystem = m_world.CreateSystem<ShootAtSightSystem>();
     m_hadronCollisionSystem = m_world.CreateSystem<HadronCollisionSystem>();
-    m_dieSystem = m_world.CreateSystem<DieSystem>();
     m_healthSystem = m_world.CreateSystem<HealthSystem>();
     m_reinforcingSystem = m_world.CreateSystem<ReinforcingSystem>(map_scene, m_factory);
     m_poweringSystem = m_world.CreateSystem<PoweringSystem>(map_scene, m_factory);
@@ -35,6 +34,8 @@ ECSWorld::ECSWorld(MapScene& map_scene)
     m_fadingSystem = m_world.CreateSystem<FadingSystem>();
     m_wallAwarePlacementSystem = m_world.CreateSystem<WallAwarePlacementSystem>(map_scene);
     m_alwaysShootSystem = m_world.CreateSystem<AlwaysShootSystem>();
+    m_dieSystem = m_world.CreateSystem<DieSystem>();
+    m_damageSystem = m_world.CreateSystem<DamageSystem>();
 
     m_world.ActivateSystemGroup(SystemGroups::GuiStop);
     m_world.SetSystemGroup(m_playerInputSystem, SystemGroups::GuiStop);
