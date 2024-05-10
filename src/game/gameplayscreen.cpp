@@ -76,7 +76,7 @@ void GameplayScreen::Update(uint64_t delta)
 
         if(m_gameWorld->isGameOver() )
         {
-            Load();
+            GoToScreen(std::make_shared<GameplayScreen>());
         }
     }
 
@@ -88,7 +88,7 @@ void GameplayScreen::Update(uint64_t delta)
 
     if (aether::core::is_key_just_pressed(aether::core::KeyCode::R))
     {
-        Load();
+        GoToScreen(std::make_shared<GameplayScreen>());
     }
 
 //    m_cam->Update(delta);
