@@ -1,11 +1,10 @@
 
 #pragma once
-/*
 
 #include <secs/secs.h>
 #include "../components.h"
-#include "map/mapscene.h"
-#include "ecs/entityfactory.h"
+#include "../../map/mapscene.h"
+#include "../entityfactory.h"
 
 class BombSystem : public secs::TypedEntitySystem<BombComponent, TileComponent>
 {
@@ -50,4 +49,3 @@ private:
 
 };	
 
-*/
