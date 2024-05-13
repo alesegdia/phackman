@@ -52,19 +52,19 @@ public:
 	                leic.desinfectDuration = 1e6;
 	                leic.desinfectTimer = 1e6;
 	            }
-	            auto& ic = GetEntityProcessor()->GetComponent<InfectComponent>(e);
+	            auto& ic = GetComponent<InfectComponent>(e);
 				ic.desinfect = true;
 				infect_wants_slow_speed = true;
 	        }
 	        else if(HasComponent<InfectComponent>(e))
 	        {
-	            GetEntityProcessor()->RemoveComponent<InfectComponent>(e);
+	            RemoveComponent<InfectComponent>(e);
 	            infect_wants_slow_speed = false;
 	        }
 
 	        if( agtinput_comp.requestedReinforce )
 	        {
-	            GetEntityProcessor()->AddComponent<ReinforceComponent>(e);
+	            AddComponent<ReinforceComponent>(e);
 	        }
 		}
 		if( u )
@@ -95,7 +95,7 @@ public:
 		{
 			if (m_mapScene.IsReinforced(tlc.current.GetX(), tlc.current.GetY()))
 			{
-				GetEntityProcessor()->AddComponent<WallPlacementComponent>(e);
+				AddComponent<WallPlacementComponent>(e);
 			}
 			else
 			{

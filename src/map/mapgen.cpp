@@ -146,6 +146,33 @@ std::vector<std::shared_ptr<aether::math::Matrix2Di> > ShapeStorage::makeSample(
     return shapes;
 }
 
+std::vector<std::shared_ptr<aether::math::Matrix2Di>> ShapeStorage::MakeLevelAwareShapeSet(int level)
+{
+    std::vector<aether::math::Matrix2Di::SharedPtr> shapes;
+    shapes.push_back(m_L1);
+    shapes.push_back(m_L2);
+    shapes.push_back(m_T);
+    for (int i = 1; i < level; i++)
+    {
+        if (level % 4 == 0)
+        {
+            shapes.push_back(m_L1);
+        }
+        else if (level % 4 == 1)
+        {
+            shapes.push_back(m_L2);
+        }
+        else if (level % 4 == 2)
+        {
+            shapes.push_back(m_T);
+        }
+        else if (level % 4 == 3)
+        {
+            shapes.push_back(m_Plus);
+        }
+    }
+    return shapes;
+}
 
 
 CompactSolver::Solution CompactSolver::solve(CompactSolver::Solution inputShapes)

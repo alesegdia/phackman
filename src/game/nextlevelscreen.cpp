@@ -8,6 +8,8 @@
 
 //#include "../debug/mapsoliddebug.h"
 
+#include "../core/persistentdata.h"
+
 NextLevelScreen::NextLevelScreen()
     : m_cam(
 		new aether::graphics::Camera(
@@ -18,7 +20,7 @@ NextLevelScreen::NextLevelScreen()
 
 int NextLevelScreen::Load()
 {
-
+	PersistentData::Instance.AdvanceFloor();
     return 0;
 }
 
@@ -63,7 +65,7 @@ void NextLevelScreen::Render()
 		"Level Cleared", 0, -50,
 		aether::graphics::Color::White, aether::graphics::TextAlign::Center);
 	Assets::instance->assetsManager.GetAsset<aether::graphics::Font>("bitcell_big.font")->Print(
-		"Press SPACE for next level", 0, 20,
+		"Press SPACE for next floor", 0, 20,
 		aether::graphics::Color::White, aether::graphics::TextAlign::Center);
 
 

@@ -47,11 +47,15 @@ void MainMenuScreen::Render()
 	m_cam->SetPosition(0, 0);
 	m_cam->SetScale(4.f, 4.f);
 	m_cam->Bind();
+	//int offx = 110;
+	//int offy = -50;
+	int offx = 0;
+	int offy = 0;
 	Assets::instance->assetsManager.GetAsset<aether::graphics::Font>("bitcell_super.font")->Print(
-		"Phackman", 0, -50,
+		"Phackman", offx + 0, offy - 50,
 		aether::graphics::Color::White, aether::graphics::TextAlign::Center);
 	Assets::instance->assetsManager.GetAsset<aether::graphics::Font>("bitcell_big.font")->Print(
-		"Press SPACE to start", 0, 20,
+		"Press SPACE to start", offx + 0, offy + 20,
 		aether::graphics::Color::White, aether::graphics::TextAlign::Center);
 }
 

@@ -6,6 +6,7 @@
 #include "../game/assets.h"
 #include <algorithm>
 
+
 class EntityFactory
 {
 public:

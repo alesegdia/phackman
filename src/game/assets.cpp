@@ -40,6 +40,11 @@ Assets::Assets()
     spawnerStand = assetsManager.GetAsset<aether::graphics::AsepriteAnimationData>("spawner.json")->anims["SpawnerStand"];
 
     guiFont = assetsManager.GetAsset<aether::graphics::Font>("bitcell_big.font");
+
+    // mainTheme.reset(new aether::audio::Stream());
+    // mainTheme->Load("phackman-theme.mp3");
+
+    // mainTheme->Play();
 }
 
 Assets::~Assets()

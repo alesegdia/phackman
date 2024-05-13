@@ -40,6 +40,8 @@ public:
 
     std::shared_ptr<aether::graphics::Font> guiFont;
 
+    //std::shared_ptr<aether::audio::Stream> mainTheme;
+
     aether::resources::AssetsManager assetsManager;
 
 

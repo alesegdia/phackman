@@ -2,6 +2,8 @@
 
 #include "aether/scene/tilemapscenenode.h"
 
+#include "../core/persistentdata.h"
+
 #include "allegro5/allegro_primitives.h"
 
 MapScene::MapScene(int level, std::shared_ptr<aether::scene::Scene> scene)
@@ -9,7 +11,7 @@ MapScene::MapScene(int level, std::shared_ptr<aether::scene::Scene> scene)
 	bool blocked = true;
 	while(blocked)
 	{
-		GenerateMap(level);
+		GenerateMap(PersistentData::Instance.GetCurrentFloor());
 		for (auto n1 : m_navmap->GetNodes())
 		{
 			for (auto n2 : m_navmap->GetNodes())
@@ -46,7 +48,7 @@ MapScene::MapScene(int level, std::shared_ptr<aether::scene::Scene> scene)
 
 void MapScene::GenerateMap(int level)
 {
-	m_map = LayoutBuilder().generate(ShapeStorage().makeSample());
+	m_map = LayoutBuilder().generate(ShapeStorage().MakeLevelAwareShapeSet(level));
 	m_infectionMap = scale_down(*m_map, 2);
 
 	m_solidnessMap = scale_down(*m_map, 2);

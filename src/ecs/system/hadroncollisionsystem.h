@@ -91,7 +91,7 @@ public:
             switch(cell_comp.type)
             {
             case CellType::IndustryCell: resources.industryCells++; break;
-            case CellType::PowerCell: resources.powerCells++; break;
+            case CellType::PowerCell: resources.reinforceCells++; break;
             }
             if (!GetEntityProcessor()->HasComponent<DieComponent>(out2))
             {

@@ -40,6 +40,7 @@ public:
 			CreateBombExplosionDamage(tc, -1,  0, bombcomponent.numLives);
 			CreateBombExplosionDamage(tc,  0,  1, bombcomponent.numLives);
 			CreateBombExplosionDamage(tc,  0, -1, bombcomponent.numLives);
+			RemoveComponent<BombComponent>(e);
 		}
 	}
 

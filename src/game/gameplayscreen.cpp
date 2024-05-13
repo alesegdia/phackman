@@ -7,6 +7,7 @@
 #include <aether/math/tween.h>
 
 #include "nextlevelscreen.h"
+#include "youdiescreen.h"
 
 namespace
 {
@@ -76,7 +77,7 @@ void GameplayScreen::Update(uint64_t delta)
 
         if(m_gameWorld->isGameOver() )
         {
-            GoToScreen(std::make_shared<GameplayScreen>());
+            GoToScreen(std::make_shared<YouDieScreen>());
         }
     }
 
@@ -91,7 +92,6 @@ void GameplayScreen::Update(uint64_t delta)
         GoToScreen(std::make_shared<GameplayScreen>());
     }
 
-//    m_cam->Update(delta);
     m_cam->Update();
 
 
@@ -142,17 +142,15 @@ void GameplayScreen::Render()
     m_scroll.Focus(new_pos.GetX() + 16, new_pos.GetY() + 16);
     m_cam->Bind();
 
-    aether::graphics::clear(0.f,0.f,0.f);
-	m_gameWorld->Render();
+    m_gameWorld->Render();
 	//m_cam->UnBind();
 
     m_guiCam->SetScale(m_scale, m_scale);
     m_guiCam->SetPosition(0, 0);
     m_guiCam->Bind();
 
-    Assets::instance->maptilesSheet->GetFrame(74)->Draw(0, 0);
+    Assets::instance->maptilesSheet->GetFrame(76)->Draw(0, 0);
     Assets::instance->maptilesSheet->GetFrame(75)->Draw(0,16);
-    Assets::instance->maptilesSheet->GetFrame(76)->Draw(0,32);
 
     const auto& rsc = m_gameWorld->playerResourceStorageComponent();
     char rc[4]; char ic[4]; char pc[4];
@@ -161,8 +159,7 @@ void GameplayScreen::Render()
     sprintf_s(pc, "%d", rsc.powerCells);
     Assets::instance->guiFont->Print(rc, 18,  0, aether::graphics::Color(1.0f, 1.0f, 1.0f));
     Assets::instance->guiFont->Print(ic, 18, 16, aether::graphics::Color(1.0f, 1.0f, 1.0f));
-    Assets::instance->guiFont->Print(pc, 18, 32, aether::graphics::Color(1.0f, 1.0f, 1.0f));
-
+    
     if (m_pause)
     {
         aether::graphics::draw_filled_rectangle(0, 0, 1000, 1000, aether::graphics::Color(0.0f, 0.0f, 0.0f, 0.5f));

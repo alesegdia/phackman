@@ -67,6 +67,7 @@ class ShapeStorage
 public:
 	ShapeStorage();
     std::vector<std::shared_ptr<aether::math::Matrix2Di>> makeSample();
+    std::vector<std::shared_ptr<aether::math::Matrix2Di>> MakeLevelAwareShapeSet(int level);
 
 private:
     std::shared_ptr<aether::math::Matrix2Di> m_L1;
